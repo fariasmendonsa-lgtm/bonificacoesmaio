@@ -1,0 +1,3696 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0a0a0a">
+<title>Portal de Bonificações Operacional · S.A Casa do Sushi</title>
+<style>
+/* ===========================================
+   Portal S.A Casa do Sushi v2 - GAMIFICADO
+   =========================================== */
+
+:root[data-theme="dark"] {
+  --bg-dark: #0a0a0a;
+  --bg-card: #161616;
+  --bg-elevated: #1f1f1f;
+  --bg-deep: #050505;
+  --border: #2a2a2a;
+  --border-strong: #3a3a3a;
+  --text: #ffffff;
+  --text-muted: #999999;
+  --text-dim: #666666;
+  --accent: #E63946;
+  --accent-2: #ff6b6b;
+  --accent-dark: #4a0a14;
+  --gold: #FFD700;
+  --gold-dim: #b8a000;
+  --success: #2ecc71;
+  --success-glow: rgba(46, 204, 113, 0.4);
+  --warning: #ff9800;
+  --danger: #e74c3c;
+  --info: #03a9f4;
+  --purple: #9c27b0;
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+:root[data-theme="light"] {
+  --bg-dark: #f5f5f7;
+  --bg-card: #ffffff;
+  --bg-elevated: #fafafa;
+  --bg-deep: #eeeeef;
+  --border: #e0e0e0;
+  --border-strong: #c0c0c0;
+  --text: #0a0a0a;
+  --text-muted: #555555;
+  --text-dim: #888888;
+  --accent: #E63946;
+  --accent-2: #c92a36;
+  --accent-dark: #ffd5d8;
+  --gold: #d4a017;
+  --gold-dim: #b8a000;
+  --success: #1a8d4a;
+  --success-glow: rgba(26, 141, 74, 0.3);
+  --warning: #d97706;
+  --danger: #dc2626;
+  --info: #0284c7;
+  --purple: #7c3aed;
+  --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: var(--bg-dark);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  line-height: 1.5;
+  transition: background 0.4s, color 0.4s;
+}
+
+button { font-family: inherit; cursor: pointer; }
+input, textarea { font-family: inherit; }
+
+/* ===== HEADER ===== */
+.app-header {
+  background: linear-gradient(135deg, #050505 0%, #1a0a0e 100%);
+  border-bottom: 2px solid var(--accent);
+  padding: 14px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(10px);
+}
+.app-header .brand { display: flex; align-items: center; gap: 14px; }
+.app-header .brand-logo { height: 40px; width: auto; display: block; }
+.app-header .right { display: flex; align-items: center; gap: 14px; }
+.app-header .ciclo-info {
+  text-align: right;
+  font-size: 11px;
+  color: rgba(255,255,255,0.7);
+}
+.app-header .ciclo-info strong {
+  color: #fff;
+  display: block;
+  font-size: 13px;
+}
+
+.theme-toggle {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: #fff;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  transition: transform 0.3s, background 0.3s;
+}
+.theme-toggle:hover {
+  transform: rotate(20deg) scale(1.1);
+  background: rgba(255,255,255,0.18);
+}
+.exit-btn {
+  background: rgba(231, 76, 60, 0.15);
+  border: 1px solid rgba(231, 76, 60, 0.3);
+  color: #ff6b6b;
+  padding: 7px 14px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+.exit-btn:hover { background: rgba(231, 76, 60, 0.25); }
+
+/* ===== CONTAINER ===== */
+.container { max-width: 1100px; margin: 0 auto; padding: 24px; }
+
+/* ===== TELA DE SELEÇÃO ===== */
+.welcome { text-align: center; padding: 70px 20px 30px; position: relative; }
+.welcome::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 0%, rgba(230, 57, 70, 0.15), transparent 50%);
+  pointer-events: none;
+}
+.welcome > * { position: relative; }
+.welcome h1 {
+  font-family: 'Impact', 'Arial Black', sans-serif;
+  font-size: 56px;
+  text-transform: uppercase;
+  letter-spacing: -1px;
+  margin-bottom: 14px;
+  background: linear-gradient(135deg, var(--text) 0%, var(--accent) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.welcome .subtitle {
+  color: var(--text-muted);
+  font-size: 16px;
+  font-style: italic;
+  max-width: 600px;
+  margin: 0 auto 30px;
+}
+.welcome .periodo-pill {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #fff;
+  padding: 10px 22px;
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  margin-bottom: 50px;
+  box-shadow: 0 4px 20px rgba(230, 57, 70, 0.4);
+  animation: pulse 2.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 4px 20px rgba(230, 57, 70, 0.4); }
+  50% { box-shadow: 0 4px 30px rgba(230, 57, 70, 0.7); }
+}
+
+.user-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 18px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.user-card {
+  background: var(--bg-card);
+  border: 2px solid var(--border);
+  border-radius: 16px;
+  padding: 26px 22px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.user-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, var(--user-color, var(--accent)) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.4s;
+  pointer-events: none;
+}
+.user-card:hover {
+  transform: translateY(-6px) scale(1.02);
+  border-color: var(--user-color, var(--accent));
+  box-shadow: var(--shadow-lg);
+}
+.user-card:hover::before { opacity: 0.08; }
+.user-card:active { transform: translateY(-2px) scale(0.99); }
+
+.user-card .avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: var(--user-color, var(--accent));
+  color: #fff;
+  font-size: 34px;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3), inset 0 -4px 12px rgba(0,0,0,0.2);
+  position: relative;
+  transition: transform 0.3s;
+}
+.user-card:hover .avatar { transform: scale(1.08) rotate(-3deg); }
+.user-card .name {
+  font-size: 19px;
+  font-weight: 800;
+  margin-bottom: 4px;
+  letter-spacing: -0.3px;
+}
+.user-card .role {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+.user-card .stats {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+  font-size: 11px;
+  color: var(--text-dim);
+  font-weight: 600;
+}
+.user-card.admin {
+  border-color: var(--gold);
+  background: linear-gradient(135deg, var(--bg-card) 0%, rgba(255, 215, 0, 0.06) 100%);
+}
+.user-card.admin .avatar {
+  background: linear-gradient(135deg, var(--gold), #ffaa00);
+  color: #000;
+}
+.user-card.admin .role { color: var(--gold); font-weight: 600; }
+
+/* ===== PERFIL ATIVO ===== */
+.profile-bar {
+  background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-elevated) 100%);
+  border-radius: 14px;
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 24px;
+  border-left: 5px solid var(--user-color, var(--accent));
+  box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
+}
+.profile-bar::after {
+  content: '';
+  position: absolute;
+  top: 0; right: 0;
+  width: 200px; height: 100%;
+  background: radial-gradient(ellipse at right, var(--user-color, var(--accent)) 0%, transparent 70%);
+  opacity: 0.1;
+  pointer-events: none;
+}
+.profile-bar .avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--user-color, var(--accent));
+  color: #fff;
+  font-size: 26px;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.3), inset 0 -3px 8px rgba(0,0,0,0.2);
+}
+.profile-bar .info { flex: 1; min-width: 0; }
+.profile-bar .info .name {
+  font-size: 24px;
+  font-weight: 800;
+  margin-bottom: 3px;
+  letter-spacing: -0.5px;
+}
+.profile-bar .info .role { font-size: 13px; color: var(--text-muted); }
+.profile-bar .actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* ===== BOTÕES ===== */
+.btn {
+  background: var(--bg-elevated);
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.btn:hover { border-color: var(--accent); transform: translateY(-1px); }
+.btn:active { transform: translateY(0); }
+.btn.primary {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  border-color: var(--accent);
+  color: #fff;
+  box-shadow: 0 4px 12px rgba(230, 57, 70, 0.3);
+}
+.btn.primary:hover { box-shadow: 0 6px 20px rgba(230, 57, 70, 0.5); }
+.btn.success {
+  background: var(--success);
+  border-color: var(--success);
+  color: #fff;
+}
+.btn.warning { background: var(--warning); border-color: var(--warning); color: #000; }
+.btn.ghost { background: transparent; color: var(--text-muted); }
+.btn.small { padding: 7px 12px; font-size: 12px; }
+
+/* ===== METAS / RESUMO ===== */
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+  margin-bottom: 24px;
+}
+.summary-card {
+  background: var(--bg-card);
+  border-radius: 12px;
+  padding: 18px 20px;
+  border-left: 4px solid var(--accent);
+  box-shadow: var(--shadow-md);
+  transition: transform 0.2s;
+}
+.summary-card:hover { transform: translateY(-2px); }
+.summary-card .label {
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+.summary-card .value {
+  font-family: 'Impact', 'Arial Black', sans-serif;
+  font-size: 30px;
+  line-height: 1;
+}
+.summary-card.bonus { border-left-color: var(--gold); }
+.summary-card.bonus .value { color: var(--gold); }
+.summary-card.unlocked { border-left-color: var(--success); }
+.summary-card.unlocked .value { color: var(--success); }
+
+.meta-banner {
+  background: var(--bg-card);
+  border-radius: 12px;
+  padding: 16px 22px;
+  margin-bottom: 24px;
+  border-left: 4px solid var(--info);
+  box-shadow: var(--shadow-md);
+}
+.meta-banner .label {
+  font-size: 11px;
+  color: var(--info);
+  letter-spacing: 0.12em;
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+.meta-banner .text {
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.5;
+}
+
+/* ===== PROGRESSO HERO ===== */
+.progress-hero {
+  background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-elevated) 100%);
+  border-radius: 16px;
+  padding: 24px 28px;
+  margin-bottom: 24px;
+  box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
+}
+.progress-hero .top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.progress-hero .label {
+  font-size: 11px;
+  color: var(--text-muted);
+  letter-spacing: 0.18em;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.progress-hero .text {
+  font-size: 18px;
+  color: var(--text);
+  font-weight: 700;
+}
+.progress-hero .text strong { color: var(--success); font-size: 22px; }
+
+.progress-hero .bonus-counter { text-align: right; }
+.progress-hero .bonus-counter .label-bonus {
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  color: var(--gold);
+  font-weight: 800;
+  text-transform: uppercase;
+}
+.progress-hero .bonus-counter .value-bonus {
+  font-family: 'Impact', sans-serif;
+  font-size: 38px;
+  color: var(--gold);
+  line-height: 1;
+  text-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+  margin-top: 4px;
+}
+.progress-hero .bonus-counter .total-bonus {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.progress-bar-outer {
+  background: var(--bg-deep);
+  border-radius: 100px;
+  height: 14px;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid var(--border);
+}
+.progress-bar-inner {
+  background: linear-gradient(90deg, var(--accent) 0%, var(--warning) 50%, var(--success) 100%);
+  height: 100%;
+  border-radius: 100px;
+  transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+.progress-bar-inner::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.3) 50%, transparent 100%);
+  animation: shimmer 2s linear infinite;
+}
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* ===== BADGES / CONQUISTAS ===== */
+.achievements-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+.achievement {
+  background: var(--bg-deep);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 6px 12px 6px 6px;
+  font-size: 11px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  opacity: 0.4;
+  transition: all 0.3s;
+}
+.achievement.unlocked {
+  opacity: 1;
+  border-color: var(--gold);
+  background: linear-gradient(135deg, var(--bg-deep) 0%, rgba(255, 215, 0, 0.1) 100%);
+  color: var(--gold);
+}
+.achievement .badge-icon {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: var(--bg-card);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}
+.achievement.unlocked .badge-icon {
+  background: var(--gold);
+  color: #000;
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.6);
+}
+
+/* ===== FILTROS / BUSCA ===== */
+.filters-bar {
+  background: var(--bg-card);
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 18px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+  box-shadow: var(--shadow-md);
+}
+.search-box {
+  flex: 1;
+  min-width: 200px;
+  position: relative;
+}
+.search-box input {
+  width: 100%;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 10px 14px 10px 38px;
+  border-radius: 8px;
+  font-size: 13px;
+  transition: border-color 0.2s;
+}
+.search-box input:focus { outline: none; border-color: var(--accent); }
+.search-box::before {
+  content: '🔍';
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 13px;
+  pointer-events: none;
+}
+.filter-pills { display: flex; gap: 6px; flex-wrap: wrap; }
+.filter-pill {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  padding: 7px 13px;
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.filter-pill:hover { color: var(--text); border-color: var(--accent); }
+.filter-pill.active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  box-shadow: 0 2px 8px rgba(230, 57, 70, 0.3);
+}
+
+/* ===== GATILHOS ===== */
+.gatilho {
+  background: var(--bg-card);
+  border-radius: 14px;
+  margin-bottom: 16px;
+  overflow: hidden;
+  border-top: 4px solid var(--gatilho-color, var(--text-muted));
+  box-shadow: var(--shadow-md);
+  transition: box-shadow 0.3s;
+}
+.gatilho:hover { box-shadow: var(--shadow-lg); }
+.gatilho.severidade-CRITICO     { --gatilho-color: var(--danger); }
+.gatilho.severidade-IMPORTANTE  { --gatilho-color: var(--warning); }
+.gatilho.severidade-PADRAO      { --gatilho-color: var(--info); }
+.gatilho.gatilho-completo {
+  border-top-color: var(--success);
+  box-shadow: 0 0 20px rgba(46, 204, 113, 0.15);
+}
+
+.gatilho-header {
+  padding: 18px 22px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  gap: 14px;
+  transition: background 0.2s;
+}
+.gatilho-header:hover { background: var(--bg-elevated); }
+
+.gatilho-header .titulo-area { flex: 1; min-width: 0; }
+.gatilho-header .titulo {
+  font-size: 16px;
+  font-weight: 800;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  letter-spacing: -0.3px;
+}
+.gatilho-header .badges {
+  display: flex;
+  gap: 6px;
+  font-size: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.severidade-pill {
+  background: var(--gatilho-color);
+  color: #fff;
+  padding: 4px 11px;
+  border-radius: 100px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  font-size: 10px;
+}
+.peso-pill {
+  background: var(--bg-elevated);
+  color: var(--text-muted);
+  padding: 4px 11px;
+  border-radius: 100px;
+  font-weight: 700;
+  font-size: 10px;
+  border: 1px solid var(--border);
+}
+.bonus-pill {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 215, 0, 0.1));
+  color: var(--gold);
+  padding: 4px 11px;
+  border-radius: 100px;
+  font-weight: 800;
+  font-size: 10px;
+  border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.gatilho-header .stats-mini {
+  text-align: right;
+  font-size: 12px;
+  color: var(--text-muted);
+  min-width: 140px;
+}
+.gatilho-header .stats-mini .progress-text {
+  color: var(--success);
+  font-weight: 800;
+  font-size: 16px;
+  font-family: 'Impact', sans-serif;
+}
+.gatilho-header .stats-mini .gatilho-mini-bar {
+  background: var(--bg-deep);
+  height: 5px;
+  border-radius: 100px;
+  margin-top: 6px;
+  overflow: hidden;
+}
+.gatilho-header .stats-mini .gatilho-mini-bar-inner {
+  height: 100%;
+  background: linear-gradient(90deg, var(--gatilho-color), var(--success));
+  transition: width 0.5s;
+  border-radius: 100px;
+}
+.gatilho-header .stats-mini .unlocked-value {
+  color: var(--gold);
+  font-size: 11px;
+  font-weight: 700;
+  margin-top: 3px;
+}
+.gatilho-header .toggle {
+  font-size: 18px;
+  color: var(--text-muted);
+  transition: transform 0.3s;
+}
+.gatilho.open .toggle { transform: rotate(90deg); }
+
+.gatilho-body {
+  padding: 0 22px 18px;
+  display: none;
+  border-top: 1px solid var(--border);
+  animation: slideDown 0.3s ease;
+}
+.gatilho.open .gatilho-body { display: block; }
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.gatilho-meta {
+  background: var(--bg-elevated);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin: 14px 0;
+  font-size: 12px;
+  color: var(--text);
+}
+.gatilho-meta strong {
+  color: var(--accent);
+  text-transform: uppercase;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  display: block;
+  margin-bottom: 4px;
+  font-weight: 800;
+}
+
+/* ===== GRUPOS DE LOJAS ===== */
+.grupo {
+  margin-top: 16px;
+  border-left: 2px solid var(--border);
+  padding-left: 16px;
+}
+.grupo .lojas-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+.loja-pill {
+  background: var(--bg-elevated);
+  color: var(--text);
+  padding: 5px 11px;
+  border-radius: 100px;
+  font-size: 11px;
+  border: 1px solid var(--border);
+  font-weight: 600;
+}
+.loja-pill.rede {
+  background: linear-gradient(135deg, rgba(3, 169, 244, 0.2), rgba(3, 169, 244, 0.05));
+  color: var(--info);
+  border-color: var(--info);
+  font-weight: 700;
+}
+
+/* ===== TAREFAS ===== */
+.tarefa {
+  background: var(--bg-elevated);
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 10px;
+  border-left: 3px solid var(--border);
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+.tarefa.done {
+  border-left-color: var(--success);
+  background: linear-gradient(135deg, var(--bg-elevated) 0%, rgba(46, 204, 113, 0.08) 100%);
+  box-shadow: 0 2px 12px rgba(46, 204, 113, 0.1);
+}
+.tarefa.hidden { display: none; }
+.tarefa.match-search {
+  border-left-color: var(--warning);
+  background: linear-gradient(135deg, var(--bg-elevated) 0%, rgba(255, 152, 0, 0.05) 100%);
+}
+.tarefa-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.tarefa-check {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.custom-checkbox {
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--border-strong);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  position: relative;
+}
+.custom-checkbox:hover { border-color: var(--success); transform: scale(1.05); }
+.custom-checkbox.checked {
+  background: var(--success);
+  border-color: var(--success);
+  box-shadow: 0 0 12px rgba(46, 204, 113, 0.5);
+}
+.custom-checkbox.checked::after {
+  content: '✓';
+  color: #fff;
+  font-weight: 900;
+  font-size: 16px;
+  animation: checkBounce 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes checkBounce {
+  0% { transform: scale(0); }
+  60% { transform: scale(1.3); }
+  100% { transform: scale(1); }
+}
+
+.tarefa-text {
+  flex: 1;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text);
+  transition: all 0.3s;
+}
+.tarefa.done .tarefa-text {
+  color: var(--text-muted);
+  text-decoration: line-through;
+  text-decoration-color: rgba(46, 204, 113, 0.5);
+}
+.tarefa-text mark {
+  background: rgba(255, 152, 0, 0.3);
+  color: var(--warning);
+  padding: 1px 3px;
+  border-radius: 3px;
+}
+.tarefa-actions {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.tarefa-action-btn {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  padding: 7px 11px;
+  border-radius: 6px;
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 600;
+}
+.tarefa-action-btn:hover {
+  color: var(--text);
+  border-color: var(--accent);
+  transform: translateY(-1px);
+}
+.tarefa-action-btn.has-data {
+  color: var(--success);
+  border-color: var(--success);
+  background: rgba(46, 204, 113, 0.1);
+}
+
+/* ===== EVIDÊNCIAS ===== */
+.evidencias {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px dashed var(--border);
+  display: none;
+  animation: slideDown 0.25s ease;
+}
+.evidencias.show { display: block; }
+.evidencia-item {
+  background: var(--bg-card);
+  border-radius: 8px;
+  padding: 9px 12px;
+  margin-bottom: 6px;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid var(--border);
+}
+.evidencia-thumb {
+  width: 44px;
+  height: 44px;
+  border-radius: 6px;
+  background: var(--bg-deep);
+  background-size: cover;
+  background-position: center;
+  flex-shrink: 0;
+}
+.evidencia-link {
+  color: var(--info);
+  text-decoration: none;
+  word-break: break-all;
+  flex: 1;
+  font-size: 12px;
+}
+.evidencia-link:hover { text-decoration: underline; }
+.evidencia-remove {
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  cursor: pointer;
+  font-size: 16px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+.evidencia-remove:hover { color: var(--danger); background: rgba(231, 76, 60, 0.1); }
+
+.evidencia-input-row {
+  display: flex;
+  gap: 6px;
+  margin-top: 10px;
+  flex-wrap: wrap;
+}
+
+.observacao-input {
+  width: 100%;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 9px 11px;
+  border-radius: 6px;
+  font-size: 12px;
+  margin-top: 10px;
+  resize: vertical;
+  min-height: 50px;
+  font-family: inherit;
+  transition: border-color 0.2s;
+}
+.observacao-input:focus { outline: none; border-color: var(--accent); }
+
+/* ===== FOOTER ACTIONS ===== */
+.actions-footer {
+  position: sticky;
+  bottom: 0;
+  background: linear-gradient(180deg, transparent 0%, var(--bg-dark) 30%);
+  padding: 30px 0 20px;
+  margin-top: 30px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* ===== ADMIN VIEW ===== */
+.admin-warn {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.08), rgba(255, 215, 0, 0.03));
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  font-size: 13px;
+  color: var(--gold);
+  box-shadow: var(--shadow-md);
+}
+.admin-warn strong { color: var(--text); }
+
+.admin-tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  background: var(--bg-card);
+  padding: 8px;
+  border-radius: 12px;
+  box-shadow: var(--shadow-md);
+}
+.admin-tab {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  padding: 11px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.admin-tab:hover { color: var(--text); background: var(--bg-elevated); }
+.admin-tab.active {
+  background: var(--bg-elevated);
+  color: var(--text);
+  box-shadow: var(--shadow-md);
+}
+.admin-tab .mini-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--c, var(--accent));
+  color: #fff;
+  font-size: 12px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cobranca-card {
+  background: var(--bg-card);
+  border-radius: 12px;
+  padding: 18px 20px;
+  margin-bottom: 12px;
+  border-left: 4px solid var(--gatilho-color, var(--text-muted));
+  box-shadow: var(--shadow-md);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.cobranca-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-lg); }
+.cobranca-card.severidade-CRITICO     { --gatilho-color: var(--danger); }
+.cobranca-card.severidade-IMPORTANTE  { --gatilho-color: var(--warning); }
+.cobranca-card.severidade-PADRAO      { --gatilho-color: var(--info); }
+
+.cobranca-card .titulo {
+  font-size: 15px;
+  font-weight: 800;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  letter-spacing: -0.2px;
+}
+.cobranca-card ul { list-style: none; margin-top: 10px; }
+.cobranca-card ul li {
+  padding: 8px 0 8px 20px;
+  position: relative;
+  font-size: 12px;
+  color: var(--text);
+  border-bottom: 1px dashed var(--border);
+}
+.cobranca-card ul li:last-child { border-bottom: none; }
+.cobranca-card ul li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-weight: 800;
+}
+
+/* ===== CONFETTI ===== */
+.confetti-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  overflow: hidden;
+}
+.confetti {
+  position: absolute;
+  width: 10px;
+  height: 14px;
+  top: -20px;
+  animation: confettiFall linear forwards;
+  border-radius: 2px;
+}
+@keyframes confettiFall {
+  0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0.3; }
+}
+
+/* ===== TOAST ===== */
+.toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--bg-elevated);
+  color: var(--text);
+  padding: 13px 24px;
+  border-radius: 100px;
+  border: 1px solid var(--success);
+  font-size: 13px;
+  font-weight: 600;
+  z-index: 1000;
+  animation: toastIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.toast.error { border-color: var(--danger); }
+.toast.gold { border-color: var(--gold); }
+@keyframes toastIn {
+  0% { opacity: 0; transform: translate(-50%, 30px) scale(0.8); }
+  100% { opacity: 1; transform: translate(-50%, 0) scale(1); }
+}
+
+/* ===== ACHIEVEMENT POPUP ===== */
+.achievement-popup {
+  position: fixed;
+  top: 100px;
+  right: 20px;
+  background: linear-gradient(135deg, var(--bg-card), var(--bg-elevated));
+  border: 2px solid var(--gold);
+  border-radius: 12px;
+  padding: 16px 20px 16px 16px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  z-index: 1000;
+  box-shadow: var(--shadow-lg), 0 0 30px rgba(255, 215, 0, 0.3);
+  animation: achievementSlide 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  max-width: 320px;
+}
+.achievement-popup.exit { animation: achievementExit 0.3s ease forwards; }
+.achievement-popup .icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold), #ffaa00);
+  color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  flex-shrink: 0;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+  animation: badgeRotate 1s ease;
+}
+.achievement-popup .info .label {
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  color: var(--gold);
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.achievement-popup .info .name {
+  font-size: 15px;
+  font-weight: 800;
+  margin-bottom: 2px;
+}
+.achievement-popup .info .desc {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+@keyframes achievementSlide {
+  0% { opacity: 0; transform: translateX(400px) rotate(20deg); }
+  60% { transform: translateX(-10px) rotate(-3deg); }
+  100% { opacity: 1; transform: translateX(0) rotate(0); }
+}
+@keyframes achievementExit {
+  to { opacity: 0; transform: translateX(400px); }
+}
+@keyframes badgeRotate {
+  from { transform: rotate(-180deg) scale(0); }
+  to { transform: rotate(0) scale(1); }
+}
+
+/* ===== UTILS ===== */
+.hidden { display: none !important; }
+.text-success { color: var(--success); }
+.text-warning { color: var(--warning); }
+.text-danger { color: var(--danger); }
+.text-muted { color: var(--text-muted); }
+.text-gold { color: var(--gold); }
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-muted);
+}
+.empty-state .icon { font-size: 48px; margin-bottom: 14px; }
+
+/* ===== MOBILE ===== */
+@media (max-width: 700px) {
+  .container { padding: 16px; }
+  .welcome { padding: 40px 20px 20px; }
+  .welcome h1 { font-size: 36px; }
+  .gatilho-header { padding: 14px 16px; }
+  .gatilho-header .stats-mini { min-width: 80px; font-size: 11px; }
+  .gatilho-header .stats-mini .gatilho-mini-bar { display: none; }
+  .gatilho-header .stats-mini .unlocked-value { display: none; }
+  .gatilho-body { padding: 0 16px 16px; }
+  .tarefa-row { flex-wrap: wrap; }
+  .tarefa-actions { flex-wrap: wrap; }
+  .profile-bar { flex-wrap: wrap; }
+  .profile-bar .info .name { font-size: 19px; }
+  .summary-card .value { font-size: 24px; }
+  .progress-hero { padding: 18px 20px; }
+  .progress-hero .bonus-counter .value-bonus { font-size: 28px; }
+  .app-header { padding: 12px 16px; }
+  .app-header .brand-logo { height: 32px; }
+  .app-header .ciclo-info { font-size: 10px; }
+  .app-header .right { gap: 8px; }
+  .theme-toggle { width: 34px; height: 34px; font-size: 16px; }
+  .achievement-popup { right: 10px; left: 10px; max-width: none; }
+}
+
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+
+<header class="app-header">
+  <div class="brand">
+    <img src="data:image/jpeg;base64,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EBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERAREQEREBERB//Z" alt="S.A Casa do Sushi Franchising" class="brand-logo">
+  </div>
+  <div class="right">
+    <div class="ciclo-info">
+      <strong>Bonificações</strong>
+      <span>Ciclo Maio 2026</span>
+    </div>
+  </div>
+</header>
+
+<main id="app">
+  <div class="empty-state">
+    <div class="icon">⏳</div>
+    Carregando...
+  </div>
+</main>
+
+<script id="planos-data" type="application/json">
+{
+  "ciclo": {
+    "periodo": "01/04/2026 → 30/04/2026",
+    "referencia": "2026-04",
+    "empresa": "S.A Casa do Sushi Franchising",
+    "diretor": "Nathan — Diretor Gerencial",
+    "comoLiberarBonificacao": [
+      "Tire print/foto/vídeo de cada tarefa executada (dashboard, conversa, postagem, ação na loja, etc.)",
+      "Monte um relatório consolidado ao fim do ciclo com 1 comprovação por tarefa",
+      "Envie pra Ellen até o fim do ciclo",
+      "Tarefa sem comprovação não é considerada executada e não conta na bonificação"
+    ],
+    "bumps": "Crítico ×1.5 · Importante ×1.2 · Padrão ×1.0"
+  },
+  "colaboradores": {
+    "alex": {
+      "id": "alex",
+      "nome": "Alex",
+      "funcao": "Consultor de Campo — Cozinha",
+      "cor": "#10b981",
+      "inicial": "A",
+      "pesoTotal": 13.3,
+      "totalAcoes": 29,
+      "totalTarefas": 66,
+      "bonificacao": 800.0,
+      "metaCiclo": "Executar todas as tarefas listadas no ciclo. Reportar conclusão a Ellen.",
+      "gatilhos": [
+        {
+          "id": "alex-g1",
+          "titulo": "Loja Yakiniku/Buffet em queda",
+          "severidade": "CRÍTICO",
+          "peso": 5,
+          "icone": "🍱",
+          "totalTarefas": 3,
+          "bonificacao": 156.34,
+          "valorTarefa": 52.11,
+          "meta": "aplicar nas lojas listadas",
+          "grupos": [
+            {
+              "lojas": [
+                "Analia Franco",
+                "Indaiatuba"
+              ],
+              "tarefas": [
+                "Solicitar SEMANALMENTE fotos atuais das embalagens/montagem de pratos da loja pra avaliar",
+                "Solicitar SEMANALMENTE controle de desperdício da loja",
+                "Treinamento de cozinha (tempo de preparo, padronização)"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "alex-g2",
+          "titulo": "Loja em recuperação (faturamento despencou ou abaixo da META histórica)",
+          "severidade": "CRÍTICO",
+          "peso": 5,
+          "icone": "🆘",
+          "totalTarefas": 4,
+          "bonificacao": 180.53,
+          "valorTarefa": 45.13,
+          "meta": "aplicar nas lojas listadas",
+          "grupos": [
+            {
+              "lojas": [
+                "Analia Franco",
+                "Merces",
+                "Indaiatuba",
+                "Mogi das Cruzes",
+                "Santos",
+                "Erechim",
+                "Fazenda Rio Grande",
+                "Itapema",
+                "Castro"
+              ],
+              "tarefas": [
+                "Auditoria / reunião com a loja pra avaliar cozinha",
+                "Solicitar SEMANALMENTE foto/vídeo das embalagens/montagem pra avaliar",
+                "Solicitar SEMANALMENTE controle de desperdício da loja",
+                "Treinamento da equipe — tempo de preparo, padronização, embalagem"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "alex-g3",
+          "titulo": "Loja Tradicional/Sequência em queda",
+          "severidade": "CRÍTICO",
+          "peso": 5,
+          "icone": "🍣",
+          "totalTarefas": 3,
+          "bonificacao": 156.34,
+          "valorTarefa": 52.11,
+          "meta": "aplicar nas lojas listadas",
+          "grupos": [
+            {
+              "lojas": [
+                "Merces",
+                "Novo Mundo"
+              ],
+              "tarefas": [
+                "Solicitar SEMANALMENTE foto/vídeo das embalagens/montagem de pratos da loja pra avaliar",
+                "Solicitar SEMANALMENTE controle de desperdício da loja",
+                "Treinamento de cozinha pra garantir padrão"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "alex-g4",
+          "titulo": "CMV acima do limite (> 40%)",
+          "severidade": "CRÍTICO",
+          "peso": 5,
+          "icone": "🔥",
+          "totalTarefas": 1,
+          "bonificacao": 90.26,
+          "valorTarefa": 90.26,
+          "meta": "aplicar nas lojas listadas",
+          "grupos": [
+            {
+              "lojas": [
+                "Merces",
+                "Sinop",
+                "Mogi das Cruzes",
+                "São Bento do Sul",
+                "São José dos Pinhais",
+                "Paranagua",
+                "São José",
+                "Ponta Grossa",
+                "São José do Rio Preto",
+                "Rondonopolis",
+                "Maringa"
+              ],
+              "tarefas": [
+                "Auditoria / reunião de cozinha — porcionamento, desperdício, padronização"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "alex-g5",
+          "titulo": "Loja só delivery em queda",
+          "severidade": "CRÍTICO",
+          "peso": 5,
+          "icone": "🛵",
+          "totalTarefas": 3,
+          "bonificacao": 156.34,
+          "valorTarefa": 52.11,
+          "meta": "Recuperar faturamento de Americana: hoje R$ 150.938,08 → alvo R$ 176.011,57 (gap: R$ 25.073,49)",
+          "grupos": [
+            {
+              "lojas": [
+                "Americana"
+              ],
+              "tarefas": [
+                "Solicitar SEMANALMENTE foto/vídeo das embalagens/montagem dos pedidos delivery na loja pra avaliar",
+                "Solicitar SEMANALMENTE controle de desperdício da loja",
+                "Treinamento de cozinha — tempo, embalagem, apresentação"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "alex-g6",
+          "titulo": "Inovação Yakiniku — Maio 2026 (Hand Roll + Bolinho Kung Fu Panda)",
+          "severidade": "PADRÃO",
+          "peso": 1,
+          "icone": "🆕",
+          "totalTarefas": 1,
+          "bonificacao": 60.18,
+          "valorTarefa": 60.18,
+          "meta": "aplicar nas lojas listadas",
+          "grupos": [
+            {
+              "lojas": [
+                "Analia Franco",
+                "Indaiatuba",
+                "Santos",
+                "Erechim"
+              ],
+              "tarefas": [
+                "Treinar a cozinha da loja no preparo de Hand Roll (montagem do cone na hora, ingredientes selecionados) e Bolinho do Kung Fu Panda (frita até crocante, recheio macio) — padrão e tempo de saída"
+              ]
+            }
+          ]
+        }
+      ],
+      "aviso": {
+        "titulo": "Treinamento pode ser sessão coletiva",
+        "texto": "Quando aparecerem várias tarefas de treinamento iguais em lojas diferentes, você pode reunir as lojas em uma única sessão online (tipo workshop). Cada loja com sua agenda fica inviável de cobrir tudo no ciclo. A comprovação serve pra todas as lojas presentes na sessão."
+      }
+    },
+    "rafael": {
+      "id": "rafael",
+      "nome": "Rafael",
+      "funcao": "Consultor de Campo — Sushi",
+      "cor": "#f97316",
+      "inicial": "R",
+      "pesoTotal": 12.3,
+      "totalAcoes": 25,
+      "totalTarefas": 62,
+      "bonificacao": 800.0,
+      "metaCiclo": "Executar todas as tarefas listadas no ciclo. Reportar conclusão a Ellen.",
+      "gatilhos": [
+        {
+          "id": "raf-g1",
+          "titulo": "Loja Yakiniku/Buffet em queda",
+          "severidade": "CRÍTICO",
+          "peso": 5,
+          "icone": "🍱",
+          "totalTarefas": 3,
+          "bonificacao": 169.06,
+          "valorTarefa": 56.35,
+          "meta": "aplicar nas lojas listadas",
+          "grupos": [
+            {
+              "lojas": [
+                "Analia Franco",
+                "Indaiatuba"
+              ],
+              "tarefas": [
+                "Solicitar SEMANALMENTE fotos atuais dos produtos da loja pra avaliar qualidade visual e padrão",
+                "Solicitar/verificar semanalmente controle de peixe sujo/limpo da loja",
+                "Treinamento online de qualidade do sushi com a equipe"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "raf-g2",
+          "titulo": "Loja em recuperação (faturamento despencou ou abaixo da META histórica)",
+          "severidade": "CRÍTICO",
+          "peso": 5,
+          "icone": "🆘",
+          "totalTarefas": 4,
+          "bonificacao": 195.21,
+          "valorTarefa": 48.8,
+          "meta": "aplicar nas lojas listadas",
+          "grupos": [
+            {
+              "lojas": [
+                "Analia Franco",
+                "Merces",
+                "Indaiatuba",
+                "Mogi das Cruzes",
+                "Santos",
+                "Erechim",
+                "Fazenda Rio Grande",
+                "Itapema",
+                "Castro"
+              ],
+              "tarefas": [
+                "Auditoria / reunião com a loja pra avaliar qualidade do produto",
+                "Solicitar SEMANALMENTE foto/vídeo dos produtos pra avaliar qualidade visual e padrão",
+                "Solicitar/verificar semanalmente controle de peixe sujo/limpo da loja",
+                "Treinamento da equipe — qualidade e padronização"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "raf-g3",
+          "titulo": "Loja Tradicional/Sequência em queda",
+          "severidade": "CRÍTICO",
+          "peso": 5,
+          "icone": "🍣",
+          "totalTarefas": 3,
+          "bonificacao": 169.06,
+          "valorTarefa": 56.35,
+          "meta": "aplicar nas lojas listadas",
+          "grupos": [
+            {
+              "lojas": [
+                "Merces",
+                "Novo Mundo"
+              ],
+              "tarefas": [
+                "Solicitar SEMANALMENTE foto/vídeo dos produtos da loja pra avaliar qualidade visual e padrão",
+                "Solicitar/verificar semanalmente controle de peixe sujo/limpo da loja",
+                "Treinamento online focado em pratos tradicionais / sequência"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "raf-g4",
+          "titulo": "CMV acima do limite (> 40%)",
+          "severidade": "CRÍTICO",
+          "peso": 5,
+          "icone": "🔥",
+          "totalTarefas": 1,
+          "bonificacao": 97.61,
+          "valorTarefa": 97.61,
+          "meta": "aplicar nas lojas listadas",
+          "grupos": [
+            {
+              "lojas": [
+                "Merces",
+                "Sinop",
+                "Mogi das Cruzes",
+                "São Bento do Sul",
+                "São José dos Pinhais",
+                "Paranagua",
+                "São José",
+                "Ponta Grossa",
+                "São José do Rio Preto",
+                "Rondonopolis",
+                "Maringa"
+              ],
+              "tarefas": [
+                "Treinamento de qualidade do produto pra reduzir descarte"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "raf-g5",
+          "titulo": "Loja só delivery em queda",
+          "severidade": "CRÍTICO",
+          "peso": 5,
+          "icone": "🛵",
+          "totalTarefas": 3,
+          "bonificacao": 169.06,
+          "valorTarefa": 56.35,
+          "meta": "Recuperar faturamento de Americana: hoje R$ 150.938,08 → alvo R$ 176.011,57 (gap: R$ 25.073,49)",
+          "grupos": [
+            {
+              "lojas": [
+                "Americana"
+              ],
+              "tarefas": [
+                "Solicitar SEMANALMENTE foto/vídeo dos produtos que saem pra delivery na loja pra avaliar qualidade",
+                "Solicitar/verificar semanalmente controle de peixe sujo/limpo da loja",
+                "Treinamento de qualidade do produto que sai pra delivery"
+              ]
+            }
+          ]
+        }
+      ],
+      "aviso": {
+        "titulo": "Treinamento pode ser sessão coletiva",
+        "texto": "Quando aparecerem várias tarefas de treinamento iguais em lojas diferentes, você pode reunir as lojas em uma única sessão online (tipo workshop). Cada loja com sua agenda fica inviável de cobrir tudo no ciclo. A comprovação serve pra todas as lojas presentes na sessão."
+      }
+    },
+    "lucas": {
+      "id": "lucas",
+      "nome": "Lucas",
+      "funcao": "Financeiro",
+      "cor": "#eab308",
+      "inicial": "L",
+      "pesoTotal": 10.9,
+      "totalAcoes": 46,
+      "totalTarefas": 176,
+      "bonificacao": 800.0,
+      "metaCiclo": "Executar tarefas atribuídas em 32 loja(s). Cada ação tem sua meta específica.",
+      "gatilhos": [
+        {
+          "id": "luc-g1",
+          "titulo": "CMO acima do limite (> 20% padrão / > 17% pra delivery)",
+          "severidade": "CRÍTICO",
+          "peso": 5,
+          "icone": "👥",
+          "totalTarefas": 4,
+          "bonificacao": 219.89,
+          "valorTarefa": 54.97,
+          "meta": "aplicar nas lojas listadas",
+          "grupos": [
+            {
+              "lojas": [
+                "Analia Franco",
+                "Indaiatuba",
+                "Sinop",
+                "Mogi das Cruzes",
+                "Santos",
+                "Erechim",
+                "São Bento do Sul",
+                "São José",
+                "Itapolis",
+                "Tubarão"
+              ],
+              "tarefas": [
+                "Análise de folha — horas extras, escala, produtividade por colaborador",
+                "Revisar com gerente local possível redimensionamento da equipe",
+                "Avaliar treinamento ou processo que reduza necessidade de mão de obra",
+                "Revisar política de folha e propor teto operacional de CMO no próximo ciclo"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "luc-g2",
+          "titulo": "CMV acima do limite (> 40%)",
+          "severidade": "CRÍTICO",
+          "peso": 5,
+          "icone": "🔥",
+          "totalTarefas": 3,
+          "bonificacao": 190.43,
+          "valorTarefa": 63.48,
+          "meta": "aplicar nas lojas listadas",
+          "grupos": [
+            {
+              "lojas": [
+                "Merces",
+                "Sinop",
+                "Mogi das Cruzes",
+                "São Bento do Sul",
+                "São José dos Pinhais",
+                "Paranagua",
+                "São José",
+                "Ponta Grossa",
+                "São José do Rio Preto",
+                "Rondonopolis",
+                "Maringa"
+              ],
+              "tarefas": [
+                "Analisar fornecedores, comparar preços, levantar pontos pra renegociação",
+                "Conferir variedade de fornecedores e se colocar à disposição pra buscar melhores opções caso necessário",
+                "Acompanhar evolução semanal e consolidar relatório"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "luc-g3",
+          "titulo": "Loja não enviou informações de CMV/CMO",
+          "severidade": "PADRÃO",
+          "peso": 1,
+          "icone": "🚫",
+          "totalTarefas": 4,
+          "bonificacao": 146.59,
+          "valorTarefa": 36.65,
+          "meta": "aplicar nas lojas listadas",
+          "grupos": [
+            {
+              "lojas": [
+                "Novo Mundo",
+                "Navegantes",
+                "Fazenda Rio Grande",
+                "Itapema",
+                "Jaragua",
+                "Sitio Cercado",
+                "Camboriu",
+                "Pinhais",
+                "São Braz",
+                "Gaspar"
+              ],
+              "tarefas": [
+                "Solicitar reunião com o gerente/franqueado da loja e apresentar a importância do controle financeiro (CMV/CMO, margem, custos)",
+                "Entender como está o controle interno da loja — metodologia, números atuais, rotina",
+                "Avaliar se a loja precisa de orientação/treinamento pra fazer o controle de CMV/CMO",
+                "Acionar a loja a começar o envio mensal da planilha de CMV/CMO"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "luc-g4",
+          "titulo": "Planilha CMV/CMO INCOMPLETA",
+          "severidade": "PADRÃO",
+          "peso": 1,
+          "icone": "📋",
+          "totalTarefas": 11,
+          "bonificacao": 243.09,
+          "valorTarefa": 22.1,
+          "meta": "aplicar nas lojas listadas",
+          "grupos": [
+            {
+              "lojas": [
+                "Erechim",
+                "Navegantes",
+                "Fazenda Rio Grande",
+                "Itapema",
+                "Araucaria",
+                "Alto da XV",
+                "Sitio Cercado",
+                "Ponta Grossa",
+                "Camboriu",
+                "Pinhais",
+                "Florianopolis",
+                "Santa Candida",
+                "São Francisco do Sul",
+                "São Braz"
+              ],
+              "tarefas": [
+                "Cobrar gerente da loja pra completar a planilha de CMV/CMO do mês",
+                "Validar valores de CMV/CMO da loja quando preenchidos",
+                "Confirmar que todos os campos foram preenchidos corretamente",
+                "Sem esses dados, decisões sobre custo de mercadoria e folha ficam às cegas"
+              ]
+            },
+            {
+              "lojas": [
+                "Rede toda — todas as lojas"
+              ],
+              "tarefas": [
+                "Consolidar dados financeiros do ciclo + relatório de CMV/CMO da rede no fechamento do mês",
+                "Identificar e cobrar lojas com CMV ou CMO acima do limite",
+                "Acionar lojas que não enviaram CMV/CMO e entender se fazem controle interno",
+                "Validar planilhas CMV/CMO recebidas no mês (campos preenchidos, valores coerentes)",
+                "Manter base de fornecedores atualizada pra apoiar negociações",
+                "Consolidar lista de lojas em situação financeira crítica pra acompanhamento",
+                "Reportar inconsistências a Ellen"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "julia": {
+      "id": "julia",
+      "nome": "Julia",
+      "funcao": "Suporte / Plataformas",
+      "cor": "#a855f7",
+      "inicial": "J",
+      "pesoTotal": 9.5,
+      "totalAcoes": 38,
+      "totalTarefas": 143,
+      "bonificacao": 400.0,
+      "metaCiclo": "Recuperar canais/lojas atribuídos ao patamar anterior — alvo combinado: R$ 51.800,14 (21 loja(s)). Cada ação tem sua meta específica.",
+      "gatilhos": [
+        {
+          "id": "jul-g1",
+          "titulo": "Link próprio em queda ou venda baixa",
+          "severidade": "IMPORTANTE",
+          "peso": 3,
+          "icone": "🔗",
+          "totalTarefas": 9,
+          "bonificacao": 151.35,
+          "valorTarefa": 16.82,
+          "meta": "aplicar nas lojas listadas",
+          "grupos": [
+            {
+              "lojas": [
+                "Analia Franco",
+                "Merces",
+                "Indaiatuba",
+                "Sinop",
+                "CWB",
+                "Mogi das Cruzes",
+                "Santos",
+                "Erechim",
+                "Fazenda Rio Grande",
+                "Araucaria",
+                "Alto da XV",
+                "São José do Rio Preto",
+                "Florianopolis"
+              ],
+              "tarefas": [
+                "Verificar semanalmente taxa de entrega — comparar se não está muito alta vs concorrência local",
+                "Verificar diariamente se o tempo de entrega configurado bate de fato com o que a loja está entregando (estão cumprindo o prazo setado?)",
+                "Monitorar diariamente o tempo de entrega no link próprio da loja",
+                "Verificar semanalmente período de loja aberta — se estão fechando cedo ou abrindo tarde",
+                "Verificar semanalmente itens pausados — confirmar se estão oferecendo todas as opções do cardápio",
+                "Conferir se combinados ancorados estão sendo trocados — não pode ficar muito tempo o mesmo, deve ter rotação por quinzena",
+                "Conferir taxas de entrega e raio de entrega configurados no link",
+                "Verificar semanalmente se os itens em promoção estão corretamente ancorados/destacados no link",
+                "Verificar semanalmente se cardápio do link está atualizado e completo"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "jul-g2",
+          "titulo": "CMV acima do limite (> 40%)",
+          "severidade": "CRÍTICO",
+          "peso": 5,
+          "icone": "🔥",
+          "totalTarefas": 1,
+          "bonificacao": 63.06,
+          "valorTarefa": 63.06,
+          "meta": "aplicar nas lojas listadas",
+          "grupos": [
+            {
+              "lojas": [
+                "Merces",
+                "Sinop",
+                "Mogi das Cruzes",
+                "São Bento do Sul",
+                "São José dos Pinhais",
+                "Paranagua",
+                "São José",
+                "Ponta Grossa",
+                "São José do Rio Preto",
+                "Rondonopolis",
+                "Maringa"
+              ],
+              "tarefas": [
+                "Verificar semanalmente se os preços dos produtos estão corretos no sistema · sinalizar se tem algo fora do normal"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "jul-g3",
+          "titulo": "Campanha Marketing — Maio 2026 · Ações de Rede",
+          "severidade": "PADRÃO",
+          "peso": 1,
+          "icone": "🎯",
+          "totalTarefas": 2,
+          "bonificacao": 59.46,
+          "valorTarefa": 29.73,
+          "meta": "Implementar todas as ações de rede de Maio 2026 + acompanhar resultados semanalmente",
+          "grupos": [
+            {
+              "lojas": [
+                "Rede toda — todas as lojas"
+              ],
+              "tarefas": [
+                "Garantir que os valores e promoções da campanha de rede estejam cadastrados nos sistemas de todas as unidades — Combos Delivery (1ª e 2ª quinzena), Cupom 10% OFF Hashi de Presente, Cortesia 1º drink Mês das Mães, Cortesia drink/chopp Foto do Espelho",
+                "Conferir se as promoções estão ativas no PDV, link próprio e nas plataformas (iFood/99Food/Pedido10)"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "jul-g4",
+          "titulo": "Plano Rede · Ticket Médio + Bebidas — Maio 2026",
+          "severidade": "PADRÃO",
+          "peso": 1,
+          "icone": "🍷",
+          "totalTarefas": 1,
+          "bonificacao": 42.04,
+          "valorTarefa": 42.04,
+          "meta": "Subir ticket médio e reverter queda de bebidas (-15,7%) na rede",
+          "grupos": [
+            {
+              "lojas": [
+                "Rede toda — todas as lojas"
+              ],
+              "tarefas": [
+                "Garantir que o COMBO 6 SASHIMIS R$ 19,99 esteja cadastrado no sistema de TODAS as unidades aplicáveis (exceto Analia Franco, Erechim, Santos, Indaiatuba) — preço, descrição, ativo no PDV/link/plataformas"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "jul-g5",
+          "titulo": "Inovação Yakiniku — Maio 2026 (Hand Roll + Bolinho Kung Fu Panda)",
+          "severidade": "PADRÃO",
+          "peso": 1,
+          "icone": "🆕",
+          "totalTarefas": 1,
+          "bonificacao": 42.04,
+          "valorTarefa": 42.04,
+          "meta": "aplicar nas lojas listadas",
+          "grupos": [
+            {
+              "lojas": [
+                "Analia Franco",
+                "Indaiatuba",
+                "Santos",
+                "Erechim"
+              ],
+              "tarefas": [
+                "Garantir que os valores e promoções (Hand Roll + Bolinho Kung Fu Panda) estejam cadastrados corretamente no sistema da loja — preço, descrição, foto, ativo no link próprio e plataformas"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "jul-g6",
+          "titulo": "Ação específica de Maio 2026 — teste por loja",
+          "severidade": "PADRÃO",
+          "peso": 1,
+          "icone": "🧪",
+          "totalTarefas": 1,
+          "bonificacao": 42.04,
+          "valorTarefa": 42.04,
+          "meta": "aplicar nas lojas listadas",
+          "grupos": [
+            {
+              "lojas": [
+                "Analia Franco",
+                "Indaiatuba",
+                "Novo Mundo",
+                "Sinop",
+                "Mogi das Cruzes",
+                "Santos",
+                "Erechim",
+                "São José do Rio Preto"
+              ],
+              "tarefas": [
+                "Garantir que os valores e promoções da ação específica da loja estejam cadastrados no sistema (PDV, link próprio, plataformas) conforme mecânica do plano"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    "ricardo": {
+      "id": "ricardo",
+      "nome": "Ricardo",
+      "funcao": "Consultor de Campo — Atendimento / Sistemas",
+      "cor": "#15803d",
+      "inicial": "R",
+      "pesoTotal": 14.9,
+      "totalAcoes": 48,
+      "totalTarefas": 159,
+      "bonificacao": 800.0,
+      "metaCiclo": "Recuperar canais/lojas atribuídos ao patamar anterior — alvo combinado: R$ 1.266.681,93 (27 loja(s)). Cada ação tem sua meta específica.",
+      "gatilhos": [
+        {
+          "id": "ric-g1",
+          "titulo": "Venda de bebidas em queda",
+          "severidade": "IMPORTANTE",
+          "peso": 3,
+          "icone": "🥂",
+          "totalTarefas": 4,
+          "bonificacao": 128.88,
+          "valorTarefa": 32.22,
+          "meta": "aplicar nas lojas listadas",
+          "grupos": [
+            {
+              "lojas": [
+                "Analia Franco",
+                "Merces",
+                "Indaiatuba",
+                "Sinop",
+                "CWB",
+                "Mogi das Cruzes",
+                "Erechim",
+                "Fazenda Rio Grande",
+                "Itapema",
+                "Goiania",
+                "Jaragua",
+                "Araucaria",
+                "Camboriu",
+                "São José do Rio Preto",
+                "Colombo",
+                "Tubarão",
+                "Florianopolis",
+                "Santa Candida"
+              ],
+              "tarefas": [
+                "Treinamento online com a equipe — foco em sugerir bebidas / upsell de bebidas",
+                "Verificar semanalmente se estão ativas as opções de drinks e bebidas padrão da rede",
+                "Verificar semanalmente se as bebidas estão expostas/destacadas no PDV e no link próprio",
+                "Acompanhar média da semana seguinte — reportar resultado"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "ric-g2",
+          "titulo": "Loja Yakiniku/Buffet em queda",
+          "severidade": "CRÍTICO",
+          "peso": 5,
+          "icone": "🍱",
+          "totalTarefas": 1,
+          "bonificacao": 80.55,
+          "valorTarefa": 80.55,
+          "meta": "aplicar nas lojas listadas",
+          "grupos": [
+            {
+              "lojas": [
+                "Analia Franco",
+                "Indaiatuba"
+              ],
+              "tarefas": [
+                "Solicitar SEMANALMENTE controle de checklist por função da loja"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "ric-g3",
+          "titulo": "Loja em recuperação (faturamento despencou ou abaixo da META histórica)",
+          "severidade": "CRÍTICO",
+          "peso": 5,
+          "icone": "🆘",
+          "totalTarefas": 3,
+          "bonificacao": 139.51,
+          "valorTarefa": 46.5,
+          "meta": "aplicar nas lojas listadas",
+          "grupos": [
+            {
+              "lojas": [
+                "Analia Franco",
+                "Merces",
+                "Indaiatuba",
+                "Mogi das Cruzes",
+                "Santos",
+                "Erechim",
+                "Fazenda Rio Grande",
+                "Itapema",
+                "Castro"
+              ],
+              "tarefas": [
+                "Solicitar SEMANALMENTE controle de checklist por função da loja",
+                "Treinamento online com a equipe da loja — atendimento, upsell, ticket, fidelização",
+                "Verificar semanalmente fechamento de caixa dessas lojas"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "ric-g4",
+          "titulo": "Loja Tradicional/Sequência em queda",
+          "severidade": "CRÍTICO",
+          "peso": 5,
+          "icone": "🍣",
+          "totalTarefas": 1,
+          "bonificacao": 80.55,
+          "valorTarefa": 80.55,
+          "meta": "aplicar nas lojas listadas",
+          "grupos": [
+            {
+              "lojas": [
+                "Merces",
+                "Novo Mundo"
+              ],
+              "tarefas": [
+                "Solicitar SEMANALMENTE controle de checklist por função da loja"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "ric-g5",
+          "titulo": "Ticket médio em queda",
+          "severidade": "IMPORTANTE",
+          "peso": 3,
+          "icone": "💰",
+          "totalTarefas": 4,
+          "bonificacao": 128.88,
+          "valorTarefa": 32.22,
+          "meta": "aplicar nas lojas listadas",
+          "grupos": [
+            {
+              "lojas": [
+                "Americana",
+                "São Bento do Sul",
+                "Castro",
+                "Jaragua",
+                "Araucaria",
+                "Colombo",
+                "Palmeira",
+                "Pinhais",
+                "Tubarão",
+                "Florianopolis",
+                "Maringa",
+                "Gaspar"
+              ],
+              "tarefas": [
+                "Treinamento online com a equipe — foco em upsell e venda de combos",
+                "Verificar semanalmente se há combos / promoções ativas que estimulem ticket maior",
+                "Revisar mix de produtos: itens de maior valor estão sendo oferecidos?",
+                "Acompanhar evolução do ticket no próximo ciclo"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "ric-g6",
+          "titulo": "Alta dependência de iFood ou 99Food (≥ 50%)",
+          "severidade": "PADRÃO",
+          "peso": 1,
+          "icone": "⚠️",
+          "totalTarefas": 1,
+          "bonificacao": 53.7,
+          "valorTarefa": 53.7,
+          "meta": "aplicar nas lojas listadas",
+          "grupos": [
+            {
+              "lojas": [
+                "Americana",
+                "CWB",
+                "Santa Candida"
+              ],
+              "tarefas": [
+                "Treinamento online com a equipe da loja — como puxar o cliente pro link próprio (script de fidelização, QR Code junto da entrega)"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "ric-g7",
+          "titulo": "Loja só delivery em queda",
+          "severidade": "CRÍTICO",
+          "peso": 5,
+          "icone": "🛵",
+          "totalTarefas": 1,
+          "bonificacao": 80.55,
+          "valorTarefa": 80.55,
+          "meta": "Recuperar faturamento de Americana: hoje R$ 150.938,08 → alvo R$ 176.011,57 (gap: R$ 25.073,49)",
+          "grupos": [
+            {
+              "lojas": [
+                "Americana"
+              ],
+              "tarefas": [
+                "Solicitar SEMANALMENTE controle de checklist por função da loja"
+              ]
+            }
+          ]
+        },
+        {
+          "id": "ric-g8",
+          "titulo": "Plano Rede · Ticket Médio + Bebidas — Maio 2026",
+          "severidade": "PADRÃO",
+          "peso": 1,
+          "icone": "🍷",
+          "totalTarefas": 4,
+          "bonificacao": 107.4,
+          "valorTarefa": 26.85,
+          "meta": "Subir ticket médio e reverter queda de bebidas (-15,7%) na rede",
+          "grupos": [
+            {
+              "lojas": [
+                "Rede toda — todas as lojas"
+              ],
+              "tarefas": [
+                "COMBO 6 SASHIMIS R$ 19,99: treinar equipes de TODAS as unidades (exceto Analia Franco, Erechim, Santos, Indaiatuba) pra empurrar o combo. Garçom acompanha cada venda do combo · matriz consolida ranking nível rede ao fim do mês",
+                "BONIFICAÇÃO DRINKS: treinar garçons sobre a premiação de R$ 250 pro que MAIS vender drinks no período. Foco em upsell de drinks na chegada do cliente",
+                "Acompanhar ranking da rede por garçom semanalmente · reportar resultados pra Camille e Ellen",
+                "Período da campanha: 04/05 a 31/05/2026 — consolidar ranking final e premiar os 2 garçons vencedores"
+              ]
+            }
+          ]
+        }
+      ],
+      "aviso": {
+        "titulo": "Treinamento pode ser sessão coletiva",
+        "texto": "Quando aparecerem várias tarefas de treinamento iguais em lojas diferentes, você pode reunir as lojas em uma única sessão online (tipo workshop). Cada loja com sua agenda fica inviável de cobrir tudo no ciclo. A comprovação serve pra todas as lojas presentes na sessão."
+      }
+    }
+  }
+}
+</script>
+
+<script>
+window.__PLANOS_DATA__ = JSON.parse(document.getElementById('planos-data').textContent);
+
+// === portal.js ===
+/* ===========================================
+   Portal S.A Casa do Sushi - Lógica Principal
+   =========================================== */
+
+const STORAGE_KEY = 'sa_portal_op_';
+const LOCK_KEY = STORAGE_KEY + 'locked_user';
+const CICLO_REF = '2026-04';
+
+// Saída de emergência via console
+window.resetPortal = function() {
+  if (confirm('⚠️ Resetar portal? Todos os dados deste dispositivo serão apagados.')) {
+    Object.keys(localStorage).filter(k => k.startsWith(STORAGE_KEY)).forEach(k => localStorage.removeItem(k));
+    location.reload();
+  }
+};
+
+let PLANOS = null;
+let CURRENT_USER = null;
+
+// ============================================
+// CARREGAR DADOS
+// ============================================
+async function loadPlanos() {
+  PLANOS = window.__PLANOS_DATA__;
+  return PLANOS;
+}
+
+// ============================================
+// LOCK / SELEÇÃO DE USUÁRIO
+// ============================================
+function getLockedUser() {
+  return localStorage.getItem(LOCK_KEY);
+}
+
+function lockUser(userId) {
+  localStorage.setItem(LOCK_KEY, userId);
+}
+
+// ============================================
+// DADOS DE EXECUÇÃO POR USUÁRIO
+// ============================================
+function userDataKey(userId) {
+  return STORAGE_KEY + 'data_' + userId + '_' + CICLO_REF;
+}
+
+function loadUserData(userId) {
+  const raw = localStorage.getItem(userDataKey(userId));
+  if (!raw) return { tarefas: {} };
+  try {
+    return JSON.parse(raw);
+  } catch (e) {
+    return { tarefas: {} };
+  }
+}
+
+function saveUserData(userId, data) {
+  localStorage.setItem(userDataKey(userId), JSON.stringify(data));
+}
+
+function getTarefaState(userId, tarefaId) {
+  const data = loadUserData(userId);
+  return data.tarefas[tarefaId] || {
+    done: false,
+    evidencias: [],
+    observacao: ''
+  };
+}
+
+function setTarefaState(userId, tarefaId, state) {
+  const data = loadUserData(userId);
+  data.tarefas[tarefaId] = state;
+  saveUserData(userId, data);
+}
+
+// ============================================
+// IDS DE TAREFA
+// ============================================
+function makeTarefaId(gatilhoId, grupoIdx, tarefaIdx) {
+  return `${gatilhoId}__g${grupoIdx}__t${tarefaIdx}`;
+}
+
+// ============================================
+// PROGRESSO
+// ============================================
+function calcularProgresso(userId, plano) {
+  let total = 0;
+  let done = 0;
+  plano.gatilhos.forEach(g => {
+    g.grupos.forEach((grp, gIdx) => {
+      grp.tarefas.forEach((_, tIdx) => {
+        total++;
+        const state = getTarefaState(userId, makeTarefaId(g.id, gIdx, tIdx));
+        if (state.done) done++;
+      });
+    });
+  });
+  return { total, done, pct: total > 0 ? Math.round((done / total) * 100) : 0 };
+}
+
+function calcularProgressoGatilho(userId, gatilho) {
+  let total = 0;
+  let done = 0;
+  gatilho.grupos.forEach((grp, gIdx) => {
+    grp.tarefas.forEach((_, tIdx) => {
+      total++;
+      const state = getTarefaState(userId, makeTarefaId(gatilho.id, gIdx, tIdx));
+      if (state.done) done++;
+    });
+  });
+  return { total, done, pct: total > 0 ? Math.round((done / total) * 100) : 0 };
+}
+
+// ============================================
+// IMPORT/EXPORT JSON BACKUP
+// ============================================
+function exportBackup(userId) {
+  const data = loadUserData(userId);
+  const plano = PLANOS.colaboradores[userId];
+  const backup = {
+    portal: 'sa-bonificacoes',
+    versao: 1,
+    exportadoEm: new Date().toISOString(),
+    ciclo: CICLO_REF,
+    colaborador: { id: userId, nome: plano.nome, funcao: plano.funcao },
+    dados: data
+  };
+  const blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `backup_${userId}_${CICLO_REF}_${Date.now()}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  toast('Backup baixado com sucesso');
+}
+
+function importBackup(userId, file) {
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    try {
+      const backup = JSON.parse(e.target.result);
+      if (backup.portal !== 'sa-bonificacoes') {
+        return toast('Arquivo inválido - não é um backup deste portal', true);
+      }
+      if (backup.colaborador.id !== userId) {
+        return toast(`Esse backup é da ${backup.colaborador.nome}, você está logada como outra pessoa`, true);
+      }
+      if (!confirm(`Importar backup de ${backup.colaborador.nome} (${new Date(backup.exportadoEm).toLocaleString('pt-BR')})?\nIsso vai sobrescrever seus dados atuais.`)) return;
+      saveUserData(userId, backup.dados);
+      toast('Backup importado! Recarregando...');
+      setTimeout(() => location.reload(), 800);
+    } catch (err) {
+      toast('Erro ao ler arquivo: ' + err.message, true);
+    }
+  };
+  reader.readAsText(file);
+}
+
+// ============================================
+// COMPRESSÃO DE IMAGEM
+// ============================================
+function compressImage(file, maxWidth = 1280, quality = 0.7) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        let { width, height } = img;
+        if (width > maxWidth) {
+          height = (height * maxWidth) / width;
+          width = maxWidth;
+        }
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+        canvas.toBlob(blob => {
+          const r2 = new FileReader();
+          r2.onload = () => resolve(r2.result);
+          r2.onerror = reject;
+          r2.readAsDataURL(blob);
+        }, 'image/jpeg', quality);
+      };
+      img.onerror = reject;
+      img.src = e.target.result;
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+// ============================================
+// TOAST
+// ============================================
+function toast(msg, isError = false) {
+  const t = document.createElement('div');
+  t.className = 'toast' + (isError ? ' error' : '');
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 3000);
+}
+
+// ============================================
+// ESCAPE HTML
+// ============================================
+function esc(s) {
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+// ============================================
+// FORMATADORES
+// ============================================
+function fmtBRL(n) {
+  return 'R$ ' + n.toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+}
+
+function severidadeClass(s) {
+  return 'severidade-' + s.replace('Ã', 'A').replace('Á', 'A').replace('í', 'i').toUpperCase();
+}
+
+
+// === relatorio.js ===
+/* ===========================================
+   Gerador de Relatório PDF
+   Usa jsPDF (carregado via CDN no HTML)
+   =========================================== */
+
+async function gerarRelatorioPDF(userId) {
+  const plano = PLANOS.colaboradores[userId];
+  const userData = loadUserData(userId);
+  const progresso = calcularProgresso(userId, plano);
+
+  // Verificar tarefas sem comprovação
+  let tarefasFeitasSemComprovacao = 0;
+  let totalDone = 0;
+  plano.gatilhos.forEach(g => {
+    g.grupos.forEach((grp, gIdx) => {
+      grp.tarefas.forEach((_, tIdx) => {
+        const state = getTarefaState(userId, makeTarefaId(g.id, gIdx, tIdx));
+        if (state.done) {
+          totalDone++;
+          if (state.evidencias.length === 0) tarefasFeitasSemComprovacao++;
+        }
+      });
+    });
+  });
+
+  if (tarefasFeitasSemComprovacao > 0) {
+    if (!confirm(`⚠️ ATENÇÃO\n\n${tarefasFeitasSemComprovacao} tarefa(s) marcada(s) como feita(s) NÃO TÊM comprovação anexada.\n\nLembre: tarefa sem comprovação não conta na bonificação.\n\nGerar PDF mesmo assim?`)) {
+      return;
+    }
+  }
+
+  toast('Gerando PDF... isso pode demorar alguns segundos');
+
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ orientation: 'portrait', unit: 'pt', format: 'a4' });
+
+  const pageW = doc.internal.pageSize.getWidth();
+  const pageH = doc.internal.pageSize.getHeight();
+  const margin = 40;
+  let y = margin;
+
+  // Helper: nova página se necessário
+  function ensureSpace(needed) {
+    if (y + needed > pageH - margin) {
+      doc.addPage();
+      y = margin;
+    }
+  }
+
+  // Helper: cor por severidade
+  function corSeveridade(s) {
+    if (s === 'CRÍTICO') return [231, 76, 60];
+    if (s === 'IMPORTANTE') return [255, 152, 0];
+    return [3, 169, 244];
+  }
+
+  // Helper: hex -> rgb
+  function hexToRgb(hex) {
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+    return [r, g, b];
+  }
+
+  // ========== CAPA ==========
+  doc.setFillColor(10, 10, 10);
+  doc.rect(0, 0, pageW, pageH, 'F');
+
+  // S.A logo
+  doc.setTextColor(230, 57, 70);
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(36);
+  doc.text('S.A', margin, 90);
+  doc.setFontSize(9);
+  doc.setTextColor(180, 180, 180);
+  doc.text('CASA DO SUSHI FRANCHISING', margin, 108);
+
+  // Título
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(28);
+  doc.setFont('helvetica', 'bold');
+  doc.text('RELATÓRIO DE BONIFICAÇÃO', margin, 200);
+  doc.setFontSize(20);
+  doc.text('Ciclo Maio 2026', margin, 230);
+
+  // Linha vermelha
+  doc.setDrawColor(230, 57, 70);
+  doc.setLineWidth(3);
+  doc.line(margin, 250, margin + 80, 250);
+
+  // Avatar do colaborador
+  const [r, g, b] = hexToRgb(plano.cor);
+  doc.setFillColor(r, g, b);
+  doc.circle(margin + 30, 320, 28, 'F');
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(28);
+  doc.setFont('helvetica', 'bold');
+  doc.text(plano.inicial, margin + 22, 332);
+
+  // Nome e função
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(24);
+  doc.text(plano.nome, margin + 70, 320);
+  doc.setFontSize(11);
+  doc.setFont('helvetica', 'normal');
+  doc.setTextColor(180, 180, 180);
+  doc.text(plano.funcao, margin + 70, 340);
+
+  // Card de resumo
+  y = 400;
+  doc.setFillColor(22, 22, 22);
+  doc.roundedRect(margin, y, pageW - margin * 2, 140, 8, 8, 'F');
+  doc.setDrawColor(46, 204, 113);
+  doc.setLineWidth(3);
+  doc.line(margin, y, margin, y + 140);
+
+  doc.setFontSize(9);
+  doc.setTextColor(150, 150, 150);
+  doc.text('PERÍODO DO CICLO', margin + 16, y + 25);
+  doc.setFontSize(13);
+  doc.setTextColor(255, 255, 255);
+  doc.setFont('helvetica', 'bold');
+  doc.text(PLANOS.ciclo.periodo, margin + 16, y + 42);
+
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(9);
+  doc.setTextColor(150, 150, 150);
+  doc.text('PROGRESSO', margin + 16, y + 70);
+  doc.setFontSize(20);
+  doc.setTextColor(46, 204, 113);
+  doc.setFont('helvetica', 'bold');
+  doc.text(`${progresso.done}/${progresso.total} tarefas (${progresso.pct}%)`, margin + 16, y + 92);
+
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(9);
+  doc.setTextColor(150, 150, 150);
+  doc.text('BONIFICAÇÃO TOTAL DO CICLO', margin + 16, y + 115);
+  doc.setFontSize(16);
+  doc.setTextColor(255, 235, 59);
+  doc.setFont('helvetica', 'bold');
+  doc.text(fmtBRL(plano.bonificacao), margin + 200, y + 115);
+
+  // Aviso
+  y = 580;
+  doc.setFillColor(40, 20, 0);
+  doc.roundedRect(margin, y, pageW - margin * 2, 80, 6, 6, 'F');
+  doc.setTextColor(255, 152, 0);
+  doc.setFontSize(10);
+  doc.setFont('helvetica', 'bold');
+  doc.text('COMO LIBERAR A BONIFICAÇÃO', margin + 16, y + 22);
+  doc.setFontSize(9);
+  doc.setFont('helvetica', 'normal');
+  doc.setTextColor(220, 220, 220);
+  const avisos = PLANOS.ciclo.comoLiberarBonificacao;
+  avisos.forEach((a, i) => {
+    doc.text('• ' + a, margin + 16, y + 38 + (i * 11), { maxWidth: pageW - margin * 2 - 32 });
+  });
+
+  // Rodapé capa
+  doc.setTextColor(120, 120, 120);
+  doc.setFontSize(8);
+  doc.setFont('helvetica', 'italic');
+  doc.text(`Gerado em ${new Date().toLocaleString('pt-BR')}`, margin, pageH - 30);
+  doc.text('Nathan — Diretor Gerencial · S.A Casa do Sushi Franchising', margin, pageH - 18);
+
+  // ========== PÁGINAS DE GATILHOS ==========
+  for (const gatilho of plano.gatilhos) {
+    doc.addPage();
+    y = margin;
+
+    const progGat = calcularProgressoGatilho(userId, gatilho);
+    const [sr, sg, sb] = corSeveridade(gatilho.severidade);
+
+    // Header gatilho
+    doc.setFillColor(22, 22, 22);
+    doc.roundedRect(margin, y, pageW - margin * 2, 90, 8, 8, 'F');
+    doc.setFillColor(sr, sg, sb);
+    doc.rect(margin, y, 6, 90, 'F');
+
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(13);
+    doc.setFont('helvetica', 'bold');
+    doc.text(gatilho.titulo, margin + 18, y + 25, { maxWidth: pageW - margin * 2 - 36 });
+
+    doc.setFontSize(9);
+    doc.setFont('helvetica', 'normal');
+    doc.setTextColor(150, 150, 150);
+    doc.text(`${gatilho.severidade} · Peso ${gatilho.peso}`, margin + 18, y + 50);
+    doc.text(`${gatilho.totalTarefas} tarefas`, margin + 18, y + 64);
+
+    doc.setTextColor(46, 204, 113);
+    doc.setFont('helvetica', 'bold');
+    doc.text(`Bonificação: ${fmtBRL(gatilho.bonificacao)}`, margin + 18, y + 78);
+
+    // Progresso à direita
+    doc.setTextColor(46, 204, 113);
+    doc.setFontSize(20);
+    doc.text(`${progGat.done}/${progGat.total}`, pageW - margin - 18, y + 38, { align: 'right' });
+    doc.setFontSize(10);
+    doc.setTextColor(150, 150, 150);
+    doc.text(`${progGat.pct}% concluído`, pageW - margin - 18, y + 56, { align: 'right' });
+
+    y += 110;
+
+    // Grupos
+    for (let gIdx = 0; gIdx < gatilho.grupos.length; gIdx++) {
+      const grupo = gatilho.grupos[gIdx];
+
+      ensureSpace(50);
+
+      // Lojas
+      doc.setFillColor(31, 31, 31);
+      doc.roundedRect(margin, y, pageW - margin * 2, 30, 4, 4, 'F');
+      doc.setTextColor(150, 150, 150);
+      doc.setFontSize(9);
+      doc.setFont('helvetica', 'bold');
+      doc.text('APLICAR EM:', margin + 10, y + 12);
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(255, 255, 255);
+      doc.setFontSize(9);
+      const lojasTxt = grupo.lojas.join(' · ');
+      doc.text(lojasTxt, margin + 10, y + 24, { maxWidth: pageW - margin * 2 - 20 });
+      y += 40;
+
+      // Tarefas
+      for (let tIdx = 0; tIdx < grupo.tarefas.length; tIdx++) {
+        const tarefa = grupo.tarefas[tIdx];
+        const tarefaId = makeTarefaId(gatilho.id, gIdx, tIdx);
+        const state = getTarefaState(userId, tarefaId);
+
+        // Calcular altura necessária
+        const lines = doc.splitTextToSize(tarefa, pageW - margin * 2 - 50);
+        let altura = Math.max(30, lines.length * 12 + 14);
+        if (state.observacao) altura += 24;
+        if (state.evidencias.length > 0) altura += state.evidencias.length * 18 + 10;
+
+        // Imagens precisam de mais espaço
+        const totalImagens = state.evidencias.filter(e => e.tipo === 'imagem').length;
+        if (totalImagens > 0) altura += totalImagens * 110;
+
+        ensureSpace(altura + 10);
+
+        // Box da tarefa
+        if (state.done) {
+          doc.setFillColor(15, 35, 20);
+        } else {
+          doc.setFillColor(31, 31, 31);
+        }
+        doc.roundedRect(margin, y, pageW - margin * 2, altura, 4, 4, 'F');
+
+        // Checkbox simulado
+        const cy = y + 12;
+        doc.setDrawColor(state.done ? 46 : 100, state.done ? 204 : 100, state.done ? 113 : 100);
+        doc.setLineWidth(1.5);
+        doc.roundedRect(margin + 8, cy, 14, 14, 2, 2);
+        if (state.done) {
+          doc.setFillColor(46, 204, 113);
+          doc.roundedRect(margin + 8, cy, 14, 14, 2, 2, 'F');
+          doc.setTextColor(0, 0, 0);
+          doc.setFontSize(11);
+          doc.setFont('helvetica', 'bold');
+          doc.text('✓', margin + 11, cy + 11);
+        }
+
+        // Texto da tarefa
+        doc.setTextColor(state.done ? 200 : 255, state.done ? 200 : 255, state.done ? 200 : 255);
+        doc.setFontSize(9);
+        doc.setFont('helvetica', state.done ? 'normal' : 'bold');
+        doc.text(lines, margin + 32, y + 18);
+
+        let yInside = y + lines.length * 12 + 18;
+
+        // Observação
+        if (state.observacao) {
+          doc.setTextColor(255, 235, 59);
+          doc.setFontSize(8);
+          doc.setFont('helvetica', 'italic');
+          doc.text('📝 ' + state.observacao, margin + 32, yInside, { maxWidth: pageW - margin * 2 - 50 });
+          yInside += 18;
+        }
+
+        // Evidências (links)
+        const links = state.evidencias.filter(e => e.tipo === 'link');
+        if (links.length > 0) {
+          doc.setTextColor(3, 169, 244);
+          doc.setFontSize(8);
+          doc.setFont('helvetica', 'normal');
+          for (const link of links) {
+            const txt = '🔗 ' + (link.titulo || link.url);
+            doc.textWithLink(txt.substring(0, 100), margin + 32, yInside, { url: link.url });
+            yInside += 12;
+          }
+        }
+
+        y += altura + 6;
+
+        // Imagens (uma página separada para cada para não quebrar)
+        const imagens = state.evidencias.filter(e => e.tipo === 'imagem');
+        for (const img of imagens) {
+          ensureSpace(120);
+          try {
+            doc.setTextColor(150, 150, 150);
+            doc.setFontSize(8);
+            doc.text('📸 Print: ' + (img.titulo || 'comprovação'), margin + 32, y + 8);
+            doc.addImage(img.dataUrl, 'JPEG', margin + 32, y + 12, 200, 100, undefined, 'FAST');
+            y += 120;
+          } catch (e) {
+            console.error('Erro ao inserir imagem:', e);
+            doc.setTextColor(231, 76, 60);
+            doc.text('⚠ Não foi possível inserir a imagem', margin + 32, y + 12);
+            y += 20;
+          }
+        }
+      }
+
+      y += 8;
+    }
+  }
+
+  // ========== PÁGINA DE ASSINATURA ==========
+  doc.addPage();
+  y = margin;
+
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(20);
+  doc.setFont('helvetica', 'bold');
+  doc.text('ENCERRAMENTO DO CICLO', margin, y + 30);
+  doc.setDrawColor(230, 57, 70);
+  doc.setLineWidth(3);
+  doc.line(margin, y + 38, margin + 80, y + 38);
+
+  y += 80;
+
+  // Resumo final
+  doc.setFillColor(22, 22, 22);
+  doc.roundedRect(margin, y, pageW - margin * 2, 130, 8, 8, 'F');
+
+  doc.setTextColor(150, 150, 150);
+  doc.setFontSize(9);
+  doc.setFont('helvetica', 'bold');
+  doc.text('RESUMO FINAL', margin + 16, y + 22);
+
+  doc.setTextColor(255, 255, 255);
+  doc.setFontSize(11);
+  doc.setFont('helvetica', 'normal');
+  doc.text(`Tarefas concluídas: ${progresso.done} de ${progresso.total} (${progresso.pct}%)`, margin + 16, y + 44);
+
+  let comComprovacao = 0;
+  let comObservacao = 0;
+  plano.gatilhos.forEach(g => {
+    g.grupos.forEach((grp, gIdx) => {
+      grp.tarefas.forEach((_, tIdx) => {
+        const st = getTarefaState(userId, makeTarefaId(g.id, gIdx, tIdx));
+        if (st.evidencias.length > 0) comComprovacao++;
+        if (st.observacao) comObservacao++;
+      });
+    });
+  });
+
+  doc.text(`Tarefas com comprovação: ${comComprovacao}`, margin + 16, y + 62);
+  doc.text(`Tarefas com observação: ${comObservacao}`, margin + 16, y + 80);
+
+  doc.setTextColor(255, 235, 59);
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(13);
+  doc.text(`Bonificação ao executar 100%: ${fmtBRL(plano.bonificacao)}`, margin + 16, y + 110);
+
+  // Assinatura
+  y += 180;
+  doc.setTextColor(150, 150, 150);
+  doc.setFontSize(10);
+  doc.text('Assinatura do colaborador:', margin, y);
+  doc.setDrawColor(80, 80, 80);
+  doc.setLineWidth(0.5);
+  doc.line(margin, y + 30, margin + 250, y + 30);
+
+  doc.text('Data: ___ / ___ / ______', margin + 320, y);
+
+  // Rodapé
+  for (let i = 1; i <= doc.internal.getNumberOfPages(); i++) {
+    doc.setPage(i);
+    doc.setTextColor(100, 100, 100);
+    doc.setFontSize(7);
+    doc.setFont('helvetica', 'italic');
+    doc.text(
+      `Relatório de Bonificação · ${plano.nome} · Ciclo ${PLANOS.ciclo.periodo} · pág ${i}/${doc.internal.getNumberOfPages()}`,
+      margin,
+      pageH - 15
+    );
+  }
+
+  doc.save(`relatorio_${plano.nome.toLowerCase()}_${CICLO_REF}.pdf`);
+  toast('PDF gerado e baixado!');
+}
+
+
+// === ui.js ===
+/* ===========================================
+   Renderização v2 - Gamificada
+   =========================================== */
+
+const app = () => document.getElementById('app');
+
+// Estado dos filtros (não persistido entre sessões — limpa ao recarregar)
+let CURRENT_FILTER = 'todas';
+let CURRENT_SEARCH = '';
+
+// ============================================
+// TEMA CLARO/ESCURO
+// ============================================
+function getTheme() {
+  return localStorage.getItem(STORAGE_KEY + 'theme') || 'dark';
+}
+function setTheme(theme) {
+  localStorage.setItem(STORAGE_KEY + 'theme', theme);
+  document.documentElement.setAttribute('data-theme', theme);
+  const btn = document.getElementById('theme-toggle');
+  if (btn) btn.textContent = theme === 'dark' ? '☀️' : '🌙';
+}
+function toggleTheme() {
+  setTheme(getTheme() === 'dark' ? 'light' : 'dark');
+}
+
+// ============================================
+// CONFETTI
+// ============================================
+function fireConfetti(originEl) {
+  const cont = document.createElement('div');
+  cont.className = 'confetti-container';
+  document.body.appendChild(cont);
+
+  const rect = originEl ? originEl.getBoundingClientRect() : { left: window.innerWidth/2, top: window.innerHeight/3, width: 0, height: 0 };
+  const cx = rect.left + rect.width / 2;
+  const cy = rect.top + rect.height / 2;
+
+  const colors = ['#E63946', '#FFD700', '#2ecc71', '#03a9f4', '#9c27b0', '#ff9800', '#ff6b6b'];
+  const count = 40;
+
+  for (let i = 0; i < count; i++) {
+    const c = document.createElement('div');
+    c.className = 'confetti';
+    c.style.background = colors[Math.floor(Math.random() * colors.length)];
+    c.style.left = (cx + (Math.random() - 0.5) * 80) + 'px';
+    c.style.top = cy + 'px';
+    const duration = 1.5 + Math.random() * 1.5;
+    const drift = (Math.random() - 0.5) * 400;
+    c.style.animation = `confettiFall ${duration}s linear forwards`;
+    c.style.setProperty('--drift', drift + 'px');
+    c.style.transform = `translate(${drift}px, 0) rotate(${Math.random() * 360}deg)`;
+    cont.appendChild(c);
+  }
+
+  setTimeout(() => cont.remove(), 3500);
+}
+
+// ============================================
+// ACHIEVEMENTS
+// ============================================
+const ACHIEVEMENTS = [
+  { id: 'first_step', icon: '🚀', name: 'Primeiro Passo', desc: 'Marcou sua 1ª tarefa', test: (s) => s.done >= 1 },
+  { id: 'on_fire', icon: '🔥', name: 'Em Chamas', desc: '10 tarefas concluídas', test: (s) => s.done >= 10 },
+  { id: 'half_way', icon: '⚡', name: 'Metade do Caminho', desc: '50% do plano executado', test: (s) => s.pct >= 50 },
+  { id: 'three_quarters', icon: '💪', name: 'Quase Lá', desc: '75% do plano executado', test: (s) => s.pct >= 75 },
+  { id: 'champion', icon: '🏆', name: 'Campeão', desc: '100% das tarefas marcadas', test: (s) => s.pct >= 100 },
+  { id: 'evidence_master', icon: '📸', name: 'Documentado', desc: 'Anexou 10 comprovações', test: (s) => s.evidencias >= 10 },
+  { id: 'fully_proven', icon: '✨', name: 'Tudo Comprovado', desc: 'Toda tarefa concluída tem evidência', test: (s) => s.done >= 5 && s.doneSemEvidencia === 0 },
+];
+
+function getUnlockedAchievements(userId, plano) {
+  const stats = collectStats(userId, plano);
+  return ACHIEVEMENTS.filter(a => a.test(stats));
+}
+
+function getShownAchievements(userId) {
+  const key = STORAGE_KEY + 'achievements_' + userId;
+  try { return JSON.parse(localStorage.getItem(key) || '[]'); } catch { return []; }
+}
+
+function markAchievementShown(userId, achievementId) {
+  const key = STORAGE_KEY + 'achievements_' + userId;
+  const shown = getShownAchievements(userId);
+  if (!shown.includes(achievementId)) {
+    shown.push(achievementId);
+    localStorage.setItem(key, JSON.stringify(shown));
+  }
+}
+
+function checkAndShowNewAchievements(userId, plano) {
+  const unlocked = getUnlockedAchievements(userId, plano);
+  const shown = getShownAchievements(userId);
+  const newOnes = unlocked.filter(a => !shown.includes(a.id));
+  newOnes.forEach((a, i) => {
+    setTimeout(() => showAchievementPopup(a, userId), i * 600);
+  });
+}
+
+function showAchievementPopup(achievement, userId) {
+  markAchievementShown(userId, achievement.id);
+  const pop = document.createElement('div');
+  pop.className = 'achievement-popup';
+  pop.innerHTML = `
+    <div class="icon">${achievement.icon}</div>
+    <div class="info">
+      <div class="label">🎉 Conquista Desbloqueada</div>
+      <div class="name">${esc(achievement.name)}</div>
+      <div class="desc">${esc(achievement.desc)}</div>
+    </div>
+  `;
+  document.body.appendChild(pop);
+  fireConfetti(pop);
+  setTimeout(() => {
+    pop.classList.add('exit');
+    setTimeout(() => pop.remove(), 400);
+  }, 4000);
+}
+
+// ============================================
+// ESTATÍSTICAS DETALHADAS
+// ============================================
+function collectStats(userId, plano) {
+  let total = 0, done = 0, evidencias = 0, doneSemEvidencia = 0, valorDesbloqueado = 0;
+  plano.gatilhos.forEach(g => {
+    g.grupos.forEach((grp, gIdx) => {
+      grp.tarefas.forEach((_, tIdx) => {
+        total++;
+        const st = getTarefaState(userId, makeTarefaId(g.id, gIdx, tIdx));
+        if (st.done) {
+          done++;
+          valorDesbloqueado += g.valorTarefa;
+          if (st.evidencias.length === 0) doneSemEvidencia++;
+        }
+        evidencias += st.evidencias.length;
+      });
+    });
+  });
+  return {
+    total, done, evidencias, doneSemEvidencia, valorDesbloqueado,
+    pct: total > 0 ? Math.round((done / total) * 100) : 0
+  };
+}
+
+function calcValorDesbloqueadoGatilho(userId, gatilho) {
+  let valor = 0;
+  gatilho.grupos.forEach((grp, gIdx) => {
+    grp.tarefas.forEach((_, tIdx) => {
+      const st = getTarefaState(userId, makeTarefaId(gatilho.id, gIdx, tIdx));
+      if (st.done) valor += gatilho.valorTarefa;
+    });
+  });
+  return valor;
+}
+
+// ============================================
+// TELA INICIAL
+// ============================================
+function renderWelcomeScreen() {
+  const colabs = Object.values(PLANOS.colaboradores);
+  app().innerHTML = `
+    <div class="welcome">
+      <h1>Bonificações Maio 2026</h1>
+      <div class="periodo-pill">📅 ${PLANOS.ciclo.periodo}</div>
+      <p class="subtitle">Selecione seu nome para acompanhar suas tarefas, anexar comprovações, desbloquear conquistas e gerar seu relatório final.</p>
+    </div>
+    <div class="container">
+      <div class="user-grid">
+        ${colabs.map(c => `
+          <div class="user-card" data-user="${c.id}" style="--user-color: ${c.cor}">
+            <div class="avatar">${c.inicial}</div>
+            <div class="name">${esc(c.nome)}</div>
+            <div class="role">${esc(c.funcao)}</div>
+            <div class="stats">${c.gatilhos.length} gatilhos · ${getTotalTarefasUnicas(c)} tarefas · ${fmtBRL(c.bonificacao)}</div>
+          </div>
+        `).join('')}
+
+        <div class="user-card admin" data-user="nathan" style="--user-color: #FFD700">
+          <div class="avatar">N</div>
+          <div class="name">Nathan</div>
+          <div class="role">Supervisão · Cobrança</div>
+          <div class="stats">Acesso a todos os planos</div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  document.querySelectorAll('.user-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const userId = card.dataset.user;
+      lockUser(userId);
+      CURRENT_USER = userId;
+      if (userId === 'nathan') {
+        renderNathanScreen();
+      } else {
+        renderColaboradorScreen(userId);
+      }
+      setupHeader();
+      window.scrollTo(0, 0);
+    });
+  });
+}
+
+function getTotalTarefasUnicas(plano) {
+  let t = 0;
+  plano.gatilhos.forEach(g => g.grupos.forEach(grp => t += grp.tarefas.length));
+  return t;
+}
+
+// ============================================
+// TELA DO COLABORADOR
+// ============================================
+function renderColaboradorScreen(userId) {
+  const plano = PLANOS.colaboradores[userId];
+  if (!plano) {
+    app().innerHTML = `<div class="empty-state"><div class="icon">⚠</div>Plano não encontrado</div>`;
+    return;
+  }
+
+  const stats = collectStats(userId, plano);
+  const totalTarefas = getTotalTarefasUnicas(plano);
+
+  app().innerHTML = `
+    <div class="container" style="--user-color: ${plano.cor}">
+      <div class="profile-bar" style="--user-color: ${plano.cor}">
+        <div class="avatar">${plano.inicial}</div>
+        <div class="info">
+          <div class="name">${esc(plano.nome)}</div>
+          <div class="role">${esc(plano.funcao)} · ${PLANOS.ciclo.periodo}</div>
+        </div>
+        <div class="actions">
+          <button class="btn small ghost" id="btn-import">📥 Importar</button>
+          <button class="btn small ghost" id="btn-export">📤 Exportar</button>
+        </div>
+      </div>
+
+      <div class="meta-banner">
+        <div class="label">🎯 META DO CICLO</div>
+        <div class="text">${esc(plano.metaCiclo)}</div>
+      </div>
+
+      ${plano.aviso ? `
+      <div class="meta-banner" style="border-left-color: var(--gold); background: linear-gradient(135deg, var(--bg-card) 0%, rgba(255,215,0,0.04) 100%);">
+        <div class="label" style="color: var(--gold);">💡 ${esc(plano.aviso.titulo)}</div>
+        <div class="text">${esc(plano.aviso.texto)}</div>
+      </div>
+      ` : ''}
+
+      <div class="progress-hero">
+        <div class="top-row">
+          <div>
+            <div class="label">Progresso geral</div>
+            <div class="text"><strong id="hero-done">${stats.done}</strong> / ${stats.total} tarefas concluídas (<span id="hero-pct">${stats.pct}</span>%)</div>
+          </div>
+          <div class="bonus-counter">
+            <div class="label-bonus">💰 Bonificação Desbloqueada</div>
+            <div class="value-bonus" id="hero-valor">${fmtBRL(stats.valorDesbloqueado)}</div>
+            <div class="total-bonus">de ${fmtBRL(plano.bonificacao)} totais</div>
+          </div>
+        </div>
+        <div class="progress-bar-outer">
+          <div class="progress-bar-inner" id="hero-bar" style="width: ${stats.pct}%"></div>
+        </div>
+        <div class="achievements-row" id="achievements-row">
+          ${renderAchievements(userId, plano)}
+        </div>
+      </div>
+
+      <div class="filters-bar">
+        <div class="search-box">
+          <input type="text" id="search-input" placeholder="Buscar tarefa, loja, palavra-chave..." />
+        </div>
+        <div class="filter-pills" id="filter-pills">
+          <button class="filter-pill active" data-filter="todas">Todas</button>
+          <button class="filter-pill" data-filter="pendentes">Pendentes</button>
+          <button class="filter-pill" data-filter="concluidas">Concluídas</button>
+          <button class="filter-pill" data-filter="sem-evidencia">Sem comprovação</button>
+          <button class="filter-pill" data-filter="critico">🔴 Crítico</button>
+          <button class="filter-pill" data-filter="importante">🟠 Importante</button>
+        </div>
+      </div>
+
+      <div id="gatilhos-container">
+        ${plano.gatilhos.map(g => renderGatilho(userId, g)).join('')}
+      </div>
+
+      <div class="actions-footer">
+        <button class="btn primary" id="btn-gerar-pdf">📄 Gerar Relatório Final (PDF)</button>
+      </div>
+    </div>
+
+    <input type="file" id="file-import" accept=".json" class="hidden">
+  `;
+
+  bindColaboradorEvents(userId);
+}
+
+function renderAchievements(userId, plano) {
+  const unlocked = getUnlockedAchievements(userId, plano).map(a => a.id);
+  return ACHIEVEMENTS.map(a => {
+    const isUnlocked = unlocked.includes(a.id);
+    return `
+      <div class="achievement ${isUnlocked ? 'unlocked' : ''}" title="${esc(a.desc)}">
+        <span class="badge-icon">${a.icon}</span>
+        ${esc(a.name)}
+      </div>
+    `;
+  }).join('');
+}
+
+function renderGatilho(userId, gatilho) {
+  const prog = calcularProgressoGatilho(userId, gatilho);
+  const sevClass = severidadeClass(gatilho.severidade);
+  const valorDesbloqueado = calcValorDesbloqueadoGatilho(userId, gatilho);
+  const isCompleto = prog.pct === 100;
+
+  return `
+    <div class="gatilho ${sevClass} ${isCompleto ? 'gatilho-completo' : ''}" data-gatilho="${gatilho.id}">
+      <div class="gatilho-header" data-toggle="${gatilho.id}">
+        <div class="titulo-area">
+          <div class="titulo">
+            <span style="font-size: 18px;">${gatilho.icone}</span>
+            ${esc(gatilho.titulo)}
+          </div>
+          <div class="badges">
+            <span class="severidade-pill">${gatilho.severidade}</span>
+            <span class="peso-pill">PESO ${gatilho.peso}</span>
+            <span class="bonus-pill">💰 ${fmtBRL(gatilho.bonificacao)}</span>
+          </div>
+        </div>
+        <div class="stats-mini">
+          <div class="progress-text">${prog.done}/${prog.total}</div>
+          <div class="gatilho-mini-bar"><div class="gatilho-mini-bar-inner" style="width: ${prog.pct}%"></div></div>
+          <div class="unlocked-value">${fmtBRL(valorDesbloqueado)} desbloq.</div>
+        </div>
+        <div class="toggle">▶</div>
+      </div>
+      <div class="gatilho-body">
+        <div class="gatilho-meta">
+          <strong>META</strong>
+          ${esc(gatilho.meta)}
+        </div>
+        ${gatilho.grupos.map((grupo, gIdx) => renderGrupo(userId, gatilho, grupo, gIdx)).join('')}
+      </div>
+    </div>
+  `;
+}
+
+function renderGrupo(userId, gatilho, grupo, gIdx) {
+  return `
+    <div class="grupo">
+      <div class="lojas-list">
+        ${grupo.lojas.map(l => {
+          const isRede = l.toLowerCase().includes('rede');
+          return `<span class="loja-pill ${isRede ? 'rede' : ''}">${esc(l)}</span>`;
+        }).join('')}
+      </div>
+      ${grupo.tarefas.map((t, tIdx) => renderTarefa(userId, gatilho, gIdx, tIdx, t, grupo.lojas)).join('')}
+    </div>
+  `;
+}
+
+function renderTarefa(userId, gatilho, gIdx, tIdx, texto, lojas) {
+  const id = makeTarefaId(gatilho.id, gIdx, tIdx);
+  const state = getTarefaState(userId, id);
+
+  return `
+    <div class="tarefa ${state.done ? 'done' : ''}" data-tarefa-id="${id}" data-severidade="${severidadeClass(gatilho.severidade)}" data-lojas="${esc(lojas.join(' | '))}">
+      <div class="tarefa-row">
+        <div class="tarefa-check">
+          <button class="custom-checkbox ${state.done ? 'checked' : ''}" data-action="toggle" data-id="${id}" aria-label="Marcar como concluída"></button>
+        </div>
+        <div class="tarefa-text" data-original="${esc(texto)}">${esc(texto)}</div>
+        <div class="tarefa-actions">
+          <button class="tarefa-action-btn ${state.evidencias.length > 0 ? 'has-data' : ''}" data-action="toggle-evidencias" data-id="${id}">
+            📎 ${state.evidencias.length || ''}
+          </button>
+        </div>
+      </div>
+      <div class="evidencias" data-evidencias="${id}">
+        ${renderEvidencias(state)}
+        <textarea class="observacao-input" placeholder="Observação (opcional)" data-action="observacao" data-id="${id}">${esc(state.observacao)}</textarea>
+      </div>
+    </div>
+  `;
+}
+
+function renderEvidencias(state) {
+  const items = state.evidencias.map((ev, idx) => {
+    if (ev.tipo === 'imagem') {
+      return `
+        <div class="evidencia-item">
+          <div class="evidencia-thumb" style="background-image: url('${ev.dataUrl}')"></div>
+          <div style="flex:1; min-width:0;">
+            <div style="font-size:12px; font-weight:600;">📸 ${esc(ev.titulo || 'Print')}</div>
+            <div style="font-size:10px; color:var(--text-muted);">${ev.tamanhoKB} KB</div>
+          </div>
+          <button class="evidencia-remove" data-action="remove-evidencia" data-idx="${idx}">×</button>
+        </div>
+      `;
+    } else {
+      return `
+        <div class="evidencia-item">
+          <div style="font-size:18px;">🔗</div>
+          <a href="${esc(ev.url)}" target="_blank" rel="noopener" class="evidencia-link">${esc(ev.titulo || ev.url)}</a>
+          <button class="evidencia-remove" data-action="remove-evidencia" data-idx="${idx}">×</button>
+        </div>
+      `;
+    }
+  }).join('');
+
+  return `
+    ${items}
+    <div class="evidencia-input-row">
+      <input type="file" accept="image/*" class="hidden" data-action="upload-img">
+      <button class="btn small" data-action="trigger-upload">📸 Adicionar print</button>
+      <button class="btn small" data-action="add-link">🔗 Adicionar link</button>
+    </div>
+  `;
+}
+
+// ============================================
+// EVENTOS
+// ============================================
+function bindColaboradorEvents(userId) {
+  // Toggle gatilho
+  document.querySelectorAll('[data-toggle]').forEach(el => {
+    el.addEventListener('click', () => el.parentElement.classList.toggle('open'));
+  });
+
+  // Eventos das tarefas (delegação)
+  document.getElementById('gatilhos-container').addEventListener('change', (e) => {
+    const t = e.target;
+    if (t.dataset.action === 'observacao') {
+      const id = t.dataset.id;
+      const state = getTarefaState(userId, id);
+      state.observacao = t.value;
+      setTarefaState(userId, id, state);
+    }
+    if (t.dataset.action === 'upload-img') {
+      handleImageUpload(userId, t);
+    }
+  });
+
+  document.getElementById('gatilhos-container').addEventListener('click', (e) => {
+    const t = e.target.closest('[data-action]');
+    if (!t) return;
+    const action = t.dataset.action;
+
+    if (action === 'toggle') {
+      e.stopPropagation();
+      const id = t.dataset.id;
+      const state = getTarefaState(userId, id);
+      state.done = !state.done;
+      setTarefaState(userId, id, state);
+
+      const tarefaEl = t.closest('.tarefa');
+      tarefaEl.classList.toggle('done', state.done);
+      t.classList.toggle('checked', state.done);
+
+      if (state.done) {
+        fireConfetti(t);
+        const plano = PLANOS.colaboradores[userId];
+        const valor = plano.gatilhos.find(g => id.startsWith(g.id)).valorTarefa;
+        toast(`+${fmtBRL(valor)} desbloqueado!`, false, 'gold');
+      }
+
+      atualizarTudo(userId);
+      checkAndShowNewAchievements(userId, PLANOS.colaboradores[userId]);
+      applyFilters();
+    }
+
+    if (action === 'toggle-evidencias') {
+      const id = t.dataset.id;
+      document.querySelector(`[data-evidencias="${id}"]`).classList.toggle('show');
+    }
+    if (action === 'trigger-upload') {
+      const fileInput = t.parentElement.querySelector('input[type="file"]');
+      fileInput.click();
+    }
+    if (action === 'add-link') {
+      const tarefaEl = t.closest('.tarefa');
+      const id = tarefaEl.dataset.tarefaId;
+      promptAddLink(userId, id);
+    }
+    if (action === 'remove-evidencia') {
+      const idx = parseInt(t.dataset.idx);
+      const tarefaEl = t.closest('.tarefa');
+      const id = tarefaEl.dataset.tarefaId;
+      removerEvidencia(userId, id, idx);
+    }
+  });
+
+  // Botões topo
+  document.getElementById('btn-export').addEventListener('click', () => exportBackup(userId));
+  document.getElementById('btn-import').addEventListener('click', () => {
+    document.getElementById('file-import').click();
+  });
+  document.getElementById('file-import').addEventListener('change', (e) => {
+    if (e.target.files[0]) importBackup(userId, e.target.files[0]);
+  });
+
+  // PDF
+  document.getElementById('btn-gerar-pdf').addEventListener('click', () => gerarRelatorioPDF(userId));
+
+  // Filtros
+  document.querySelectorAll('.filter-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      CURRENT_FILTER = pill.dataset.filter;
+      applyFilters();
+    });
+  });
+
+  // Busca
+  const searchInput = document.getElementById('search-input');
+  searchInput.addEventListener('input', (e) => {
+    CURRENT_SEARCH = e.target.value.toLowerCase().trim();
+    applyFilters();
+  });
+}
+
+// ============================================
+// FILTROS E BUSCA
+// ============================================
+function applyFilters() {
+  const allTarefas = document.querySelectorAll('.tarefa');
+  let visibleByGatilho = {};
+
+  allTarefas.forEach(t => {
+    const id = t.dataset.tarefaId;
+    const sev = t.dataset.severidade;
+    const isDone = t.classList.contains('done');
+    const text = (t.querySelector('.tarefa-text').dataset.original || '').toLowerCase();
+    const lojas = (t.dataset.lojas || '').toLowerCase();
+
+    // Filtro por status/severidade
+    let matchFilter = true;
+    if (CURRENT_FILTER === 'pendentes') matchFilter = !isDone;
+    else if (CURRENT_FILTER === 'concluidas') matchFilter = isDone;
+    else if (CURRENT_FILTER === 'sem-evidencia') {
+      if (!isDone) matchFilter = false;
+      else {
+        // Tem evidência se o botão 📎 tem has-data
+        const evBtn = t.querySelector('.tarefa-action-btn');
+        matchFilter = !evBtn.classList.contains('has-data');
+      }
+    }
+    else if (CURRENT_FILTER === 'critico') matchFilter = sev === 'severidade-CRITICO';
+    else if (CURRENT_FILTER === 'importante') matchFilter = sev === 'severidade-IMPORTANTE';
+
+    // Filtro por busca
+    let matchSearch = true;
+    if (CURRENT_SEARCH) {
+      matchSearch = text.includes(CURRENT_SEARCH) || lojas.includes(CURRENT_SEARCH);
+    }
+
+    const visible = matchFilter && matchSearch;
+    t.classList.toggle('hidden', !visible);
+    t.classList.toggle('match-search', !!CURRENT_SEARCH && matchSearch);
+
+    // Highlight da busca no texto
+    const textEl = t.querySelector('.tarefa-text');
+    const original = textEl.dataset.original;
+    if (CURRENT_SEARCH && matchSearch) {
+      const regex = new RegExp(`(${CURRENT_SEARCH.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+      textEl.innerHTML = esc(original).replace(regex, '<mark>$1</mark>');
+    } else {
+      textEl.textContent = original;
+    }
+
+    // Contar visíveis por gatilho
+    const gatilhoEl = t.closest('.gatilho');
+    const gid = gatilhoEl.dataset.gatilho;
+    if (!visibleByGatilho[gid]) visibleByGatilho[gid] = 0;
+    if (visible) visibleByGatilho[gid]++;
+  });
+
+  // Ocultar gatilho inteiro se nenhuma tarefa visível + abrir automaticamente se busca ativa
+  document.querySelectorAll('.gatilho').forEach(g => {
+    const gid = g.dataset.gatilho;
+    const cnt = visibleByGatilho[gid] || 0;
+    g.classList.toggle('hidden', cnt === 0 && (CURRENT_FILTER !== 'todas' || !!CURRENT_SEARCH));
+    if (CURRENT_SEARCH && cnt > 0) g.classList.add('open');
+  });
+}
+
+// ============================================
+// IMAGENS / LINKS
+// ============================================
+async function handleImageUpload(userId, input) {
+  const file = input.files[0];
+  if (!file) return;
+  if (!file.type.startsWith('image/')) {
+    toast('Apenas imagens são permitidas', true);
+    return;
+  }
+  const tarefaEl = input.closest('.tarefa');
+  const id = tarefaEl.dataset.tarefaId;
+  try {
+    toast('Comprimindo imagem...');
+    const dataUrl = await compressImage(file);
+    const tamanhoKB = Math.round(dataUrl.length * 0.75 / 1024);
+    const titulo = prompt('Título/descrição do print (opcional):', file.name.replace(/\.[^.]+$/, ''));
+    const state = getTarefaState(userId, id);
+    state.evidencias.push({
+      tipo: 'imagem', dataUrl, titulo: titulo || file.name, tamanhoKB,
+      adicionadoEm: new Date().toISOString()
+    });
+    setTarefaState(userId, id, state);
+    refreshTarefa(userId, id);
+    toast('Print adicionado! 📸');
+    checkAndShowNewAchievements(userId, PLANOS.colaboradores[userId]);
+    atualizarTudo(userId);
+  } catch (e) {
+    toast('Erro: ' + e.message, true);
+  }
+  input.value = '';
+}
+
+function promptAddLink(userId, tarefaId) {
+  const url = prompt('Cole o link (Drive, Instagram, Notion, etc):');
+  if (!url || !url.trim()) return;
+  const titulo = prompt('Título/descrição (opcional):', '');
+  const state = getTarefaState(userId, tarefaId);
+  state.evidencias.push({
+    tipo: 'link', url: url.trim(), titulo: titulo || '',
+    adicionadoEm: new Date().toISOString()
+  });
+  setTarefaState(userId, tarefaId, state);
+  refreshTarefa(userId, tarefaId);
+  toast('Link adicionado! 🔗');
+  checkAndShowNewAchievements(userId, PLANOS.colaboradores[userId]);
+  atualizarTudo(userId);
+}
+
+function removerEvidencia(userId, tarefaId, idx) {
+  if (!confirm('Remover essa comprovação?')) return;
+  const state = getTarefaState(userId, tarefaId);
+  state.evidencias.splice(idx, 1);
+  setTarefaState(userId, tarefaId, state);
+  refreshTarefa(userId, tarefaId);
+  atualizarTudo(userId);
+}
+
+function refreshTarefa(userId, tarefaId) {
+  const plano = PLANOS.colaboradores[userId];
+  for (const g of plano.gatilhos) {
+    for (let gIdx = 0; gIdx < g.grupos.length; gIdx++) {
+      for (let tIdx = 0; tIdx < g.grupos[gIdx].tarefas.length; tIdx++) {
+        if (makeTarefaId(g.id, gIdx, tIdx) === tarefaId) {
+          const html = renderTarefa(userId, g, gIdx, tIdx, g.grupos[gIdx].tarefas[tIdx], g.grupos[gIdx].lojas);
+          const tarefaEl = document.querySelector(`[data-tarefa-id="${tarefaId}"]`);
+          const wasOpen = tarefaEl.querySelector('.evidencias').classList.contains('show');
+          tarefaEl.outerHTML = html;
+          if (wasOpen) document.querySelector(`[data-evidencias="${tarefaId}"]`).classList.add('show');
+          return;
+        }
+      }
+    }
+  }
+}
+
+// ============================================
+// ATUALIZAÇÃO EM TEMPO REAL
+// ============================================
+function atualizarTudo(userId) {
+  const plano = PLANOS.colaboradores[userId];
+  const stats = collectStats(userId, plano);
+
+  // Hero
+  const heroDone = document.getElementById('hero-done');
+  const heroPct = document.getElementById('hero-pct');
+  const heroValor = document.getElementById('hero-valor');
+  const heroBar = document.getElementById('hero-bar');
+  if (heroDone) heroDone.textContent = stats.done;
+  if (heroPct) heroPct.textContent = stats.pct;
+  if (heroValor) {
+    const oldText = heroValor.textContent;
+    const newText = fmtBRL(stats.valorDesbloqueado);
+    if (oldText !== newText) {
+      heroValor.textContent = newText;
+      heroValor.style.transition = 'transform 0.3s';
+      heroValor.style.transform = 'scale(1.15)';
+      setTimeout(() => heroValor.style.transform = 'scale(1)', 300);
+    }
+  }
+  if (heroBar) heroBar.style.width = stats.pct + '%';
+
+  // Gatilhos
+  plano.gatilhos.forEach(g => {
+    const p = calcularProgressoGatilho(userId, g);
+    const valorG = calcValorDesbloqueadoGatilho(userId, g);
+    const gEl = document.querySelector(`[data-gatilho="${g.id}"]`);
+    if (gEl) {
+      const stats = gEl.querySelector('.stats-mini');
+      if (stats) {
+        stats.querySelector('.progress-text').textContent = `${p.done}/${p.total}`;
+        stats.querySelector('.gatilho-mini-bar-inner').style.width = p.pct + '%';
+        const uv = stats.querySelector('.unlocked-value');
+        if (uv) uv.textContent = `${fmtBRL(valorG)} desbloq.`;
+      }
+      gEl.classList.toggle('gatilho-completo', p.pct === 100);
+    }
+  });
+
+  // Achievements row
+  const achEl = document.getElementById('achievements-row');
+  if (achEl) achEl.innerHTML = renderAchievements(userId, plano);
+}
+
+// ============================================
+// TOAST (override)
+// ============================================
+function toast(msg, isError = false, variant = '') {
+  const t = document.createElement('div');
+  t.className = 'toast' + (isError ? ' error' : '') + (variant ? ' ' + variant : '');
+  t.textContent = msg;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 2800);
+}
+
+// ============================================
+// TELA NATHAN (ADMIN)
+// ============================================
+function renderNathanScreen() {
+  const colabs = Object.values(PLANOS.colaboradores);
+  const tabs = colabs.map(c => `
+    <button class="admin-tab" data-tab="${c.id}">
+      <span class="mini-avatar" style="--c: ${c.cor}">${c.inicial}</span>
+      ${esc(c.nome)}
+    </button>
+  `).join('');
+
+  app().innerHTML = `
+    <div class="container">
+      <div class="profile-bar" style="--user-color: #FFD700">
+        <div class="avatar" style="background: linear-gradient(135deg, #FFD700, #ffaa00); color: #000;">N</div>
+        <div class="info">
+          <div class="name">Nathan</div>
+          <div class="role">Supervisão · Cobrança · ${PLANOS.ciclo.periodo}</div>
+        </div>
+      </div>
+
+      <div class="admin-warn">
+        <strong>Modo supervisão.</strong> Você vê o que precisa ser cobrado de cada colaborador. <em>O progresso real (status, prints e links) fica no dispositivo de cada um — quando precisar conferir, peça pra pessoa abrir o portal dela e te mostrar.</em>
+      </div>
+
+      <div class="admin-tabs" id="admin-tabs">${tabs}</div>
+      <div id="admin-content"></div>
+    </div>
+  `;
+
+  document.querySelectorAll('.admin-tab').forEach(t => {
+    t.addEventListener('click', () => {
+      document.querySelectorAll('.admin-tab').forEach(x => x.classList.remove('active'));
+      t.classList.add('active');
+      renderNathanColab(t.dataset.tab);
+    });
+  });
+
+  document.querySelectorAll('.admin-tab')[0]?.click();
+}
+
+function renderNathanColab(userId) {
+  const plano = PLANOS.colaboradores[userId];
+  const cont = document.getElementById('admin-content');
+
+  const cards = plano.gatilhos.map(g => {
+    const sevClass = severidadeClass(g.severidade);
+    const todasTarefas = [];
+    g.grupos.forEach(grp => {
+      grp.tarefas.forEach(t => todasTarefas.push({ texto: t, lojas: grp.lojas }));
+    });
+
+    return `
+      <div class="cobranca-card ${sevClass}">
+        <div class="titulo">
+          <span style="font-size:18px;">${g.icone}</span>
+          ${esc(g.titulo)}
+          <span class="severidade-pill">${g.severidade}</span>
+          <span class="bonus-pill">💰 ${fmtBRL(g.bonificacao)}</span>
+        </div>
+        <div style="font-size:11px; color: var(--text-muted); margin-bottom:6px;">
+          🎯 ${esc(g.meta)}
+        </div>
+        <div style="font-size:11px; color: var(--text-muted); margin-bottom:8px;">
+          📋 <strong style="color:var(--text);">${todasTarefas.length}</strong> tarefas a cobrar · valor por tarefa: <strong style="color:var(--text);">${fmtBRL(g.valorTarefa)}</strong>
+        </div>
+        <ul>
+          ${todasTarefas.map(t => `
+            <li>
+              <div>${esc(t.texto)}</div>
+              <div style="margin-top:4px; display:flex; flex-wrap:wrap; gap:4px;">
+                ${t.lojas.map(l => `<span class="loja-pill" style="font-size:10px; padding:2px 8px;">${esc(l)}</span>`).join('')}
+              </div>
+            </li>
+          `).join('')}
+        </ul>
+      </div>
+    `;
+  }).join('');
+
+  const totalT = getTotalTarefasUnicas(plano);
+
+  cont.innerHTML = `
+    <div class="profile-bar" style="--user-color: ${plano.cor}; margin-top:8px;">
+      <div class="avatar">${plano.inicial}</div>
+      <div class="info">
+        <div class="name">${esc(plano.nome)}</div>
+        <div class="role">${esc(plano.funcao)}</div>
+      </div>
+    </div>
+
+    <div class="meta-banner">
+      <div class="label">🎯 META DO CICLO</div>
+      <div class="text">${esc(plano.metaCiclo)}</div>
+    </div>
+
+    <div class="summary-grid">
+      <div class="summary-card">
+        <div class="label">Gatilhos</div>
+        <div class="value">${plano.gatilhos.length}</div>
+      </div>
+      <div class="summary-card">
+        <div class="label">Tarefas únicas</div>
+        <div class="value">${totalT}</div>
+      </div>
+      <div class="summary-card bonus">
+        <div class="label">Bonificação</div>
+        <div class="value">${fmtBRL(plano.bonificacao)}</div>
+      </div>
+    </div>
+
+    ${cards}
+  `;
+}
+
+// ============================================
+// HEADER (theme + exit)
+// ============================================
+function setupHeader() {
+  const lockedUser = getLockedUser();
+  const headerRight = document.querySelector('.app-header .right');
+  if (!headerRight) return;
+
+  // Inserir botão de tema antes do ciclo-info
+  if (!document.getElementById('theme-toggle')) {
+    const btn = document.createElement('button');
+    btn.id = 'theme-toggle';
+    btn.className = 'theme-toggle';
+    btn.title = 'Alternar tema';
+    btn.textContent = getTheme() === 'dark' ? '☀️' : '🌙';
+    btn.addEventListener('click', toggleTheme);
+    headerRight.insertBefore(btn, headerRight.firstChild);
+  }
+
+  // Inserir botão "trocar de pessoa" se travado
+  const existingExit = document.getElementById('exit-btn');
+  if (lockedUser && !existingExit) {
+    const btn = document.createElement('button');
+    btn.id = 'exit-btn';
+    btn.className = 'exit-btn';
+    btn.textContent = '↩ Trocar';
+    btn.title = 'Voltar para tela de seleção (não apaga seus dados)';
+    btn.addEventListener('click', () => {
+      if (confirm('Voltar para a tela de seleção?\n\nSeus dados ficam salvos. Você pode voltar a entrar aqui depois.')) {
+        localStorage.removeItem(LOCK_KEY);
+        location.reload();
+      }
+    });
+    headerRight.insertBefore(btn, headerRight.firstChild);
+  } else if (!lockedUser && existingExit) {
+    existingExit.remove();
+  }
+}
+
+// ============================================
+// BOOT
+// ============================================
+async function boot() {
+  setTheme(getTheme());
+
+  await loadPlanos();
+
+  const lockedUser = getLockedUser();
+
+  if (!lockedUser) {
+    renderWelcomeScreen();
+    setupHeader();
+    return;
+  }
+
+  CURRENT_USER = lockedUser;
+
+  if (lockedUser === 'nathan') {
+    renderNathanScreen();
+  } else if (PLANOS.colaboradores[lockedUser]) {
+    renderColaboradorScreen(lockedUser);
+  } else {
+    localStorage.removeItem(LOCK_KEY);
+    location.reload();
+    return;
+  }
+
+  setupHeader();
+}
+
+document.addEventListener('DOMContentLoaded', boot);
+
+</script>
+
+</body>
+</html>
