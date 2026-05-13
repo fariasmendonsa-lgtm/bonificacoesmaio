@@ -1346,6 +1346,217 @@ input, textarea { font-family: inherit; }
   padding: 12px !important;
 }
 
+/* ===== BADGE NO BOTÃO COBRAR ===== */
+.cobrar-badge {
+  display: inline-flex;
+  align-items: center; justify-content: center;
+  min-width: 22px; height: 22px;
+  background: var(--bg-deep);
+  color: var(--text-muted);
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 0 6px;
+  margin-left: 6px;
+  transition: background 0.2s;
+}
+.cobrar-badge.has {
+  background: var(--accent);
+  color: #fff;
+  animation: cobrar-badge-pulse 1.8s ease-in-out infinite;
+}
+@keyframes cobrar-badge-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(230,57,70,0.7); }
+  50% { box-shadow: 0 0 0 6px rgba(230,57,70,0); }
+}
+
+/* ===== PAINEL TAREFAS A COBRAR ===== */
+.painel-cobrar { background: rgba(0,0,0,0.85); align-items: flex-start; padding: 24px 16px; overflow-y: auto; }
+.cobrar-modal {
+  width: 100%; max-width: 940px;
+  background: var(--bg-card);
+  border-radius: 16px;
+  border: 1px solid var(--border-strong);
+  box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+  overflow: hidden;
+  max-height: calc(100vh - 48px);
+  display: flex; flex-direction: column;
+  animation: pin-pop 0.3s cubic-bezier(.34,1.56,.64,1);
+}
+.cobrar-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--border);
+  background: linear-gradient(135deg, var(--accent-dark) 0%, var(--bg-card) 100%);
+}
+.cobrar-titulo { font-size: 19px; font-weight: 800; }
+.cobrar-sub { font-size: 12px; color: var(--text-muted); margin-top: 4px; max-width: 640px; line-height: 1.4; }
+.cobrar-filters {
+  display: flex; align-items: center; gap: 8px;
+  padding: 12px 20px; flex-wrap: wrap;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-elevated);
+}
+.cobrar-filter-user {
+  background: var(--bg-deep);
+  border: 1px solid var(--border-strong);
+  color: var(--text);
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  margin-left: auto;
+}
+.cobrar-list {
+  overflow-y: auto;
+  padding: 8px;
+  flex: 1;
+  min-height: 200px;
+}
+.cobrar-foot {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 12px 20px;
+  border-top: 1px solid var(--border);
+  font-size: 12px; color: var(--text-muted);
+  background: var(--bg-elevated);
+}
+.cobrar-item {
+  display: grid;
+  grid-template-columns: 130px 1fr 200px;
+  gap: 14px;
+  align-items: center;
+  padding: 14px;
+  margin: 6px 0;
+  background: var(--bg-deep);
+  border-radius: 10px;
+  border-left: 4px solid var(--info);
+}
+.cobrar-item.severidade-CRITICO { border-left-color: var(--danger); }
+.cobrar-item.severidade-IMPORTANTE { border-left-color: var(--warning); }
+.cobrar-item-col-user {
+  display: flex; align-items: center; gap: 10px;
+}
+.cobrar-item-col-user .mini-avatar {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--user-color);
+  color: #fff;
+  font-weight: 800; font-size: 15px;
+  display: flex; align-items: center; justify-content: center;
+}
+.cobrar-item-nome { font-size: 13px; font-weight: 700; }
+.cobrar-item-gatilho {
+  font-size: 12px; color: var(--text-muted);
+  margin-bottom: 4px;
+  display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+}
+.cobrar-item-gatilho .sev-tag {
+  background: var(--bg-card);
+  border: 1px solid var(--border-strong);
+  padding: 2px 8px; border-radius: 999px;
+  font-size: 10px; font-weight: 800;
+  letter-spacing: 0.5px;
+}
+.severidade-CRITICO .sev-tag { color: var(--danger); border-color: var(--danger); }
+.severidade-IMPORTANTE .sev-tag { color: var(--warning); border-color: var(--warning); }
+.cobrar-item-texto { font-size: 13px; line-height: 1.4; font-weight: 600; }
+.cobrar-item-meta {
+  font-size: 11px; color: var(--text-muted);
+  margin-top: 6px;
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+}
+.ja-avisado-pill {
+  background: rgba(255, 152, 0, 0.15);
+  color: var(--warning);
+  border: 1px solid rgba(255, 152, 0, 0.4);
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 700;
+}
+.sem-aviso-pill {
+  background: var(--bg-card);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 600;
+}
+.cobrar-item-col-acao { display: flex; flex-direction: column; }
+.btn-whats {
+  background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+  color: #fff;
+  border: none;
+  padding: 10px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  transition: filter 0.2s, transform 0.1s;
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+}
+.btn-whats:hover { filter: brightness(1.1); }
+.btn-whats:active { transform: scale(0.97); }
+.wa-icon { font-size: 16px; }
+
+/* ===== AVISO NO COLABORADOR ===== */
+.aviso-geral-banner {
+  background: linear-gradient(135deg, #ff6b00 0%, #ff9800 50%, #ffb340 100%);
+  color: #fff;
+  padding: 16px 18px;
+  border-radius: 12px;
+  margin: 12px 0;
+  display: flex; align-items: center; gap: 14px;
+  box-shadow: 0 8px 24px rgba(255, 152, 0, 0.35);
+  animation: aviso-shake 1.2s cubic-bezier(.36,.07,.19,.97) infinite;
+  animation-delay: 1s;
+  animation-iteration-count: 2;
+}
+.aviso-geral-icon {
+  font-size: 30px;
+  animation: aviso-bell 1.4s ease-in-out infinite;
+}
+@keyframes aviso-bell {
+  0%, 100% { transform: rotate(0); }
+  10%, 30% { transform: rotate(-12deg); }
+  20%, 40% { transform: rotate(12deg); }
+  50% { transform: rotate(0); }
+}
+@keyframes aviso-shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-3px); }
+  75% { transform: translateX(3px); }
+}
+.aviso-geral-texto { flex: 1; font-size: 14px; }
+
+.tarefa.tem-aviso {
+  position: relative;
+  box-shadow: 0 0 0 2px rgba(255, 152, 0, 0.55), 0 6px 20px rgba(255, 152, 0, 0.2);
+  background: linear-gradient(135deg, var(--bg-card) 0%, rgba(255, 152, 0, 0.05) 100%);
+}
+.aviso-banner {
+  background: linear-gradient(90deg, rgba(255,107,0,0.95), rgba(255,152,0,0.95));
+  color: #fff;
+  display: flex; align-items: center; gap: 10px;
+  padding: 10px 12px;
+  margin: -2px -2px 8px -2px;
+  border-radius: 8px 8px 0 0;
+  font-size: 13px;
+}
+.aviso-banner .aviso-icone { font-size: 22px; animation: aviso-bell 1.6s ease-in-out infinite; }
+.aviso-banner .aviso-msg strong { display: block; }
+.aviso-banner .aviso-meta { font-size: 10px; opacity: 0.95; margin-top: 2px; }
+
+@media (max-width: 720px) {
+  .cobrar-item {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .cobrar-item-col-acao { width: 100%; }
+  .btn-whats { width: 100%; }
+  .cobrar-filters { gap: 6px; padding: 10px; }
+  .cobrar-filter-user { margin-left: 0; width: 100%; }
+}
+
 /* ===== DASHBOARD ADMIN ===== */
 .rt-indicator {
   display: inline-flex; align-items: center; gap: 6px;
@@ -2880,6 +3091,23 @@ function subscribeDashboardRealtime(onChange) {
 }
 function unsubscribeRealtime() {
   if (_realtimeChan) { try { _realtimeChan.unsubscribe(); } catch (e) {} _realtimeChan = null; }
+  if (_avisosChan) { try { _avisosChan.unsubscribe(); } catch (e) {} _avisosChan = null; }
+}
+
+let _avisosChan = null;
+function subscribeAvisosColab(userId) {
+  if (!SB) return;
+  if (_avisosChan) { try { _avisosChan.unsubscribe(); } catch (e) {} }
+  _avisosChan = SB.channel('op_avisos_colab_' + userId + '_' + Date.now())
+    .on('postgres_changes',
+        { event: '*', schema: 'public', table: 'op_avisos', filter: `user_id=eq.${userId}` },
+        async () => {
+          window.__AVISOS_COLAB__ = await cloudListarAvisosPorTarefa(userId);
+          // Re-render tudo: simples e seguro
+          renderColaboradorScreen(userId);
+        })
+    .subscribe();
+  return _avisosChan;
 }
 
 // ---------- QUEUE de pushes pendentes (offline) ----------
@@ -2899,6 +3127,68 @@ async function flushPending() {
   savePending(remaining);
 }
 window.addEventListener('online', flushPending);
+
+// ---------- AVISOS / COBRANÇAS ----------
+async function cloudListarAvisosAbertos(userId) {
+  if (!SB) return [];
+  const { data, error } = await SB.from('op_avisos').select('*')
+    .eq('user_id', userId).eq('ciclo_ref', CICLO_REF)
+    .is('resolvido_em', null).order('criado_em', { ascending: false });
+  if (error) { console.error(error); return []; }
+  return data || [];
+}
+
+async function cloudListarAvisosPorTarefa(userId) {
+  // Retorna mapa tarefa_id -> { count, ultimo_em, ultima_mensagem }
+  const lista = await cloudListarAvisosAbertos(userId);
+  const map = {};
+  for (const a of lista) {
+    if (!map[a.tarefa_id]) map[a.tarefa_id] = { count: 0, ultimo_em: a.criado_em, ultima_mensagem: a.mensagem };
+    map[a.tarefa_id].count++;
+    if (a.criado_em > map[a.tarefa_id].ultimo_em) {
+      map[a.tarefa_id].ultimo_em = a.criado_em;
+      map[a.tarefa_id].ultima_mensagem = a.mensagem;
+    }
+  }
+  return map;
+}
+
+async function cloudHistAvisosPorTarefa(p_user_id, p_tarefa_id) {
+  if (!SB) return [];
+  const { data, error } = await SB.from('op_avisos').select('*')
+    .eq('user_id', p_user_id).eq('ciclo_ref', CICLO_REF).eq('tarefa_id', p_tarefa_id)
+    .order('criado_em', { ascending: false });
+  if (error) { console.error(error); return []; }
+  return data || [];
+}
+
+async function cloudCriarAviso(payload) {
+  // payload: { user_id, tarefa_id, gatilho_id, severidade, mensagem }
+  if (!SB) throw new Error('Sem cliente Supabase');
+  const { data, error } = await SB.rpc('op_criar_aviso', {
+    p_user_id: payload.user_id, p_ciclo: CICLO_REF, p_tarefa_id: payload.tarefa_id,
+    p_gatilho_id: payload.gatilho_id || null, p_severidade: payload.severidade || null,
+    p_mensagem: payload.mensagem || ''
+  });
+  if (error) throw error;
+  return data; // { ok, aviso_id, telefone, nome }
+}
+
+async function cloudContagemAvisos() {
+  if (!SB) return {};
+  const { data, error } = await SB.rpc('op_contagem_avisos', { p_ciclo: CICLO_REF });
+  if (error) { console.error(error); return {}; }
+  const map = {};
+  (data || []).forEach(r => map[r.user_id] = Number(r.abertos) || 0);
+  return map;
+}
+
+async function cloudGetTelefone(userId) {
+  if (!SB) return null;
+  const { data, error } = await SB.from('op_usuarios_publico').select('telefone').eq('id', userId).maybeSingle();
+  if (error) { console.error(error); return null; }
+  return data?.telefone || null;
+}
 
 
 // === relatorio.js ===
@@ -3849,15 +4139,27 @@ function getTotalTarefasUnicas(plano) {
 // ============================================
 // TELA DO COLABORADOR
 // ============================================
-function renderColaboradorScreen(userId) {
+async function renderColaboradorScreen(userId) {
   const plano = PLANOS.colaboradores[userId];
   if (!plano) {
     app().innerHTML = `<div class="empty-state"><div class="icon">⚠</div>Plano não encontrado</div>`;
     return;
   }
 
+  // Carrega avisos abertos antes de renderizar (pra mostrar badges)
+  try {
+    window.__AVISOS_COLAB__ = await cloudListarAvisosPorTarefa(userId);
+  } catch (e) {
+    console.error('Falha carregando avisos:', e);
+    window.__AVISOS_COLAB__ = {};
+  }
+
+  // Sub realtime para receber avisos novos sem recarregar
+  subscribeAvisosColab(userId);
+
   const stats = collectStats(userId, plano);
   const totalTarefas = getTotalTarefasUnicas(plano);
+  const totalAvisos = Object.values(window.__AVISOS_COLAB__ || {}).filter(a => a && a.count > 0).length;
 
   app().innerHTML = `
     <div class="container" style="--user-color: ${plano.cor}">
@@ -3873,6 +4175,18 @@ function renderColaboradorScreen(userId) {
           <button class="btn small ghost" id="btn-export">📤 Exportar</button>
         </div>
       </div>
+
+      ${totalAvisos > 0 ? `
+      <div class="aviso-geral-banner">
+        <div class="aviso-geral-icon">🔔</div>
+        <div class="aviso-geral-texto">
+          <strong>Você tem ${totalAvisos} aviso${totalAvisos > 1 ? 's' : ''} do Administrador!</strong>
+          <div style="font-size: 12px; opacity: 0.9; margin-top: 2px;">
+            Procure as tarefas marcadas com ⚠️ e acelere a conclusão delas.
+          </div>
+        </div>
+      </div>
+      ` : ''}
 
       <div class="meta-banner">
         <div class="label">🎯 META DO CICLO</div>
@@ -4003,9 +4317,20 @@ function renderGrupo(userId, gatilho, grupo, gIdx) {
 function renderTarefa(userId, gatilho, gIdx, tIdx, texto, lojas) {
   const id = makeTarefaId(gatilho.id, gIdx, tIdx);
   const state = getTarefaState(userId, id);
+  const aviso = (window.__AVISOS_COLAB__ || {})[id];
+  const temAviso = !!aviso && !state.done;
 
   return `
-    <div class="tarefa ${state.done ? 'done' : ''}" data-tarefa-id="${id}" data-severidade="${severidadeClass(gatilho.severidade)}" data-lojas="${esc(lojas.join(' | '))}">
+    <div class="tarefa ${state.done ? 'done' : ''} ${temAviso ? 'tem-aviso' : ''}" data-tarefa-id="${id}" data-severidade="${severidadeClass(gatilho.severidade)}" data-lojas="${esc(lojas.join(' | '))}">
+      ${temAviso ? `
+        <div class="aviso-banner">
+          <div class="aviso-icone">⚠️</div>
+          <div class="aviso-msg">
+            <strong>Você recebeu um aviso, vamos acelerar essa tarefa!</strong>
+            <div class="aviso-meta">Última cobrança ${formatRelativo(aviso.ultimo_em)}${aviso.count > 1 ? ` · ${aviso.count} cobranças no total` : ''}</div>
+          </div>
+        </div>
+      ` : ''}
       <div class="tarefa-row">
         <div class="tarefa-check">
           <button class="custom-checkbox ${state.done ? 'checked' : ''}" data-action="toggle" data-id="${id}" aria-label="Marcar como concluída"></button>
@@ -4418,6 +4743,9 @@ async function renderAdministradorScreen() {
           <div class="role">Dashboard ao vivo · ${PLANOS.ciclo.periodo}</div>
         </div>
         <div class="actions">
+          <button class="btn small primary" id="btn-cobrar" style="position: relative;">
+            🔔 Tarefas a Cobrar <span class="cobrar-badge" id="cobrar-badge">0</span>
+          </button>
           <button class="btn small ghost" id="btn-change-pin-adm">🔒 Alterar senha</button>
           <span class="rt-indicator" id="rt-indicator" title="Atualização em tempo real">
             <span class="rt-dot"></span> Ao vivo
@@ -4465,11 +4793,12 @@ async function renderAdministradorScreen() {
   });
 
   document.getElementById('btn-change-pin-adm')?.addEventListener('click', () => openChangePinModal('administrador'));
+  document.getElementById('btn-cobrar')?.addEventListener('click', () => abrirPainelCobrar());
 
   await refreshAdminDashboard();
+  atualizarBadgeCobrar();
 
   subscribeDashboardRealtime(async (payload) => {
-    // Atualiza só o card afetado para não recarregar tudo
     if (_adminState.view === 'dashboard') {
       await refreshAdminDashboard();
     } else if (_adminState.view === 'detalhe' && _adminState.focusUser) {
@@ -4478,6 +4807,7 @@ async function renderAdministradorScreen() {
         await refreshAdminDetalheColab(_adminState.focusUser);
       }
     }
+    atualizarBadgeCobrar();
   });
 }
 
@@ -4677,6 +5007,280 @@ async function refreshAdminDetalheColab(userId) {
 
     <div id="gatilhos-container">${gatilhosHtml}</div>
   `;
+}
+
+// ============================================
+// PAINEL: TAREFAS A COBRAR (ADM)
+// ============================================
+async function atualizarBadgeCobrar() {
+  const badge = document.getElementById('cobrar-badge');
+  if (!badge) return;
+  // Conta: total de tarefas CRÍTICO+IMPORTANTE pendentes em todos os colaboradores
+  try {
+    const { data, error } = await SB.from('op_progresso')
+      .select('user_id, tarefa_id, concluida')
+      .eq('ciclo_ref', CICLO_REF);
+    const concluidasSet = new Set();
+    if (!error && data) {
+      data.forEach(r => { if (r.concluida) concluidasSet.add(r.user_id + '::' + r.tarefa_id); });
+    }
+    let totalPendentes = 0;
+    Object.values(PLANOS.colaboradores).forEach(c => {
+      c.gatilhos.forEach(g => {
+        if (g.severidade !== 'CRÍTICO' && g.severidade !== 'IMPORTANTE') return;
+        g.grupos.forEach((grp, gIdx) => {
+          grp.tarefas.forEach((_, tIdx) => {
+            const tid = makeTarefaId(g.id, gIdx, tIdx);
+            if (!concluidasSet.has(c.id + '::' + tid)) totalPendentes++;
+          });
+        });
+      });
+    });
+    badge.textContent = totalPendentes;
+    badge.classList.toggle('has', totalPendentes > 0);
+  } catch (e) { console.error(e); }
+}
+
+function montarListaTarefasACobrar(concluidasSet, avisosByUserTarefa) {
+  // Retorna [{ colaborador, gatilho, gIdx, tIdx, texto, tarefaId, lojas, jaAvisado, ultimoAvisoEm, avisosCount }]
+  const lista = [];
+  Object.values(PLANOS.colaboradores).forEach(c => {
+    c.gatilhos.forEach(g => {
+      if (g.severidade !== 'CRÍTICO' && g.severidade !== 'IMPORTANTE') return;
+      g.grupos.forEach((grp, gIdx) => {
+        grp.tarefas.forEach((texto, tIdx) => {
+          const tid = makeTarefaId(g.id, gIdx, tIdx);
+          if (concluidasSet.has(c.id + '::' + tid)) return;
+          const av = avisosByUserTarefa[c.id + '::' + tid];
+          lista.push({
+            colaborador: c, gatilho: g, gIdx, tIdx, texto, tarefaId: tid, lojas: grp.lojas,
+            avisosCount: av ? av.count : 0,
+            ultimoAvisoEm: av ? av.ultimo_em : null
+          });
+        });
+      });
+    });
+  });
+  // Ordenar: severidade CRÍTICO primeiro, depois sem aviso (priorizar quem ainda não foi cobrado), depois aviso mais antigo
+  lista.sort((a, b) => {
+    if (a.gatilho.severidade !== b.gatilho.severidade) {
+      return a.gatilho.severidade === 'CRÍTICO' ? -1 : 1;
+    }
+    if (a.avisosCount !== b.avisosCount) return a.avisosCount - b.avisosCount;
+    return (a.ultimoAvisoEm || '') > (b.ultimoAvisoEm || '') ? 1 : -1;
+  });
+  return lista;
+}
+
+async function abrirPainelCobrar() {
+  const overlay = document.createElement('div');
+  overlay.className = 'pin-overlay show painel-cobrar';
+  overlay.innerHTML = `
+    <div class="cobrar-modal">
+      <div class="cobrar-head">
+        <div>
+          <div class="cobrar-titulo">🔔 Tarefas a Cobrar</div>
+          <div class="cobrar-sub">Tarefas <strong>CRÍTICAS</strong> e <strong>IMPORTANTES</strong> ainda não concluídas. Cobre com 1 clique direto no WhatsApp.</div>
+        </div>
+        <button class="pin-close" data-action="close">×</button>
+      </div>
+      <div class="cobrar-filters">
+        <button class="filter-pill active" data-fcobrar="todas">Todas</button>
+        <button class="filter-pill" data-fcobrar="critico">🔴 Crítico</button>
+        <button class="filter-pill" data-fcobrar="importante">🟠 Importante</button>
+        <button class="filter-pill" data-fcobrar="sem-aviso">Ainda não avisado</button>
+        <button class="filter-pill" data-fcobrar="ja-avisado">Já avisado</button>
+        <select class="cobrar-filter-user" id="cobrar-filter-user">
+          <option value="">Todos colaboradores</option>
+          ${Object.values(PLANOS.colaboradores).map(c => `<option value="${c.id}">${esc(c.nome)}</option>`).join('')}
+        </select>
+      </div>
+      <div class="cobrar-list" id="cobrar-list">
+        <div style="padding: 40px; text-align: center; color: var(--text-muted);">Carregando...</div>
+      </div>
+      <div class="cobrar-foot">
+        <span id="cobrar-resumo">—</span>
+        <button class="btn small ghost" data-action="close">Fechar</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+
+  function close() { overlay.remove(); }
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) close();
+    if (e.target.closest('[data-action="close"]')) close();
+  });
+
+  // Carrega dados em paralelo
+  const [progressoResp, allAvisos] = await Promise.all([
+    SB.from('op_progresso').select('user_id, tarefa_id, concluida').eq('ciclo_ref', CICLO_REF),
+    SB.from('op_avisos').select('*').eq('ciclo_ref', CICLO_REF).is('resolvido_em', null).order('criado_em', { ascending: false })
+  ]);
+
+  const concluidasSet = new Set();
+  (progressoResp.data || []).forEach(r => { if (r.concluida) concluidasSet.add(r.user_id + '::' + r.tarefa_id); });
+
+  const avisosByUserTarefa = {};
+  (allAvisos.data || []).forEach(a => {
+    const k = a.user_id + '::' + a.tarefa_id;
+    if (!avisosByUserTarefa[k]) avisosByUserTarefa[k] = { count: 0, ultimo_em: a.criado_em };
+    avisosByUserTarefa[k].count++;
+    if (a.criado_em > avisosByUserTarefa[k].ultimo_em) avisosByUserTarefa[k].ultimo_em = a.criado_em;
+  });
+
+  const todasTarefas = montarListaTarefasACobrar(concluidasSet, avisosByUserTarefa);
+  let filtroSev = 'todas';
+  let filtroAviso = 'todas'; // todas | sem-aviso | ja-avisado
+  let filtroUser = '';
+
+  function renderLista() {
+    const filtradas = todasTarefas.filter(t => {
+      if (filtroSev === 'critico' && t.gatilho.severidade !== 'CRÍTICO') return false;
+      if (filtroSev === 'importante' && t.gatilho.severidade !== 'IMPORTANTE') return false;
+      if (filtroAviso === 'sem-aviso' && t.avisosCount > 0) return false;
+      if (filtroAviso === 'ja-avisado' && t.avisosCount === 0) return false;
+      if (filtroUser && t.colaborador.id !== filtroUser) return false;
+      return true;
+    });
+
+    document.getElementById('cobrar-resumo').textContent =
+      `${filtradas.length} tarefa(s) pendente(s) · ${filtradas.filter(t=>t.avisosCount===0).length} ainda não avisada(s)`;
+
+    const lista = document.getElementById('cobrar-list');
+    if (filtradas.length === 0) {
+      lista.innerHTML = `<div style="padding: 40px; text-align: center; color: var(--text-muted);">✨ Nada pra cobrar com esses filtros</div>`;
+      return;
+    }
+
+    lista.innerHTML = filtradas.map(t => {
+      const sevClass = severidadeClass(t.gatilho.severidade);
+      const sevEmoji = t.gatilho.severidade === 'CRÍTICO' ? '🔴' : '🟠';
+      const avisado = t.avisosCount > 0;
+      const ultimo = t.ultimoAvisoEm ? formatRelativo(t.ultimoAvisoEm) : '';
+      return `
+        <div class="cobrar-item ${sevClass}" data-user="${t.colaborador.id}" data-tarefa="${t.tarefaId}" data-gatilho="${t.gatilho.id}" data-sev="${t.gatilho.severidade}">
+          <div class="cobrar-item-col-user" style="--user-color: ${t.colaborador.cor}">
+            <div class="mini-avatar">${t.colaborador.inicial}</div>
+            <div class="cobrar-item-nome">${esc(t.colaborador.nome)}</div>
+          </div>
+          <div class="cobrar-item-col-main">
+            <div class="cobrar-item-gatilho">
+              ${sevEmoji} <span class="sev-tag">${t.gatilho.severidade}</span>
+              <span style="font-size: 13px;">${t.gatilho.icone || ''} ${esc(t.gatilho.titulo)}</span>
+            </div>
+            <div class="cobrar-item-texto">${esc(t.texto)}</div>
+            <div class="cobrar-item-meta">
+              💰 ${fmtBRL(t.gatilho.valorTarefa)} · 🏪 ${t.lojas.slice(0, 3).map(esc).join(' · ')}${t.lojas.length > 3 ? ' …' : ''}
+              ${avisado ? `<span class="ja-avisado-pill">⚠ Já avisado ${t.avisosCount}× · último ${ultimo}</span>` : `<span class="sem-aviso-pill">Não avisado ainda</span>`}
+            </div>
+          </div>
+          <div class="cobrar-item-col-acao">
+            <button class="btn-whats" data-action="cobrar-whats">
+              <span class="wa-icon">💬</span> ${avisado ? 'Cobrar de novo' : 'Cobrar via WhatsApp'}
+            </button>
+            <button class="btn small ghost" data-action="ver-historico" style="margin-top: 6px; font-size: 10px;">📜 Histórico</button>
+          </div>
+        </div>
+      `;
+    }).join('');
+  }
+
+  overlay.querySelectorAll('[data-fcobrar]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const val = btn.dataset.fcobrar;
+      if (val === 'critico' || val === 'importante' || val === 'todas') {
+        overlay.querySelectorAll('[data-fcobrar="todas"], [data-fcobrar="critico"], [data-fcobrar="importante"]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        filtroSev = val;
+      } else if (val === 'sem-aviso' || val === 'ja-avisado') {
+        overlay.querySelectorAll('[data-fcobrar="sem-aviso"], [data-fcobrar="ja-avisado"]').forEach(b => b.classList.remove('active'));
+        if (filtroAviso === val) { filtroAviso = 'todas'; btn.classList.remove('active'); }
+        else { filtroAviso = val; btn.classList.add('active'); }
+      }
+      renderLista();
+    });
+  });
+  overlay.querySelector('#cobrar-filter-user').addEventListener('change', (e) => {
+    filtroUser = e.target.value;
+    renderLista();
+  });
+
+  overlay.querySelector('#cobrar-list').addEventListener('click', async (e) => {
+    const t = e.target.closest('[data-action]');
+    if (!t) return;
+    const item = t.closest('.cobrar-item');
+    if (!item) return;
+    const userId = item.dataset.user;
+    const tarefaId = item.dataset.tarefa;
+    const gatilhoId = item.dataset.gatilho;
+    const sev = item.dataset.sev;
+
+    if (t.dataset.action === 'cobrar-whats') {
+      await enviarCobrancaWhatsApp(userId, tarefaId, gatilhoId, sev, item, overlay);
+    } else if (t.dataset.action === 'ver-historico') {
+      const hist = await cloudHistAvisosPorTarefa(userId, tarefaId);
+      const txt = hist.length === 0 ? 'Nenhum aviso ainda.' :
+        hist.map(h => `• ${new Date(h.criado_em).toLocaleString('pt-BR')} — ${h.mensagem || '(sem mensagem)'}`).join('\n');
+      alert('📜 Histórico de avisos\n\n' + txt);
+    }
+  });
+
+  renderLista();
+}
+
+async function enviarCobrancaWhatsApp(userId, tarefaId, gatilhoId, severidade, itemEl, overlayEl) {
+  const colab = PLANOS.colaboradores[userId];
+  const gat = colab.gatilhos.find(g => g.id === gatilhoId);
+  const parts = tarefaId.split('__');
+  const gIdx = parseInt(parts[1].replace('g',''));
+  const tIdx = parseInt(parts[2].replace('t',''));
+  const texto = gat.grupos[gIdx].tarefas[tIdx];
+
+  const mensagem = montarMensagemWhatsApp(colab, gat, texto);
+
+  try {
+    const r = await cloudCriarAviso({
+      user_id: userId, tarefa_id: tarefaId, gatilho_id: gatilhoId,
+      severidade, mensagem
+    });
+    if (!r.ok) { toast('Erro ao registrar aviso', true); return; }
+
+    const telefone = r.telefone;
+    if (!telefone) {
+      toast('Sem telefone cadastrado pra ' + colab.nome, true);
+      return;
+    }
+    const url = `https://wa.me/${telefone}?text=${encodeURIComponent(mensagem)}`;
+    window.open(url, '_blank', 'noopener,noreferrer');
+    toast('Aviso registrado · WhatsApp aberto 📱');
+
+    // Atualiza o item visualmente sem refazer toda a query
+    const pill = itemEl.querySelector('.sem-aviso-pill, .ja-avisado-pill');
+    if (pill) {
+      pill.className = 'ja-avisado-pill';
+      const prev = parseInt((pill.textContent.match(/(\d+)×/) || [0, 0])[1]) || 0;
+      pill.textContent = `⚠ Já avisado ${prev + 1}× · último agora`;
+    }
+    const btn = itemEl.querySelector('[data-action="cobrar-whats"]');
+    if (btn) btn.innerHTML = '<span class="wa-icon">💬</span> Cobrar de novo';
+
+    atualizarBadgeCobrar();
+  } catch (e) {
+    console.error(e);
+    toast('Erro: ' + (e.message || 'falha ao registrar'), true);
+  }
+}
+
+function montarMensagemWhatsApp(colab, gat, textoTarefa) {
+  const sevEmoji = gat.severidade === 'CRÍTICO' ? '🔴' : '🟠';
+  return `Oi ${colab.nome}! 👋\n\n` +
+    `Notei que essa tarefa ainda está em aberto:\n\n` +
+    `${sevEmoji} *${gat.severidade}* — ${gat.icone || ''} ${gat.titulo}\n` +
+    `📋 ${textoTarefa}\n` +
+    `💰 Vale *${fmtBRL(gat.valorTarefa)}* na sua bonificação\n\n` +
+    `Vamos acelerar essa? 🚀 Quando concluir, marca no portal e anexa o print da comprovação.\n\n` +
+    `— Administrador`;
 }
 
 // ============================================
