@@ -1196,8 +1196,262 @@ input, textarea { font-family: inherit; }
   .achievement-popup { right: 10px; left: 10px; max-width: none; }
 }
 
+/* ===== LOGIN PIN ===== */
+.pin-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.75);
+  backdrop-filter: blur(8px);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 200;
+  opacity: 0; transition: opacity 0.2s;
+  padding: 20px;
+}
+.pin-overlay.show { opacity: 1; }
+.pin-modal {
+  background: var(--bg-card);
+  border: 1px solid var(--border-strong);
+  border-radius: 16px;
+  padding: 28px 24px 24px;
+  width: 100%; max-width: 360px;
+  text-align: center;
+  box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 0 1px var(--user-color, var(--accent)) inset;
+  position: relative;
+  animation: pin-pop 0.3s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes pin-pop { from { transform: scale(0.85); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.pin-close {
+  position: absolute; top: 10px; right: 14px;
+  background: transparent; border: none;
+  color: var(--text-muted); font-size: 22px;
+  width: 28px; height: 28px; line-height: 1;
+  border-radius: 8px;
+}
+.pin-close:hover { background: var(--bg-elevated); color: var(--text); }
+.pin-avatar {
+  width: 72px; height: 72px; border-radius: 50%;
+  background: var(--user-color, var(--accent));
+  color: #fff; font-size: 32px; font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 14px; box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+}
+.pin-name { font-size: 22px; font-weight: 800; margin-bottom: 4px; }
+.pin-hint { font-size: 12px; color: var(--text-muted); margin-bottom: 18px; }
+.pin-input {
+  width: 100%;
+  background: var(--bg-deep);
+  border: 2px solid var(--border-strong);
+  color: var(--text);
+  padding: 16px;
+  font-size: 28px;
+  text-align: center;
+  letter-spacing: 12px;
+  border-radius: 10px;
+  outline: none;
+  transition: border-color 0.2s;
+  font-weight: 700;
+}
+.pin-input:focus { border-color: var(--user-color, var(--accent)); }
+.pin-feedback {
+  min-height: 18px;
+  font-size: 12px; font-weight: 600;
+  margin: 10px 0;
+}
+.pin-feedback.err { color: var(--danger); }
+.pin-feedback.ok { color: var(--success); }
+.pin-feedback.wait { color: var(--text-muted); }
+.pin-submit {
+  width: 100%;
+  background: var(--user-color, var(--accent));
+  color: #fff;
+  border: none;
+  padding: 14px;
+  font-size: 15px;
+  font-weight: 700;
+  border-radius: 10px;
+  letter-spacing: 0.5px;
+  transition: filter 0.2s, transform 0.1s;
+}
+.pin-submit:hover { filter: brightness(1.1); }
+.pin-submit:active { transform: scale(0.98); }
+.mig-bar {
+  height: 8px; background: var(--bg-deep); border-radius: 999px; margin-top: 14px; overflow: hidden;
+}
+.mig-bar-inner {
+  height: 100%; width: 0%;
+  background: linear-gradient(90deg, var(--accent), var(--gold), var(--success));
+  transition: width 0.3s;
+}
+
+/* ===== MIGRAÇÃO FORÇADA — CTA chamativo ===== */
+.pin-overlay.mig-forced { background: rgba(0,0,0,0.92); }
+.pin-overlay.mig-forced .pin-modal {
+  box-shadow: 0 30px 80px rgba(0,0,0,0.7),
+              0 0 0 1px rgba(255,215,0,0.4) inset,
+              0 0 60px rgba(255,215,0,0.15);
+}
+.mig-avatar-pulse {
+  background: linear-gradient(135deg, #FFD700, #ff9800) !important;
+  color: #1a1a1a !important;
+  animation: mig-float 2.4s ease-in-out infinite;
+  font-size: 38px !important;
+}
+@keyframes mig-float {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-4px) scale(1.04); }
+}
+.mig-cta {
+  background: linear-gradient(135deg, #FFD700 0%, #ff9800 50%, #FFD700 100%) !important;
+  background-size: 200% 200% !important;
+  color: #1a1a1a !important;
+  font-weight: 800 !important;
+  font-size: 16px !important;
+  letter-spacing: 1px !important;
+  padding: 18px !important;
+  margin-top: 18px;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 24px rgba(255,215,0,0.35), 0 0 0 0 rgba(255,215,0,0.6);
+  text-transform: uppercase;
+  animation: mig-cta-pulse 1.8s ease-in-out infinite, mig-cta-shine 3s linear infinite;
+  position: relative;
+  overflow: hidden;
+}
+@keyframes mig-cta-pulse {
+  0%, 100% {
+    box-shadow: 0 8px 24px rgba(255,215,0,0.35), 0 0 0 0 rgba(255,215,0,0.5);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow: 0 12px 32px rgba(255,215,0,0.55), 0 0 0 12px rgba(255,215,0,0);
+    transform: scale(1.02);
+  }
+}
+@keyframes mig-cta-shine {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.mig-cta:hover {
+  filter: brightness(1.1);
+  animation-play-state: paused;
+}
+.mig-cta:active { transform: scale(0.98); }
+
+/* ===== ALTERAR PIN — Form rows ===== */
+.pin-form-rows {
+  display: flex; flex-direction: column; gap: 10px; margin-top: 8px;
+}
+.pin-input-sm {
+  font-size: 20px !important;
+  letter-spacing: 6px !important;
+  padding: 12px !important;
+}
+
+/* ===== DASHBOARD ADMIN ===== */
+.rt-indicator {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 11px; font-weight: 700;
+  color: var(--success);
+  padding: 4px 10px;
+  background: rgba(46, 204, 113, 0.1);
+  border-radius: 999px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+.rt-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--success);
+  box-shadow: 0 0 0 0 var(--success-glow);
+  animation: rt-pulse 1.6s infinite;
+}
+@keyframes rt-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(46,204,113,0.7); }
+  70% { box-shadow: 0 0 0 8px rgba(46,204,113,0); }
+  100% { box-shadow: 0 0 0 0 rgba(46,204,113,0); }
+}
+
+.admin-summary {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.admin-summary .adm-stat {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px;
+}
+.admin-summary .adm-stat .lab {
+  font-size: 10px; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.5px; margin-bottom: 6px;
+}
+.admin-summary .adm-stat .val {
+  font-size: 22px; font-weight: 800; color: var(--text);
+}
+.admin-summary .adm-stat.bonus .val { color: var(--gold); }
+
+.admin-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 14px;
+}
+.adm-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--user-color);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex; flex-direction: column; gap: 10px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.adm-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+}
+.adm-card.completo { border-left-color: var(--success); box-shadow: 0 0 0 1px var(--success-glow); }
+.adm-card-head {
+  display: flex; align-items: center; gap: 12px;
+}
+.adm-card-head .avatar {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: var(--user-color);
+  color: #fff; font-size: 18px; font-weight: 800;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.adm-card-head .who { flex: 1; min-width: 0; }
+.adm-card-head .nome { font-size: 15px; font-weight: 700; }
+.adm-card-head .funcao { font-size: 11px; color: var(--text-muted); }
+.adm-pct {
+  font-size: 22px; font-weight: 800; color: var(--user-color);
+}
+.adm-bar {
+  height: 6px; background: var(--bg-deep); border-radius: 999px; overflow: hidden;
+}
+.adm-bar-inner {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--accent), var(--gold), var(--success));
+  transition: width 0.5s;
+}
+.adm-metrics {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 6px;
+  font-size: 11px;
+}
+.adm-metrics .m {
+  background: var(--bg-deep); padding: 6px 8px; border-radius: 6px;
+}
+.adm-metrics .m .k { color: var(--text-muted); display: block; font-size: 10px; }
+.adm-metrics .m .v { font-weight: 700; color: var(--text); }
+.adm-metrics .m .v.gold { color: var(--gold); }
+.adm-metrics .m .v.dim { color: var(--text-muted); font-weight: 500; font-size: 10px; }
+.adm-detail-btn { width: 100%; margin-top: 4px; }
+
+@media (max-width: 720px) {
+  .admin-summary { grid-template-columns: repeat(2, 1fr); }
+  .pin-input { font-size: 22px; letter-spacing: 8px; }
+}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
 </head>
 <body>
 
@@ -2226,6 +2480,8 @@ function setTarefaState(userId, tarefaId, state) {
   const data = loadUserData(userId);
   data.tarefas[tarefaId] = state;
   saveUserData(userId, data);
+  // Sync automático para a nuvem (debounced; só roda se já migrou)
+  if (typeof schedulePushTarefa === 'function') schedulePushTarefa(userId, tarefaId);
 }
 
 // ============================================
@@ -2381,6 +2637,270 @@ function severidadeClass(s) {
 }
 
 
+// === cloud.js ===
+/* ===========================================
+   Camada de nuvem (Supabase)
+   - Login por PIN
+   - Migração one-shot do localStorage
+   - Sync automático após migração
+   - Upload de imagens no Storage
+   - Realtime para o dashboard do Administrador
+   =========================================== */
+
+const SUPABASE_URL = 'https://pcnmdmywvlkaxciwvsqn.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBjbm1kbXl3dmxrYXhjaXd2c3FuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcwNTI2NDcsImV4cCI6MjA5MjYyODY0N30.xjjA9o4JkNV7lKyMzFimLq5Pl0WqMtUSYGhhXGxk6s0';
+const SB = window.supabase ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
+window.SB = SB;
+
+const SESSION_KEY = STORAGE_KEY + 'session_v2';
+const MIGRATION_DONE_KEY = STORAGE_KEY + 'cloud_migrated_';
+const PENDING_QUEUE_KEY = STORAGE_KEY + 'pending_queue_v1';
+
+// ---------- SESSÃO ----------
+function getCloudSession() {
+  try { return JSON.parse(localStorage.getItem(SESSION_KEY) || 'null'); } catch { return null; }
+}
+function setCloudSession(s) {
+  if (s) localStorage.setItem(SESSION_KEY, JSON.stringify(s));
+  else localStorage.removeItem(SESSION_KEY);
+}
+
+async function cloudLogin(userId, pin) {
+  if (!SB) return { ok: false, erro: 'sem_cliente_supabase' };
+  const { data, error } = await SB.rpc('op_login', { p_user_id: userId, p_pin: pin });
+  if (error) { console.error(error); return { ok: false, erro: 'erro_servidor' }; }
+  if (!data || !data.ok) return { ok: false, erro: data && data.erro || 'pin_invalido' };
+  const session = { id: data.id, nome: data.nome, role: data.role, criado_em: Date.now() };
+  setCloudSession(session);
+  return { ok: true, session };
+}
+
+function cloudLogout() {
+  setCloudSession(null);
+  localStorage.removeItem(LOCK_KEY);
+}
+
+// ---------- MIGRAÇÃO (one-time por usuário e ciclo) ----------
+function migrationKey(userId) { return MIGRATION_DONE_KEY + userId + '_' + CICLO_REF; }
+function isMigrated(userId) { return localStorage.getItem(migrationKey(userId)) === '1'; }
+function markMigrated(userId) { localStorage.setItem(migrationKey(userId), '1'); }
+function localHasData(userId) {
+  const data = loadUserData(userId);
+  return data && data.tarefas && Object.keys(data.tarefas).length > 0;
+}
+
+function dataUrlToBlob(dataUrl) {
+  const [header, b64] = dataUrl.split(',');
+  const mimeMatch = header.match(/data:([^;]+)/);
+  const mime = mimeMatch ? mimeMatch[1] : 'image/jpeg';
+  const bin = atob(b64);
+  const arr = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
+  return new Blob([arr], { type: mime });
+}
+
+async function migrateUserToCloud(userId, onProgress) {
+  if (!SB) throw new Error('Cliente Supabase indisponível');
+  const data = loadUserData(userId);
+  const tarefas = data.tarefas || {};
+  const ids = Object.keys(tarefas);
+  let processados = 0;
+
+  if (ids.length === 0) { markMigrated(userId); return { tarefas: 0, evidencias: 0 }; }
+
+  let evCount = 0;
+
+  // Limpa estado antigo na nuvem deste ciclo (evita duplicação se rodar de novo)
+  await SB.from('op_evidencias').delete().eq('user_id', userId).eq('ciclo_ref', CICLO_REF);
+
+  for (const tarefaId of ids) {
+    const t = tarefas[tarefaId];
+    processados++;
+    onProgress && onProgress({ stage: 'progresso', i: processados, total: ids.length });
+
+    await SB.from('op_progresso').upsert({
+      user_id: userId, ciclo_ref: CICLO_REF, tarefa_id: tarefaId,
+      concluida: !!t.done, observacao: t.observacao || '',
+      atualizado_em: new Date().toISOString()
+    }, { onConflict: 'user_id,ciclo_ref,tarefa_id' });
+
+    const evs = Array.isArray(t.evidencias) ? t.evidencias : [];
+    for (let evIdx = 0; evIdx < evs.length; evIdx++) {
+      const ev = evs[evIdx];
+      onProgress && onProgress({ stage: 'evidencia', i: processados, total: ids.length, evIdx: evIdx + 1, evTotal: evs.length });
+      try {
+        if (ev.tipo === 'link') {
+          await SB.from('op_evidencias').insert({
+            user_id: userId, ciclo_ref: CICLO_REF, tarefa_id: tarefaId,
+            tipo: 'link', url: ev.url || '', titulo: ev.titulo || ''
+          });
+          evCount++;
+        } else if (ev.tipo === 'imagem' && ev.dataUrl && ev.dataUrl.startsWith('data:')) {
+          const blob = dataUrlToBlob(ev.dataUrl);
+          await uploadImagemEvidencia(userId, tarefaId, blob, ev.titulo || '');
+          evCount++;
+        } else if (ev.tipo === 'imagem' && ev.url) {
+          await SB.from('op_evidencias').insert({
+            user_id: userId, ciclo_ref: CICLO_REF, tarefa_id: tarefaId,
+            tipo: 'imagem', url: ev.url, storage_path: ev.storage_path || null,
+            titulo: ev.titulo || '', size_bytes: 0
+          });
+          evCount++;
+        }
+      } catch (e) {
+        console.error('Falha migrando evidência', tarefaId, e);
+      }
+    }
+  }
+
+  markMigrated(userId);
+  return { tarefas: ids.length, evidencias: evCount };
+}
+
+// ---------- PULL — carrega estado da nuvem pro localStorage ----------
+async function cloudPullUser(userId) {
+  if (!SB) return null;
+  const [progResp, evResp] = await Promise.all([
+    SB.from('op_progresso').select('*').eq('user_id', userId).eq('ciclo_ref', CICLO_REF),
+    SB.from('op_evidencias').select('*').eq('user_id', userId).eq('ciclo_ref', CICLO_REF).order('criado_em', { ascending: true })
+  ]);
+  if (progResp.error) throw progResp.error;
+  if (evResp.error) throw evResp.error;
+
+  const data = { tarefas: {} };
+  for (const row of progResp.data) {
+    data.tarefas[row.tarefa_id] = {
+      done: !!row.concluida,
+      observacao: row.observacao || '',
+      evidencias: []
+    };
+  }
+  for (const ev of evResp.data) {
+    if (!data.tarefas[ev.tarefa_id]) data.tarefas[ev.tarefa_id] = { done: false, observacao: '', evidencias: [] };
+    if (ev.tipo === 'imagem') {
+      data.tarefas[ev.tarefa_id].evidencias.push({
+        tipo: 'imagem', dataUrl: ev.url, url: ev.url,
+        storage_path: ev.storage_path, titulo: ev.titulo || '',
+        tamanhoKB: Math.round((ev.size_bytes || 0) / 1024),
+        adicionadoEm: ev.criado_em, _id: ev.id
+      });
+    } else {
+      data.tarefas[ev.tarefa_id].evidencias.push({
+        tipo: 'link', url: ev.url, titulo: ev.titulo || '',
+        adicionadoEm: ev.criado_em, _id: ev.id
+      });
+    }
+  }
+  saveUserData(userId, data);
+  return data;
+}
+
+// ---------- PUSH — debounced por tarefa ----------
+const _pushTimers = {};
+function schedulePushTarefa(userId, tarefaId) {
+  if (!SB || !isMigrated(userId)) return;
+  const key = userId + '::' + tarefaId;
+  clearTimeout(_pushTimers[key]);
+  _pushTimers[key] = setTimeout(() => {
+    pushTarefa(userId, tarefaId).catch(e => {
+      console.error('Sync falhou, enfileirando', e);
+      enqueuePending({ type: 'push_tarefa', userId, tarefaId });
+    });
+  }, 400);
+}
+
+async function pushTarefa(userId, tarefaId) {
+  const state = getTarefaState(userId, tarefaId);
+  const { error } = await SB.from('op_progresso').upsert({
+    user_id: userId, ciclo_ref: CICLO_REF, tarefa_id: tarefaId,
+    concluida: !!state.done, observacao: state.observacao || '',
+    atualizado_em: new Date().toISOString()
+  }, { onConflict: 'user_id,ciclo_ref,tarefa_id' });
+  if (error) throw error;
+}
+
+// ---------- EVIDÊNCIAS ----------
+async function pushEvidenciaLink(userId, tarefaId, url, titulo) {
+  const { data, error } = await SB.from('op_evidencias').insert({
+    user_id: userId, ciclo_ref: CICLO_REF, tarefa_id: tarefaId,
+    tipo: 'link', url, titulo: titulo || ''
+  }).select().single();
+  if (error) throw error;
+  return data;
+}
+
+async function uploadImagemEvidencia(userId, tarefaId, blob, titulo) {
+  const path = `${userId}/${CICLO_REF}/${tarefaId}/${Date.now()}_${Math.random().toString(36).slice(2, 8)}.jpg`;
+  const { error: upErr } = await SB.storage.from('op-evidencias').upload(path, blob, {
+    contentType: blob.type || 'image/jpeg', upsert: false
+  });
+  if (upErr) throw upErr;
+  const { data: pub } = SB.storage.from('op-evidencias').getPublicUrl(path);
+  const publicUrl = pub.publicUrl;
+  const { data, error } = await SB.from('op_evidencias').insert({
+    user_id: userId, ciclo_ref: CICLO_REF, tarefa_id: tarefaId,
+    tipo: 'imagem', url: publicUrl, storage_path: path,
+    titulo: titulo || '', size_bytes: blob.size || 0
+  }).select().single();
+  if (error) throw error;
+  return { id: data.id, url: publicUrl, storage_path: path, size_bytes: blob.size || 0 };
+}
+
+async function deleteEvidenciaCloud(evidencia) {
+  if (!SB) return;
+  try {
+    if (evidencia._id) await SB.from('op_evidencias').delete().eq('id', evidencia._id);
+    if (evidencia.tipo === 'imagem' && evidencia.storage_path) {
+      await SB.storage.from('op-evidencias').remove([evidencia.storage_path]);
+    }
+  } catch (e) { console.error('Falha removendo evidência da nuvem', e); }
+}
+
+// ---------- DASHBOARD ADMINISTRADOR ----------
+async function cloudDashboard() {
+  if (!SB) return [];
+  const { data, error } = await SB.rpc('op_dashboard', { p_ciclo: CICLO_REF });
+  if (error) throw error;
+  return data || [];
+}
+
+async function cloudFetchAllUserData(userId) {
+  return await cloudPullUser(userId);
+}
+
+let _realtimeChan = null;
+function subscribeDashboardRealtime(onChange) {
+  if (!SB) return null;
+  if (_realtimeChan) { try { _realtimeChan.unsubscribe(); } catch (e) {} }
+  _realtimeChan = SB.channel('op_dashboard_rt_' + Date.now())
+    .on('postgres_changes', { event: '*', schema: 'public', table: 'op_progresso' }, onChange)
+    .on('postgres_changes', { event: '*', schema: 'public', table: 'op_evidencias' }, onChange)
+    .subscribe();
+  return _realtimeChan;
+}
+function unsubscribeRealtime() {
+  if (_realtimeChan) { try { _realtimeChan.unsubscribe(); } catch (e) {} _realtimeChan = null; }
+}
+
+// ---------- QUEUE de pushes pendentes (offline) ----------
+function loadPending() { try { return JSON.parse(localStorage.getItem(PENDING_QUEUE_KEY) || '[]'); } catch { return []; } }
+function savePending(q) { localStorage.setItem(PENDING_QUEUE_KEY, JSON.stringify(q)); }
+function enqueuePending(item) { const q = loadPending(); q.push(item); savePending(q); }
+async function flushPending() {
+  if (!SB) return;
+  const q = loadPending();
+  if (!q.length) return;
+  const remaining = [];
+  for (const item of q) {
+    try {
+      if (item.type === 'push_tarefa') await pushTarefa(item.userId, item.tarefaId);
+    } catch (e) { remaining.push(item); }
+  }
+  savePending(remaining);
+}
+window.addEventListener('online', flushPending);
+
+
 // === relatorio.js ===
 /* ===========================================
    Gerador de Relatório PDF
@@ -2391,6 +2911,8 @@ async function gerarRelatorioPDF(userId) {
   const plano = PLANOS.colaboradores[userId];
   const userData = loadUserData(userId);
   const progresso = calcularProgresso(userId, plano);
+  const stats = collectStats(userId, plano);
+  const valorTotalDesbloqueado = stats.valorDesbloqueado;
 
   // Verificar tarefas sem comprovação
   let tarefasFeitasSemComprovacao = 0;
@@ -2518,11 +3040,11 @@ async function gerarRelatorioPDF(userId) {
   doc.setFont('helvetica', 'normal');
   doc.setFontSize(9);
   doc.setTextColor(150, 150, 150);
-  doc.text('BONIFICAÇÃO TOTAL DO CICLO', margin + 16, y + 115);
+  doc.text('BONIFICAÇÃO DESBLOQUEADA', margin + 16, y + 115);
   doc.setFontSize(16);
-  doc.setTextColor(255, 235, 59);
+  doc.setTextColor(46, 204, 113);
   doc.setFont('helvetica', 'bold');
-  doc.text(fmtBRL(plano.bonificacao), margin + 200, y + 115);
+  doc.text(`${fmtBRL(valorTotalDesbloqueado)} de ${fmtBRL(plano.bonificacao)}`, margin + 200, y + 115);
 
   // Aviso
   y = 580;
@@ -2545,7 +3067,7 @@ async function gerarRelatorioPDF(userId) {
   doc.setFontSize(8);
   doc.setFont('helvetica', 'italic');
   doc.text(`Gerado em ${new Date().toLocaleString('pt-BR')}`, margin, pageH - 30);
-  doc.text('Nathan — Diretor Gerencial · S.A Casa do Sushi Franchising', margin, pageH - 18);
+  doc.text('Administrador · S.A Casa do Sushi Franchising', margin, pageH - 18);
 
   // ========== PÁGINAS DE GATILHOS ==========
   for (const gatilho of plano.gatilhos) {
@@ -2553,13 +3075,14 @@ async function gerarRelatorioPDF(userId) {
     y = margin;
 
     const progGat = calcularProgressoGatilho(userId, gatilho);
+    const valorGatDesbloqueado = calcValorDesbloqueadoGatilho(userId, gatilho);
     const [sr, sg, sb] = corSeveridade(gatilho.severidade);
 
     // Header gatilho
     doc.setFillColor(22, 22, 22);
-    doc.roundedRect(margin, y, pageW - margin * 2, 90, 8, 8, 'F');
+    doc.roundedRect(margin, y, pageW - margin * 2, 100, 8, 8, 'F');
     doc.setFillColor(sr, sg, sb);
-    doc.rect(margin, y, 6, 90, 'F');
+    doc.rect(margin, y, 6, 100, 'F');
 
     doc.setTextColor(255, 255, 255);
     doc.setFontSize(13);
@@ -2570,11 +3093,13 @@ async function gerarRelatorioPDF(userId) {
     doc.setFont('helvetica', 'normal');
     doc.setTextColor(150, 150, 150);
     doc.text(`${gatilho.severidade} · Peso ${gatilho.peso}`, margin + 18, y + 50);
-    doc.text(`${gatilho.totalTarefas} tarefas`, margin + 18, y + 64);
+    doc.text(`${gatilho.totalTarefas} tarefas · valor por tarefa: ${fmtBRL(gatilho.valorTarefa)}`, margin + 18, y + 64);
 
-    doc.setTextColor(46, 204, 113);
+    doc.setTextColor(255, 235, 59);
     doc.setFont('helvetica', 'bold');
-    doc.text(`Bonificação: ${fmtBRL(gatilho.bonificacao)}`, margin + 18, y + 78);
+    doc.text(`Bonificação total: ${fmtBRL(gatilho.bonificacao)}`, margin + 18, y + 78);
+    doc.setTextColor(46, 204, 113);
+    doc.text(`Desbloqueado: ${fmtBRL(valorGatDesbloqueado)}`, margin + 18, y + 92);
 
     // Progresso à direita
     doc.setTextColor(46, 204, 113);
@@ -2584,7 +3109,7 @@ async function gerarRelatorioPDF(userId) {
     doc.setTextColor(150, 150, 150);
     doc.text(`${progGat.pct}% concluído`, pageW - margin - 18, y + 56, { align: 'right' });
 
-    y += 110;
+    y += 120;
 
     // Grupos
     for (let gIdx = 0; gIdx < gatilho.grupos.length; gIdx++) {
@@ -2717,7 +3242,7 @@ async function gerarRelatorioPDF(userId) {
 
   // Resumo final
   doc.setFillColor(22, 22, 22);
-  doc.roundedRect(margin, y, pageW - margin * 2, 130, 8, 8, 'F');
+  doc.roundedRect(margin, y, pageW - margin * 2, 150, 8, 8, 'F');
 
   doc.setTextColor(150, 150, 150);
   doc.setFontSize(9);
@@ -2744,10 +3269,14 @@ async function gerarRelatorioPDF(userId) {
   doc.text(`Tarefas com comprovação: ${comComprovacao}`, margin + 16, y + 62);
   doc.text(`Tarefas com observação: ${comObservacao}`, margin + 16, y + 80);
 
-  doc.setTextColor(255, 235, 59);
+  doc.setTextColor(46, 204, 113);
   doc.setFont('helvetica', 'bold');
-  doc.setFontSize(13);
-  doc.text(`Bonificação ao executar 100%: ${fmtBRL(plano.bonificacao)}`, margin + 16, y + 110);
+  doc.setFontSize(14);
+  doc.text(`Bonificação desbloqueada: ${fmtBRL(valorTotalDesbloqueado)}`, margin + 16, y + 108);
+  doc.setTextColor(180, 180, 180);
+  doc.setFontSize(10);
+  doc.setFont('helvetica', 'normal');
+  doc.text(`(de ${fmtBRL(plano.bonificacao)} totais ao executar 100%)`, margin + 16, y + 124);
 
   // Assinatura
   y += 180;
@@ -2943,7 +3472,7 @@ function renderWelcomeScreen() {
     <div class="welcome">
       <h1>Bonificações Maio 2026</h1>
       <div class="periodo-pill">📅 ${PLANOS.ciclo.periodo}</div>
-      <p class="subtitle">Selecione seu nome para acompanhar suas tarefas, anexar comprovações, desbloquear conquistas e gerar seu relatório final.</p>
+      <p class="subtitle">Selecione seu nome e digite seu PIN para acessar suas tarefas. Os dados agora ficam salvos na nuvem ☁️ — sincronizam entre dispositivos automaticamente.</p>
     </div>
     <div class="container">
       <div class="user-grid">
@@ -2956,11 +3485,11 @@ function renderWelcomeScreen() {
           </div>
         `).join('')}
 
-        <div class="user-card admin" data-user="nathan" style="--user-color: #FFD700">
-          <div class="avatar">N</div>
-          <div class="name">Nathan</div>
-          <div class="role">Supervisão · Cobrança</div>
-          <div class="stats">Acesso a todos os planos</div>
+        <div class="user-card admin" data-user="administrador" style="--user-color: #FFD700">
+          <div class="avatar">★</div>
+          <div class="name">Administrador</div>
+          <div class="role">Supervisão · Dashboard em tempo real</div>
+          <div class="stats">Vê o progresso de todos ao vivo</div>
         </div>
       </div>
     </div>
@@ -2969,15 +3498,344 @@ function renderWelcomeScreen() {
   document.querySelectorAll('.user-card').forEach(card => {
     card.addEventListener('click', () => {
       const userId = card.dataset.user;
+      openPinModal(userId);
+    });
+  });
+}
+
+// ============================================
+// MODAL DE LOGIN (PIN)
+// ============================================
+function openPinModal(userId) {
+  const isAdmin = userId === 'administrador';
+  const colab = isAdmin ? null : PLANOS.colaboradores[userId];
+  const nome = isAdmin ? 'Administrador' : (colab ? colab.nome : userId);
+  const cor = isAdmin ? '#FFD700' : (colab ? colab.cor : '#999');
+  const inicial = isAdmin ? '★' : (colab ? colab.inicial : '?');
+  const len = isAdmin ? 6 : 4;
+  const placeholder = isAdmin ? '••••••' : '••••';
+
+  const overlay = document.createElement('div');
+  overlay.className = 'pin-overlay';
+  overlay.innerHTML = `
+    <div class="pin-modal" style="--user-color: ${cor}">
+      <button class="pin-close" data-action="close" aria-label="Fechar">×</button>
+      <div class="pin-avatar">${inicial}</div>
+      <div class="pin-name">${esc(nome)}</div>
+      <div class="pin-hint">${isAdmin ? 'Digite a senha de administrador' : 'Digite seu PIN de 4 dígitos'}</div>
+      <input type="${isAdmin ? 'password' : 'tel'}" inputmode="numeric" pattern="[0-9]*"
+             id="pin-input" class="pin-input" maxlength="${isAdmin ? 12 : len}"
+             placeholder="${placeholder}" autocomplete="off" />
+      <div class="pin-feedback" id="pin-feedback"></div>
+      <button class="pin-submit" data-action="submit">Entrar</button>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+  setTimeout(() => overlay.classList.add('show'), 10);
+
+  const input = overlay.querySelector('#pin-input');
+  const feedback = overlay.querySelector('#pin-feedback');
+  setTimeout(() => input.focus(), 100);
+
+  function close() {
+    overlay.classList.remove('show');
+    setTimeout(() => overlay.remove(), 200);
+  }
+
+  async function tryLogin() {
+    const pin = input.value.trim();
+    if (!pin) { feedback.textContent = 'Digite o PIN'; feedback.className = 'pin-feedback err'; return; }
+    feedback.textContent = 'Verificando...';
+    feedback.className = 'pin-feedback wait';
+    input.disabled = true;
+    try {
+      const r = await cloudLogin(userId, pin);
+      if (!r.ok) {
+        feedback.textContent = r.erro === 'pin_invalido' ? 'PIN incorreto' : 'Erro ao entrar';
+        feedback.className = 'pin-feedback err';
+        input.disabled = false;
+        input.value = '';
+        input.focus();
+        return;
+      }
+      feedback.textContent = '✓ Acesso liberado';
+      feedback.className = 'pin-feedback ok';
       lockUser(userId);
       CURRENT_USER = userId;
-      if (userId === 'nathan') {
-        renderNathanScreen();
-      } else {
-        renderColaboradorScreen(userId);
+      setTimeout(async () => {
+        close();
+        await postLoginFlow(userId);
+      }, 350);
+    } catch (e) {
+      console.error(e);
+      feedback.textContent = 'Erro de conexão. Tente novamente.';
+      feedback.className = 'pin-feedback err';
+      input.disabled = false;
+    }
+  }
+
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) close();
+    const t = e.target.closest('[data-action]');
+    if (!t) return;
+    if (t.dataset.action === 'close') close();
+    if (t.dataset.action === 'submit') tryLogin();
+  });
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') tryLogin();
+    if (e.key === 'Escape') close();
+  });
+}
+
+// ============================================
+// FLUXO PÓS-LOGIN (migração + pull + render)
+// ============================================
+async function postLoginFlow(userId) {
+  if (userId === 'administrador') {
+    renderAdministradorScreen();
+    setupHeader();
+    window.scrollTo(0, 0);
+    return;
+  }
+
+  const ehMigrado = isMigrated(userId);
+  const temLocal = localHasData(userId);
+
+  if (!ehMigrado && temLocal) {
+    // Tem dados locais e ainda não foi migrado → oferece migração
+    const ok = await showMigrationDialog(userId);
+    if (ok) {
+      await runMigration(userId);
+    } else {
+      // Pulou: marca como migrado mesmo sem subir (assume que vai usar só local)
+      // Mas vamos pelo menos tentar puxar da nuvem caso haja algo lá
+    }
+  } else if (!ehMigrado && !temLocal) {
+    // Sem dados locais → marca como migrado e puxa o que existir na nuvem
+    markMigrated(userId);
+  }
+
+  // Pull da nuvem (sobrescreve o local pelo que estiver no servidor — fonte da verdade pós-migração)
+  if (isMigrated(userId)) {
+    try {
+      await cloudPullUser(userId);
+    } catch (e) {
+      console.error('Falha ao puxar dados da nuvem:', e);
+      toast('Não foi possível conectar à nuvem. Usando dados locais.', true);
+    }
+  }
+
+  flushPending().catch(() => {});
+
+  renderColaboradorScreen(userId);
+  setupHeader();
+  window.scrollTo(0, 0);
+}
+
+// Fluxo forçado: usuário NÃO pode pular a migração na primeira vez.
+// O modal só fecha quando ela for concluída com sucesso.
+function showMigrationDialog(userId) {
+  return new Promise((resolve) => {
+    const plano = PLANOS.colaboradores[userId];
+    const data = loadUserData(userId);
+    const tarefas = Object.values(data.tarefas || {});
+    const doneCount = tarefas.filter(t => t.done).length;
+    const evCount = tarefas.reduce((a, t) => a + (t.evidencias?.length || 0), 0);
+
+    const overlay = document.createElement('div');
+    overlay.className = 'pin-overlay show mig-forced';
+    overlay.innerHTML = `
+      <div class="pin-modal" style="--user-color: ${plano.cor}; max-width: 480px;">
+        <div class="pin-avatar mig-avatar-pulse">☁️</div>
+        <div class="pin-name">Vamos salvar tudo na nuvem!</div>
+        <div style="text-align:left; margin-top: 14px; font-size: 13px; color: var(--text-muted); line-height: 1.55;">
+          Antes de continuar, precisamos enviar seus dados deste dispositivo pra nuvem.
+          Encontramos aqui:
+          <ul style="margin: 10px 0 12px 18px;">
+            <li><strong style="color: var(--text);">${doneCount}</strong> tarefas concluídas</li>
+            <li><strong style="color: var(--text);">${evCount}</strong> comprovações (links + prints)</li>
+          </ul>
+          Isso é feito <strong style="color: var(--gold);">só uma vez</strong>. Depois, tudo sincroniza automaticamente — você pode acessar de qualquer dispositivo.
+          <br><br>
+          <span style="font-size: 11px; color: var(--text-dim);">Seus dados locais não serão apagados, ficam como backup.</span>
+        </div>
+        <button class="pin-submit mig-cta" data-action="go">☁️ SUBIR PARA A NUVEM</button>
+      </div>
+    `;
+    document.body.appendChild(overlay);
+    overlay.addEventListener('click', (e) => {
+      const t = e.target.closest('[data-action="go"]');
+      if (!t) return;
+      overlay.remove();
+      resolve(true);
+    });
+  });
+}
+
+async function runMigration(userId) {
+  const overlay = document.createElement('div');
+  overlay.className = 'pin-overlay show mig-forced';
+  overlay.innerHTML = `
+    <div class="pin-modal" style="max-width: 480px;">
+      <div class="pin-avatar mig-avatar-pulse">☁️</div>
+      <div class="pin-name">Subindo para a nuvem...</div>
+      <div id="mig-msg" class="pin-hint" style="margin-top: 12px;">Preparando upload...</div>
+      <div class="mig-bar"><div class="mig-bar-inner" id="mig-bar-inner"></div></div>
+      <div id="mig-detail" style="font-size: 11px; color: var(--text-dim); margin-top: 8px;"></div>
+      <div id="mig-retry-row" style="display:none; margin-top: 14px;">
+        <button class="pin-submit mig-cta" data-action="retry">↻ Tentar novamente</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+
+  async function attempt() {
+    const msg = overlay.querySelector('#mig-msg');
+    const bar = overlay.querySelector('#mig-bar-inner');
+    const detail = overlay.querySelector('#mig-detail');
+    const retryRow = overlay.querySelector('#mig-retry-row');
+    retryRow.style.display = 'none';
+    bar.style.width = '0%';
+    try {
+      const result = await migrateUserToCloud(userId, (p) => {
+        const pct = p.total > 0 ? Math.round((p.i / p.total) * 100) : 0;
+        bar.style.width = pct + '%';
+        if (p.stage === 'progresso') {
+          msg.textContent = `Sincronizando tarefa ${p.i}/${p.total}`;
+          detail.textContent = '';
+        } else if (p.stage === 'evidencia') {
+          msg.textContent = `Subindo evidência ${p.evIdx}/${p.evTotal}`;
+          detail.textContent = `(tarefa ${p.i}/${p.total})`;
+        }
+      });
+      msg.textContent = '✓ Tudo na nuvem!';
+      detail.textContent = `${result.tarefas} tarefas · ${result.evidencias} evidências enviadas`;
+      bar.style.width = '100%';
+      await new Promise(r => setTimeout(r, 1100));
+      overlay.remove();
+    } catch (e) {
+      console.error(e);
+      msg.textContent = '⚠ Falha ao enviar';
+      detail.textContent = (e.message || 'Erro desconhecido') + ' — seus dados locais estão intactos.';
+      retryRow.style.display = 'block';
+    }
+  }
+
+  overlay.addEventListener('click', (e) => {
+    const t = e.target.closest('[data-action="retry"]');
+    if (!t) return;
+    attempt();
+  });
+
+  await attempt();
+}
+
+// ============================================
+// ALTERAÇÃO DE PIN
+// ============================================
+function openChangePinModal(userId) {
+  const isAdmin = userId === 'administrador';
+  const colab = isAdmin ? null : PLANOS.colaboradores[userId];
+  const nome = isAdmin ? 'Administrador' : (colab ? colab.nome : userId);
+  const cor = isAdmin ? '#FFD700' : (colab ? colab.cor : '#999');
+  const minLen = isAdmin ? 6 : 4;
+  const maxLen = isAdmin ? 12 : 4;
+
+  const overlay = document.createElement('div');
+  overlay.className = 'pin-overlay show';
+  overlay.innerHTML = `
+    <div class="pin-modal" style="--user-color: ${cor}; max-width: 400px;">
+      <button class="pin-close" data-action="close" aria-label="Fechar">×</button>
+      <div class="pin-avatar">🔒</div>
+      <div class="pin-name">Alterar ${isAdmin ? 'senha' : 'PIN'}</div>
+      <div class="pin-hint">${esc(nome)} · mínimo ${minLen} ${isAdmin ? 'caracteres' : 'dígitos'}</div>
+      <div class="pin-form-rows">
+        <input type="${isAdmin ? 'password' : 'tel'}" inputmode="numeric" pattern="[0-9]*"
+               id="pin-atual" class="pin-input pin-input-sm" maxlength="${maxLen}"
+               placeholder="${isAdmin ? 'Senha atual' : 'PIN atual'}" autocomplete="off" />
+        <input type="${isAdmin ? 'password' : 'tel'}" inputmode="numeric" pattern="[0-9]*"
+               id="pin-novo" class="pin-input pin-input-sm" maxlength="${maxLen}"
+               placeholder="${isAdmin ? 'Senha nova' : 'PIN novo'}" autocomplete="off" />
+        <input type="${isAdmin ? 'password' : 'tel'}" inputmode="numeric" pattern="[0-9]*"
+               id="pin-conf" class="pin-input pin-input-sm" maxlength="${maxLen}"
+               placeholder="${isAdmin ? 'Confirmar nova' : 'Confirmar PIN'}" autocomplete="off" />
+      </div>
+      <div class="pin-feedback" id="pin-feedback"></div>
+      <button class="pin-submit" data-action="submit">Alterar</button>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+
+  const atual = overlay.querySelector('#pin-atual');
+  const novo = overlay.querySelector('#pin-novo');
+  const conf = overlay.querySelector('#pin-conf');
+  const feedback = overlay.querySelector('#pin-feedback');
+  setTimeout(() => atual.focus(), 80);
+
+  function close() { overlay.remove(); }
+
+  async function trySubmit() {
+    const a = atual.value.trim();
+    const n = novo.value.trim();
+    const c = conf.value.trim();
+    if (!a || !n || !c) {
+      feedback.textContent = 'Preencha todos os campos';
+      feedback.className = 'pin-feedback err';
+      return;
+    }
+    if (n.length < minLen) {
+      feedback.textContent = `${isAdmin ? 'Senha' : 'PIN'} novo precisa de ao menos ${minLen} ${isAdmin ? 'caracteres' : 'dígitos'}`;
+      feedback.className = 'pin-feedback err';
+      return;
+    }
+    if (n !== c) {
+      feedback.textContent = 'As duas senhas não batem';
+      feedback.className = 'pin-feedback err';
+      return;
+    }
+    if (n === a) {
+      feedback.textContent = `A nova ${isAdmin ? 'senha' : 'PIN'} é igual à atual`;
+      feedback.className = 'pin-feedback err';
+      return;
+    }
+    feedback.textContent = 'Alterando...';
+    feedback.className = 'pin-feedback wait';
+    try {
+      const { data, error } = await SB.rpc('op_change_pin', {
+        p_user_id: userId, p_pin_atual: a, p_pin_novo: n
+      });
+      if (error) throw error;
+      if (!data.ok) {
+        const erros = {
+          pin_atual_invalido: `${isAdmin ? 'Senha' : 'PIN'} atual incorreto`,
+          pin_curto: `${isAdmin ? 'Senha' : 'PIN'} novo muito curto`,
+          usuario_nao_encontrado: 'Usuário não encontrado'
+        };
+        feedback.textContent = erros[data.erro] || 'Erro ao alterar';
+        feedback.className = 'pin-feedback err';
+        return;
       }
-      setupHeader();
-      window.scrollTo(0, 0);
+      feedback.textContent = `✓ ${isAdmin ? 'Senha' : 'PIN'} alterado com sucesso`;
+      feedback.className = 'pin-feedback ok';
+      setTimeout(close, 1200);
+    } catch (e) {
+      console.error(e);
+      feedback.textContent = 'Erro de conexão';
+      feedback.className = 'pin-feedback err';
+    }
+  }
+
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) close();
+    const t = e.target.closest('[data-action]');
+    if (!t) return;
+    if (t.dataset.action === 'close') close();
+    if (t.dataset.action === 'submit') trySubmit();
+  });
+  [atual, novo, conf].forEach(inp => {
+    inp.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') trySubmit();
+      if (e.key === 'Escape') close();
     });
   });
 }
@@ -3010,6 +3868,7 @@ function renderColaboradorScreen(userId) {
           <div class="role">${esc(plano.funcao)} · ${PLANOS.ciclo.periodo}</div>
         </div>
         <div class="actions">
+          <button class="btn small ghost" id="btn-change-pin">🔒 Alterar PIN</button>
           <button class="btn small ghost" id="btn-import">📥 Importar</button>
           <button class="btn small ghost" id="btn-export">📤 Exportar</button>
         </div>
@@ -3273,6 +4132,7 @@ function bindColaboradorEvents(userId) {
   });
 
   // Botões topo
+  document.getElementById('btn-change-pin').addEventListener('click', () => openChangePinModal(userId));
   document.getElementById('btn-export').addEventListener('click', () => exportBackup(userId));
   document.getElementById('btn-import').addEventListener('click', () => {
     document.getElementById('file-import').click();
@@ -3382,13 +4242,38 @@ async function handleImageUpload(userId, input) {
   try {
     toast('Comprimindo imagem...');
     const dataUrl = await compressImage(file);
-    const tamanhoKB = Math.round(dataUrl.length * 0.75 / 1024);
+    const blob = dataUrlToBlob(dataUrl);
+    const tamanhoKB = Math.round(blob.size / 1024);
     const titulo = prompt('Título/descrição do print (opcional):', file.name.replace(/\.[^.]+$/, ''));
+
+    let evObj;
+    // Tenta subir para a nuvem (se já migrado e online)
+    if (SB && isMigrated(userId)) {
+      try {
+        toast('Enviando para a nuvem... ☁️');
+        const up = await uploadImagemEvidencia(userId, id, blob, titulo || file.name);
+        evObj = {
+          tipo: 'imagem', dataUrl: up.url, url: up.url, storage_path: up.storage_path,
+          titulo: titulo || file.name, tamanhoKB,
+          adicionadoEm: new Date().toISOString(), _id: up.id
+        };
+      } catch (e) {
+        console.error('Falha no upload, salvando local:', e);
+        toast('Sem internet — salvo localmente, sincroniza depois.', true);
+        evObj = {
+          tipo: 'imagem', dataUrl, titulo: titulo || file.name, tamanhoKB,
+          adicionadoEm: new Date().toISOString(), _pendingUpload: true, _blob: dataUrl
+        };
+      }
+    } else {
+      evObj = {
+        tipo: 'imagem', dataUrl, titulo: titulo || file.name, tamanhoKB,
+        adicionadoEm: new Date().toISOString()
+      };
+    }
+
     const state = getTarefaState(userId, id);
-    state.evidencias.push({
-      tipo: 'imagem', dataUrl, titulo: titulo || file.name, tamanhoKB,
-      adicionadoEm: new Date().toISOString()
-    });
+    state.evidencias.push(evObj);
     setTarefaState(userId, id, state);
     refreshTarefa(userId, id);
     toast('Print adicionado! 📸');
@@ -3400,15 +4285,21 @@ async function handleImageUpload(userId, input) {
   input.value = '';
 }
 
-function promptAddLink(userId, tarefaId) {
+async function promptAddLink(userId, tarefaId) {
   const url = prompt('Cole o link (Drive, Instagram, Notion, etc):');
   if (!url || !url.trim()) return;
   const titulo = prompt('Título/descrição (opcional):', '');
+  const ev = { tipo: 'link', url: url.trim(), titulo: titulo || '', adicionadoEm: new Date().toISOString() };
+
+  if (SB && isMigrated(userId)) {
+    try {
+      const row = await pushEvidenciaLink(userId, tarefaId, ev.url, ev.titulo);
+      ev._id = row.id;
+    } catch (e) { console.error('Falha sync link:', e); }
+  }
+
   const state = getTarefaState(userId, tarefaId);
-  state.evidencias.push({
-    tipo: 'link', url: url.trim(), titulo: titulo || '',
-    adicionadoEm: new Date().toISOString()
-  });
+  state.evidencias.push(ev);
   setTarefaState(userId, tarefaId, state);
   refreshTarefa(userId, tarefaId);
   toast('Link adicionado! 🔗');
@@ -3416,13 +4307,18 @@ function promptAddLink(userId, tarefaId) {
   atualizarTudo(userId);
 }
 
-function removerEvidencia(userId, tarefaId, idx) {
+async function removerEvidencia(userId, tarefaId, idx) {
   if (!confirm('Remover essa comprovação?')) return;
   const state = getTarefaState(userId, tarefaId);
+  const removida = state.evidencias[idx];
   state.evidencias.splice(idx, 1);
   setTarefaState(userId, tarefaId, state);
   refreshTarefa(userId, tarefaId);
   atualizarTudo(userId);
+
+  if (removida && SB && isMigrated(userId)) {
+    deleteEvidenciaCloud(removida).catch(e => console.error('Falha removendo na nuvem:', e));
+  }
 }
 
 function refreshTarefa(userId, tarefaId) {
@@ -3503,118 +4399,283 @@ function toast(msg, isError = false, variant = '') {
 }
 
 // ============================================
-// TELA NATHAN (ADMIN)
+// TELA DO ADMINISTRADOR — DASHBOARD AO VIVO
 // ============================================
-function renderNathanScreen() {
+let _adminState = { view: 'dashboard', focusUser: null };
+
+async function renderAdministradorScreen() {
+  unsubscribeRealtime();
+  _adminState = { view: 'dashboard', focusUser: null };
+
   const colabs = Object.values(PLANOS.colaboradores);
-  const tabs = colabs.map(c => `
-    <button class="admin-tab" data-tab="${c.id}">
-      <span class="mini-avatar" style="--c: ${c.cor}">${c.inicial}</span>
-      ${esc(c.nome)}
-    </button>
-  `).join('');
 
   app().innerHTML = `
     <div class="container">
       <div class="profile-bar" style="--user-color: #FFD700">
-        <div class="avatar" style="background: linear-gradient(135deg, #FFD700, #ffaa00); color: #000;">N</div>
+        <div class="avatar" style="background: linear-gradient(135deg, #FFD700, #ffaa00); color: #000;">★</div>
         <div class="info">
-          <div class="name">Nathan</div>
-          <div class="role">Supervisão · Cobrança · ${PLANOS.ciclo.periodo}</div>
+          <div class="name">Administrador</div>
+          <div class="role">Dashboard ao vivo · ${PLANOS.ciclo.periodo}</div>
+        </div>
+        <div class="actions">
+          <button class="btn small ghost" id="btn-change-pin-adm">🔒 Alterar senha</button>
+          <span class="rt-indicator" id="rt-indicator" title="Atualização em tempo real">
+            <span class="rt-dot"></span> Ao vivo
+          </span>
         </div>
       </div>
 
-      <div class="admin-warn">
-        <strong>Modo supervisão.</strong> Você vê o que precisa ser cobrado de cada colaborador. <em>O progresso real (status, prints e links) fica no dispositivo de cada um — quando precisar conferir, peça pra pessoa abrir o portal dela e te mostrar.</em>
+      <div class="admin-summary" id="admin-summary">
+        <div class="adm-stat"><div class="lab">Colaboradores</div><div class="val" id="adm-total-colab">${colabs.length}</div></div>
+        <div class="adm-stat"><div class="lab">Tarefas concluídas</div><div class="val" id="adm-total-done">…</div></div>
+        <div class="adm-stat bonus"><div class="lab">R$ desbloqueado total</div><div class="val" id="adm-total-valor">…</div></div>
+        <div class="adm-stat"><div class="lab">Evidências enviadas</div><div class="val" id="adm-total-ev">…</div></div>
       </div>
 
-      <div class="admin-tabs" id="admin-tabs">${tabs}</div>
-      <div id="admin-content"></div>
+      <div class="admin-grid" id="admin-grid">
+        ${colabs.map(c => `
+          <div class="adm-card" data-user="${c.id}" style="--user-color: ${c.cor}">
+            <div class="adm-card-head">
+              <div class="avatar">${c.inicial}</div>
+              <div class="who">
+                <div class="nome">${esc(c.nome)}</div>
+                <div class="funcao">${esc(c.funcao)}</div>
+              </div>
+              <div class="adm-pct" data-pct="0">0%</div>
+            </div>
+            <div class="adm-bar"><div class="adm-bar-inner" data-bar></div></div>
+            <div class="adm-metrics">
+              <div class="m"><span class="k">Tarefas</span> <span class="v" data-done>0</span> / <span data-total>${getTotalTarefasUnicas(c)}</span></div>
+              <div class="m"><span class="k">Evidências</span> <span class="v" data-ev>0</span></div>
+              <div class="m"><span class="k">R$ desbloq.</span> <span class="v gold" data-valor>R$ 0,00</span></div>
+              <div class="m"><span class="k">Última atividade</span> <span class="v dim" data-ultima>—</span></div>
+            </div>
+            <button class="btn small ghost adm-detail-btn" data-action="ver-detalhe">Ver detalhes →</button>
+          </div>
+        `).join('')}
+      </div>
     </div>
   `;
 
-  document.querySelectorAll('.admin-tab').forEach(t => {
-    t.addEventListener('click', () => {
-      document.querySelectorAll('.admin-tab').forEach(x => x.classList.remove('active'));
-      t.classList.add('active');
-      renderNathanColab(t.dataset.tab);
-    });
+  document.getElementById('admin-grid').addEventListener('click', (e) => {
+    const card = e.target.closest('.adm-card');
+    if (!card) return;
+    const userId = card.dataset.user;
+    renderAdminDetalheColab(userId);
   });
 
-  document.querySelectorAll('.admin-tab')[0]?.click();
+  document.getElementById('btn-change-pin-adm')?.addEventListener('click', () => openChangePinModal('administrador'));
+
+  await refreshAdminDashboard();
+
+  subscribeDashboardRealtime(async (payload) => {
+    // Atualiza só o card afetado para não recarregar tudo
+    if (_adminState.view === 'dashboard') {
+      await refreshAdminDashboard();
+    } else if (_adminState.view === 'detalhe' && _adminState.focusUser) {
+      const uid = payload?.new?.user_id || payload?.old?.user_id;
+      if (!uid || uid === _adminState.focusUser) {
+        await refreshAdminDetalheColab(_adminState.focusUser);
+      }
+    }
+  });
 }
 
-function renderNathanColab(userId) {
-  const plano = PLANOS.colaboradores[userId];
-  const cont = document.getElementById('admin-content');
+async function refreshAdminDashboard() {
+  let rows = [];
+  try { rows = await cloudDashboard(); }
+  catch (e) { console.error('Dashboard load fail', e); return; }
 
-  const cards = plano.gatilhos.map(g => {
-    const sevClass = severidadeClass(g.severidade);
-    const todasTarefas = [];
-    g.grupos.forEach(grp => {
-      grp.tarefas.forEach(t => todasTarefas.push({ texto: t, lojas: grp.lojas }));
+  const byUser = {};
+  rows.forEach(r => byUser[r.user_id] = r);
+
+  let totalDone = 0, totalEv = 0, totalValor = 0;
+  Object.values(PLANOS.colaboradores).forEach(c => {
+    const r = byUser[c.id] || { total_concluidas: 0, total_evidencias: 0, ultima_atividade: null };
+    const total = getTotalTarefasUnicas(c);
+    const done = Number(r.total_concluidas) || 0;
+    const ev = Number(r.total_evidencias) || 0;
+    const valor = done * c.gatilhos.reduce((acc, g) => acc + g.valorTarefa, 0) / c.gatilhos.length; // aproximação se não tiver detalhe
+    // Para precisão, calculamos depois via fetch detalhado se quiser.
+    const card = document.querySelector(`.adm-card[data-user="${c.id}"]`);
+    if (!card) return;
+    const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+    card.querySelector('[data-pct]').textContent = pct + '%';
+    card.querySelector('[data-bar]').style.width = pct + '%';
+    card.querySelector('[data-done]').textContent = done;
+    card.querySelector('[data-ev]').textContent = ev;
+    // Valor: precisão via fetch separado (lazy)
+    refreshUserValorAdmin(c.id, card);
+    card.querySelector('[data-ultima]').textContent = r.ultima_atividade ? formatRelativo(r.ultima_atividade) : 'sem atividade';
+    card.classList.toggle('completo', pct >= 100);
+    totalDone += done;
+    totalEv += ev;
+  });
+
+  document.getElementById('adm-total-done').textContent = totalDone;
+  document.getElementById('adm-total-ev').textContent = totalEv;
+  // Total R$ é atualizado pelos cards via refreshUserValorAdmin
+  setTimeout(() => {
+    let soma = 0;
+    document.querySelectorAll('.adm-card [data-valor]').forEach(el => {
+      const n = parseFloat((el.dataset.raw || '0'));
+      soma += n;
     });
+    document.getElementById('adm-total-valor').textContent = fmtBRL(soma);
+  }, 600);
+}
 
+async function refreshUserValorAdmin(userId, card) {
+  try {
+    const { data, error } = await SB.from('op_progresso')
+      .select('tarefa_id, concluida').eq('user_id', userId).eq('ciclo_ref', CICLO_REF).eq('concluida', true);
+    if (error) return;
+    const plano = PLANOS.colaboradores[userId];
+    if (!plano) return;
+    let valor = 0;
+    data.forEach(r => {
+      // Resolve gatilho a partir do tarefa_id (formato: gatilhoId__gX__tY)
+      const gid = (r.tarefa_id || '').split('__')[0];
+      const g = plano.gatilhos.find(x => x.id === gid);
+      if (g) valor += g.valorTarefa;
+    });
+    const el = card.querySelector('[data-valor]');
+    el.textContent = fmtBRL(valor);
+    el.dataset.raw = valor;
+  } catch (e) { /* silencioso */ }
+}
+
+function formatRelativo(iso) {
+  const dt = new Date(iso);
+  const diff = (Date.now() - dt.getTime()) / 1000;
+  if (diff < 60) return 'agora';
+  if (diff < 3600) return Math.floor(diff / 60) + ' min atrás';
+  if (diff < 86400) return Math.floor(diff / 3600) + ' h atrás';
+  return dt.toLocaleDateString('pt-BR');
+}
+
+async function renderAdminDetalheColab(userId) {
+  _adminState = { view: 'detalhe', focusUser: userId };
+  const plano = PLANOS.colaboradores[userId];
+
+  app().innerHTML = `
+    <div class="container">
+      <div class="profile-bar" style="--user-color: ${plano.cor}">
+        <button class="btn small ghost" data-action="voltar-dash" style="margin-right:8px;">← Voltar</button>
+        <div class="avatar">${plano.inicial}</div>
+        <div class="info">
+          <div class="name">${esc(plano.nome)}</div>
+          <div class="role">${esc(plano.funcao)} · vista do Administrador</div>
+        </div>
+      </div>
+
+      <div id="admin-detalhe-conteudo">
+        <div style="padding: 40px; text-align: center; color: var(--text-muted);">Carregando...</div>
+      </div>
+    </div>
+  `;
+
+  document.querySelector('[data-action="voltar-dash"]').addEventListener('click', () => {
+    renderAdministradorScreen();
+  });
+
+  await refreshAdminDetalheColab(userId);
+}
+
+async function refreshAdminDetalheColab(userId) {
+  try {
+    await cloudPullUser(userId);
+  } catch (e) {
+    console.error(e);
+  }
+  const plano = PLANOS.colaboradores[userId];
+  const stats = collectStats(userId, plano);
+  const cont = document.getElementById('admin-detalhe-conteudo');
+  if (!cont) return;
+
+  const gatilhosHtml = plano.gatilhos.map(g => {
+    const prog = calcularProgressoGatilho(userId, g);
+    const valor = calcValorDesbloqueadoGatilho(userId, g);
+    const sevClass = severidadeClass(g.severidade);
     return `
-      <div class="cobranca-card ${sevClass}">
-        <div class="titulo">
-          <span style="font-size:18px;">${g.icone}</span>
-          ${esc(g.titulo)}
-          <span class="severidade-pill">${g.severidade}</span>
-          <span class="bonus-pill">💰 ${fmtBRL(g.bonificacao)}</span>
+      <div class="gatilho ${sevClass} open" data-gatilho="${g.id}">
+        <div class="gatilho-header">
+          <div class="titulo-area">
+            <div class="titulo"><span>${g.icone}</span> ${esc(g.titulo)}</div>
+            <div class="badges">
+              <span class="severidade-pill">${g.severidade}</span>
+              <span class="bonus-pill">💰 ${fmtBRL(g.bonificacao)}</span>
+            </div>
+          </div>
+          <div class="stats-mini">
+            <div class="progress-text">${prog.done}/${prog.total}</div>
+            <div class="gatilho-mini-bar"><div class="gatilho-mini-bar-inner" style="width:${prog.pct}%"></div></div>
+            <div class="unlocked-value">${fmtBRL(valor)} desbloq.</div>
+          </div>
         </div>
-        <div style="font-size:11px; color: var(--text-muted); margin-bottom:6px;">
-          🎯 ${esc(g.meta)}
-        </div>
-        <div style="font-size:11px; color: var(--text-muted); margin-bottom:8px;">
-          📋 <strong style="color:var(--text);">${todasTarefas.length}</strong> tarefas a cobrar · valor por tarefa: <strong style="color:var(--text);">${fmtBRL(g.valorTarefa)}</strong>
-        </div>
-        <ul>
-          ${todasTarefas.map(t => `
-            <li>
-              <div>${esc(t.texto)}</div>
-              <div style="margin-top:4px; display:flex; flex-wrap:wrap; gap:4px;">
-                ${t.lojas.map(l => `<span class="loja-pill" style="font-size:10px; padding:2px 8px;">${esc(l)}</span>`).join('')}
+        <div class="gatilho-body">
+          ${g.grupos.map((grp, gIdx) => `
+            <div class="grupo">
+              <div class="lojas-list">
+                ${grp.lojas.map(l => `<span class="loja-pill">${esc(l)}</span>`).join('')}
               </div>
-            </li>
+              ${grp.tarefas.map((t, tIdx) => {
+                const id = makeTarefaId(g.id, gIdx, tIdx);
+                const state = getTarefaState(userId, id);
+                return `
+                  <div class="tarefa ${state.done ? 'done' : ''}">
+                    <div class="tarefa-row">
+                      <div class="tarefa-check"><div class="custom-checkbox ${state.done ? 'checked' : ''}" style="pointer-events:none;"></div></div>
+                      <div class="tarefa-text">${esc(t)}</div>
+                      <div class="tarefa-actions" style="font-size: 11px; color: var(--text-muted);">
+                        ${state.evidencias.length ? `📎 ${state.evidencias.length}` : ''}
+                      </div>
+                    </div>
+                    ${state.evidencias.length || state.observacao ? `
+                      <div class="evidencias show" style="margin-top: 8px;">
+                        ${state.observacao ? `<div style="font-size:12px; color: var(--gold); font-style: italic; padding: 4px 0;">📝 ${esc(state.observacao)}</div>` : ''}
+                        ${state.evidencias.map(ev => ev.tipo === 'imagem' ? `
+                          <div class="evidencia-item">
+                            <a href="${esc(ev.url || ev.dataUrl)}" target="_blank" rel="noopener" class="evidencia-thumb" style="background-image: url('${ev.url || ev.dataUrl}'); cursor: zoom-in;"></a>
+                            <div style="flex:1; min-width:0; font-size:12px;">📸 ${esc(ev.titulo || 'Print')}</div>
+                          </div>
+                        ` : `
+                          <div class="evidencia-item">
+                            <div>🔗</div>
+                            <a href="${esc(ev.url)}" target="_blank" rel="noopener" class="evidencia-link">${esc(ev.titulo || ev.url)}</a>
+                          </div>
+                        `).join('')}
+                      </div>
+                    ` : ''}
+                  </div>
+                `;
+              }).join('')}
+            </div>
           `).join('')}
-        </ul>
+        </div>
       </div>
     `;
   }).join('');
 
-  const totalT = getTotalTarefasUnicas(plano);
-
   cont.innerHTML = `
-    <div class="profile-bar" style="--user-color: ${plano.cor}; margin-top:8px;">
-      <div class="avatar">${plano.inicial}</div>
-      <div class="info">
-        <div class="name">${esc(plano.nome)}</div>
-        <div class="role">${esc(plano.funcao)}</div>
+    <div class="progress-hero">
+      <div class="top-row">
+        <div>
+          <div class="label">Progresso geral</div>
+          <div class="text"><strong>${stats.done}</strong> / ${stats.total} tarefas (${stats.pct}%)</div>
+        </div>
+        <div class="bonus-counter">
+          <div class="label-bonus">💰 Bonificação Desbloqueada</div>
+          <div class="value-bonus">${fmtBRL(stats.valorDesbloqueado)}</div>
+          <div class="total-bonus">de ${fmtBRL(plano.bonificacao)} totais</div>
+        </div>
+      </div>
+      <div class="progress-bar-outer">
+        <div class="progress-bar-inner" style="width:${stats.pct}%"></div>
       </div>
     </div>
 
-    <div class="meta-banner">
-      <div class="label">🎯 META DO CICLO</div>
-      <div class="text">${esc(plano.metaCiclo)}</div>
-    </div>
-
-    <div class="summary-grid">
-      <div class="summary-card">
-        <div class="label">Gatilhos</div>
-        <div class="value">${plano.gatilhos.length}</div>
-      </div>
-      <div class="summary-card">
-        <div class="label">Tarefas únicas</div>
-        <div class="value">${totalT}</div>
-      </div>
-      <div class="summary-card bonus">
-        <div class="label">Bonificação</div>
-        <div class="value">${fmtBRL(plano.bonificacao)}</div>
-      </div>
-    </div>
-
-    ${cards}
+    <div id="gatilhos-container">${gatilhosHtml}</div>
   `;
 }
 
@@ -3646,8 +4707,10 @@ function setupHeader() {
     btn.textContent = '↩ Trocar';
     btn.title = 'Voltar para tela de seleção (não apaga seus dados)';
     btn.addEventListener('click', () => {
-      if (confirm('Voltar para a tela de seleção?\n\nSeus dados ficam salvos. Você pode voltar a entrar aqui depois.')) {
+      if (confirm('Voltar para a tela de seleção?\n\nSeus dados ficam salvos na nuvem. Você precisará digitar o PIN para entrar de novo.')) {
         localStorage.removeItem(LOCK_KEY);
+        setCloudSession(null);
+        unsubscribeRealtime();
         location.reload();
       }
     });
@@ -3665,9 +4728,20 @@ async function boot() {
 
   await loadPlanos();
 
+  // Compatibilidade: se travado no antigo "nathan", migrar para "administrador"
+  const lockedUserRaw = getLockedUser();
+  if (lockedUserRaw === 'nathan') {
+    localStorage.removeItem(LOCK_KEY);
+    setCloudSession(null);
+  }
+
+  const session = getCloudSession();
   const lockedUser = getLockedUser();
 
-  if (!lockedUser) {
+  // Sem sessão na nuvem → força login
+  if (!session || !lockedUser) {
+    setCloudSession(null);
+    localStorage.removeItem(LOCK_KEY);
     renderWelcomeScreen();
     setupHeader();
     return;
@@ -3675,12 +4749,33 @@ async function boot() {
 
   CURRENT_USER = lockedUser;
 
-  if (lockedUser === 'nathan') {
-    renderNathanScreen();
-  } else if (PLANOS.colaboradores[lockedUser]) {
+  if (lockedUser === 'administrador') {
+    await renderAdministradorScreen();
+    setupHeader();
+    return;
+  }
+
+  if (PLANOS.colaboradores[lockedUser]) {
+    // Sessão válida: puxa dados da nuvem se já migrou
+    if (isMigrated(lockedUser)) {
+      try { await cloudPullUser(lockedUser); }
+      catch (e) { console.error('Falha ao puxar nuvem:', e); }
+    } else if (localHasData(lockedUser)) {
+      // Tem dados locais mas não migrou → oferece migração
+      const ok = await showMigrationDialog(lockedUser);
+      if (ok) await runMigration(lockedUser);
+      if (isMigrated(lockedUser)) {
+        try { await cloudPullUser(lockedUser); } catch (e) { console.error(e); }
+      }
+    } else {
+      markMigrated(lockedUser);
+    }
+
+    flushPending().catch(() => {});
     renderColaboradorScreen(lockedUser);
   } else {
     localStorage.removeItem(LOCK_KEY);
+    setCloudSession(null);
     location.reload();
     return;
   }
